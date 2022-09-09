@@ -321,3 +321,15 @@ The problem sheets can either be handed in during the lecture or put in the lett
 | [Problem sheet II](ps2.pdf)  | [Solutions](sol2.pdf) | Oct 25    | Nov 7  |
 | [Problem sheet III](ps3.pdf) | [Solutions](sol3.pdf) | Nov 9     | Nov 21 |
 
+```{raw} html
+<script
+   type="text/javascript"
+   src="https://utteranc.es/client.js"
+   async="async"
+   repo="executablebooks/jupyter-book"
+   issue-term="pathname"
+   theme="github-light"
+   label="💬 comment"
+   crossorigin="anonymous"
+/>
+```

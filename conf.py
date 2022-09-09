@@ -23,9 +23,6 @@ copyright = '2022, Dominik Schröder'
 
 from typing import Any, Dict
 
-redirects = {
-     "index": "cv.html"
-}
 
 # -- General configuration ---------------------------------------------------
 
@@ -40,6 +37,8 @@ extensions = [
     'sphinx.ext.mathjax',
     "sphinxcontrib.bibtex"
 ]
+
+
 
 myst_enable_extensions = [
     "amsmath",

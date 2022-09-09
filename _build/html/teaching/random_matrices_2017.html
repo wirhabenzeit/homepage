@@ -1,0 +1,982 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Random Matrices (2017)</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ELO estimate for football" href="../projects/elo.html" />
+    <link rel="prev" title="Dominik Schröder" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dominik2021-1.jpg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Dominik Schröder
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Teaching
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Random Matrices (2017)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://metaphor.ethz.ch/x/2020/hs/401-4607-70L/">
+   Medley of Advanced Probability
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Projects
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../projects/elo.html">
+   ELO estimate for football
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Links
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/wirhabenzeit">
+   Github
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://www.instagram.com/wirhabenzeit/">
+   Instagram
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://unsplash.com/@wirhabenzeit">
+   Unsplash
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#description">
+   Description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#target-audience">
+   Target audience
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation">
+   Evaluation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#credits">
+   Credits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lecture-notes">
+   Lecture notes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#schedule">
+   Schedule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-12">
+     October 12
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-17">
+     October 17
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-17-recitation">
+     October 17 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-18">
+     October 18
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-24">
+     October 24
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-24-recitation">
+     October 24 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-25">
+     October 25
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-2">
+     November 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-7">
+     November 7
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-7-recitation">
+     November 7 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-9">
+     November 9
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-14">
+     November 14
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-14-recitation">
+     November 14 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-16">
+     November 16
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-21">
+     November 21
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-23">
+     November 23
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#homework">
+   Homework
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Random Matrices (2017)</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#description">
+   Description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#target-audience">
+   Target audience
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation">
+   Evaluation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#credits">
+   Credits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lecture-notes">
+   Lecture notes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#schedule">
+   Schedule
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-12">
+     October 12
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-17">
+     October 17
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-17-recitation">
+     October 17 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-18">
+     October 18
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-24">
+     October 24
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-24-recitation">
+     October 24 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#october-25">
+     October 25
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-2">
+     November 2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-7">
+     November 7
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-7-recitation">
+     November 7 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-9">
+     November 9
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-14">
+     November 14
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-14-recitation">
+     November 14 (Recitation)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-16">
+     November 16
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-21">
+     November 21
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#november-23">
+     November 23
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#homework">
+   Homework
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="random-matrices-2017">
+<h1>Random Matrices (2017)<a class="headerlink" href="#random-matrices-2017" title="Permalink to this headline">#</a></h1>
+<p>Introductory course on random matrices from <em>October 10 to November 23, 2017</em> at <em>IST Austria</em>. The course instructor is <a class="reference external" href="http://ist.ac.at/en/research/research-groups/erdoes-group/">László Erdős</a> and the teaching assistant is <a class="reference external" href="http://ist.ac.at/~dschroed/">Dominik Schröder</a>.</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">#</a></h2>
+<p>Random matrices were first introduced in statistics in the 1920’s, but they were made famous by Eugene Wigner’s revolutionary vision. He predicted that spectral lines of heavy nuclei can be modelled by the eigenvalues of random symmetric matrices with independent entries (Wigner matrices). In particular, he conjectured that the statistics of energy gaps is given by a universal distribution that is independent of the detailed physical parameters. While the proof of this conjecture for realistic physical models is still beyond reach, it has recently been shown that the gap statistics of Wigner matrices is independent of the distribution of the matrix elements. Students will be introduced to the fascinating world of random matrices and presented with some of the basic tools for their mathematical analysis in this course.</p>
+</section>
+<section id="target-audience">
+<h2>Target audience<a class="headerlink" href="#target-audience" title="Permalink to this headline">#</a></h2>
+<p>Students with orientation in mathematics, theoretical physics, statistics and computer science. No physics background is necessary. Calculus, linear algebra and some basic familiarity with probability theory is expected.</p>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">#</a></h2>
+<p>The final grade will be obtained as a combination of the student’s performance on the example sheets and an oral exam.</p>
+</section>
+<section id="credits">
+<h2>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">#</a></h2>
+<p>3 ECTS</p>
+</section>
+<section id="lecture-notes">
+<h2>Lecture notes<a class="headerlink" href="#lecture-notes" title="Permalink to this headline">#</a></h2>
+<p>Related <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">notes</span></a> from the recent <a class="reference external" href="https://pcmi.ias.edu/program-index/2017ss">PCMI summer school</a> on random matrices.</p>
+</section>
+<section id="schedule">
+<h2>Schedule<a class="headerlink" href="#schedule" title="Permalink to this headline">#</a></h2>
+<p>The course lasts from October 10 – November 23, 2017.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Day</strong></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p><strong>Time</strong></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p><strong>Room</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>Oct 12</em></p></td>
+<td><p><em>Thu</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.20am–12.35pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Oct 17</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.15am-11.30am</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Oct 17</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.45am-12.35pm</span></code></p></td>
+<td><p>Recitation</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Oct 18</strong></p></td>
+<td><p><strong>Wed</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.30am-12.45pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p><strong>Mondi 1</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>Oct 24</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.15am-11.30am</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Oct 24</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.45am-12.35pm</span></code></p></td>
+<td><p>Recitation</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Oct 25</strong></p></td>
+<td><p><strong>Wed</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.30am-12.45pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p><strong>Mondi 1</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Nov 2</em></p></td>
+<td><p><em>Thu</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.20am–12.35pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Nov 7</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.15am-11.30am</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Nov 7</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.45am-12.35pm</span></code></p></td>
+<td><p>Recitation</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Nov 9</em></p></td>
+<td><p><em>Thu</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.20am–12.35pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Nov 14</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.15am-11.30am</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Nov 14</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.45am-12.35pm</span></code></p></td>
+<td><p>Recitation</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Nov 16</em></p></td>
+<td><p><em>Thu</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.20am–12.35pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Nov 21</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">10.15am-11.30am</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Nov 21</em></p></td>
+<td><p><em>Tue</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.45am-12.35pm</span></code></p></td>
+<td><p>Recitation</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Nov 23</em></p></td>
+<td><p><em>Thu</em></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">11.20am–12.35pm</span></code></p></td>
+<td><p>Lecture</p></td>
+<td><p>Mondi 3</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
+<section id="october-12">
+<h3>October 12<a class="headerlink" href="#october-12" title="Permalink to this headline">#</a></h3>
+<ol class="arabic simple">
+<li><p>Basic facts from probability theory. Law of large numbers (LLN) and the central limit theorem (CLT), viewed as universality statements. In the LLN the limit is deterministic, while in CLT the limit is a random variable, namely the Gaussian (normal) one. No matter which distribution the initial random variables had, their appropriately normalized sums always converge to the same distribution — in other words the limiting Gaussian distribution is universal.</p></li>
+<li><p>Wigner random matrices. Real symmetric and complex hermitian. GUE and GOE.  Wishart matrices and their relation to Wigner-type matrices. Scaling so that eigenvalues remain bounded. Statement on the concentration of the largest eigenvalue. Introducing the semicircle law as a law of large numbers for the empirical density of the eigenvalues.</p></li>
+<li><p>Linear statistics of eigenvalues (with a smooth function as observable) leads to CLT but with an unusual scaling — indicating very strong correlation among eigenvalues.</p></li>
+<li><p>Statement of the gap universality, Wigner surmise. The limit behavior of the gap is a new universal distribution; in this sense this is the analogue of the CLT.</p></li>
+</ol>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> up to middle of Section 1.2.3.</p>
+</section>
+<section id="october-17">
+<h3>October 17<a class="headerlink" href="#october-17" title="Permalink to this headline">#</a></h3>
+<ol class="arabic simple">
+<li><p>Main questions in random matrix theory:</p>
+<ul class="simple">
+<li><p>Density on global scale (like LLN)</p></li>
+<li><p>Extreme eigenvalues (especially relevant for sample covariance matrices)</p></li>
+<li><p>Fluctuation on the scale of eigenvalue spacing (like CLT)</p></li>
+<li><p>Mesoscopic density — follows the global behaviour, but it is a non-trivial fact.</p></li>
+<li><p>Eigenfunction (de)localization</p></li>
+</ul>
+</li>
+<li><p>Definition of <span class="math notranslate nohighlight">\(k\)</span>-point correlation functions. Relation of the gap distribution to the local correlation functions on scale of the eigenvalue spacing (inclusion-exclusion formula)</p></li>
+<li><p>Rescaled (local) correlation functions. Determinant structure. Sine kernel for complex Hermitian Wigner matrices. Statement of the main universality result in the bulk spectrum (for energies away from the edges of the semicircle law).</p></li>
+</ol>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> up to the end of Section 1.2.3.</p>
+</section>
+<section id="october-17-recitation">
+<h3>October 17 (Recitation)<a class="headerlink" href="#october-17-recitation" title="Permalink to this headline">#</a></h3>
+<ol class="arabic">
+<li><p>Definition of Stieltjes transform</p>
+<div class="math notranslate nohighlight" id="equation-eq-stieltjes">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-stieltjes" title="Permalink to this equation">#</a></span>\[
+    m_\mu(z):=\int_{\mathbb R} \frac{d\mu(\lambda)}{\lambda-z},\quad z\in\mathbb{H}:=\{z\in\mathbb C,\, \Im z&gt;0\}
+    \]</div>
+<p>of probability measure <span class="math notranslate nohighlight">\(\mu\)</span> and statement of elementary properties (analyticity, trivial bounds on derivatives). Interpretation of the Stieltjes transform of the empirical spectral density as the normalized trace of the resolvent.</p>
+</li>
+<li><p>Interpretation of the imaginary part of <a class="reference internal" href="#equation-eq-stieltjes">(1)</a> as the convolution with the Poisson kernel,</p>
+<div class="math notranslate nohighlight">
+\[
+    \Im m_\mu(x+i\eta)= \pi (P_\eta\ast \mu)(x),\quad P_\eta(x):=\frac{1}{\pi}\frac{\eta}{x^2+\eta^2}.
+    \]</div>
+<p>The Stieltjes transform <span class="math notranslate nohighlight">\(m_\mu(x+i\eta)\)</span> thus contains information about <span class="math notranslate nohighlight">\(\mu\)</span> at a scale of <span class="math notranslate nohighlight">\(\eta\)</span> around <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</li>
+<li><p><em>Stieltjes continuity theorem for sequences of random measures:</em> A sequence of random probability measures <span class="math notranslate nohighlight">\(\mu_1,\mu_2,\dots\)</span> converges vaguely, a) in expectation b) in probability c) almost surely to a deterministic probability measure <span class="math notranslate nohighlight">\(\mu\)</span> if and only if for all <span class="math notranslate nohighlight">\(z\in\mathbb H\)</span>, the sequence of numbers <span class="math notranslate nohighlight">\(m_{\mu_N}(z)\)</span> converges a) in expectation b) in probability c) almost surely to <span class="math notranslate nohighlight">\(m_{\mu}(z)\)</span>.</p></li>
+<li><p>Derivation of the <em>Helffer-Sjöstrand formula</em></p>
+<div class="math notranslate nohighlight">
+\[
+    f(\lambda)=\frac{1}{2\pi i}\int_{\mathbb C} \frac{\partial_{\overline z} f_{\mathbb C} (z)}{\lambda-z}d \overline z \wedge d z,\quad f_{\mathbb C}(x+i\eta):= \chi(\eta)\big[f(x)+i\eta f'(x)\big]
+    \]</div>
+</li>
+</ol>
+<p>for compactly supported <span class="math notranslate nohighlight">\(C^2\)</span>-functions <span class="math notranslate nohighlight">\(f\colon\mathbb R\to\mathbb R\)</span> and some smooth cut-off function <span class="math notranslate nohighlight">\(\chi\)</span>.</p>
+</section>
+<section id="october-18">
+<h3>October 18<a class="headerlink" href="#october-18" title="Permalink to this headline">#</a></h3>
+<p><strong>Main motivations for random matrices:</strong></p>
+<ol class="arabic simple">
+<li><p>Wigner’s original motivation: to model energy levels of heavy nuclei. The distribution of the gaps very well matched that of the Wigner random matrices. The density of states depends on the actual nucleus (and it is not the semicircle), but the local statistics (e.g. gap statistics) are universal.</p></li>
+<li><p>Random Schrodinger operators, Anderson transition</p></li>
+<li><p>Gap statistics of the zeros of the Riemann zeta function.</p></li>
+</ol>
+<p><strong>Quantum Mechanics in nutshell:</strong></p>
+<ul class="simple">
+<li><p>Configuration space: <span class="math notranslate nohighlight">\(S\)</span> (with a measure)</p></li>
+<li><p>State space: <span class="math notranslate nohighlight">\(\ell^2(S)\)</span> (square integrable functions on <span class="math notranslate nohighlight">\(S\)</span>)</p></li>
+<li><p>Observables: self-adjoint (symmetric) operators on <span class="math notranslate nohighlight">\(\ell^2(S)\)</span></p></li>
+<li><p>A distinguished observable: the Hamilton (or energy) operator</p></li>
+<li><p>Time evolution — Schrödinger equation.</p></li>
+</ul>
+<p>Random Schrödinger operator describes a single electron in an ionic (metallic) lattice. <span class="math notranslate nohighlight">\(S = \mathbb Z^d\)</span> or a subset of that. <span class="math notranslate nohighlight">\(H\)</span> is the sum of the discrete (lattice) Laplace operator and a random potential.</p>
+<p><strong>Anderson phase transition:</strong> depending on the strength of the disorder, the system is either in delocalized (conductor) or localized (insulator) phase. Localized phase is characterized by</p>
+<ul class="simple">
+<li><p>Localized eigenfunctions</p></li>
+<li><p>Localized time evolution (no transport)</p></li>
+<li><p>Pure point spectrum (for the infinite volume operator)</p></li>
+<li><p>Poisson local spectral statistics, no level repulsion (for the finite volume model)</p></li>
+</ul>
+<p>In the delocalized phase, we have delocalized eigenfunctions (“almost” <span class="math notranslate nohighlight">\(\ell^2\)</span>-normalizable solutions to the eigenvalue equation), quantum transport, absolutely continuous spectrum and random matrix eigenvalue statistics, in particular level repulsion.</p>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> Sections 5.1 — 5.3</p>
+</section>
+<section id="october-24">
+<h3>October 24<a class="headerlink" href="#october-24" title="Permalink to this headline">#</a></h3>
+<p>Phase diagram for the Anderson model (= random Schrödinger operator on the <span class="math notranslate nohighlight">\(\mathbb Z^d\)</span> lattice) in <span class="math notranslate nohighlight">\(d\ge 3\)</span> dimensions. Localized regime can be proven, delocalized regime is conjectured to exist but no mathematical result.</p>
+<p>In <span class="math notranslate nohighlight">\(d=1\)</span> dimension the Anderson model is always localized (transfer matrix method helps). In <span class="math notranslate nohighlight">\(d=2\)</span> nothing is known, even there is no clear agreement in the physics whether it behaves more like <span class="math notranslate nohighlight">\(d=1\)</span> (localization) or more like <span class="math notranslate nohighlight">\(d=3\)</span> (delocalization); majority believes in localization.</p>
+<p>Delocalized regime, at least for small disorder, sounds easier to prove because it looks like a perturbative problem (zero disorder corresponds to the pure Laplacian which is perfectly understood). Resolvent perturbation formulas were discussed; major problem: lack of convergence.</p>
+<p>We gave some explanation why the localization regime is easier to handle mathematically: off-diagonal resolvent matrix elements decay exponentially. This fact provides an effective decoupling and makes localized resolvents almost independent.</p>
+<p>Random band matrices: naturally interpolate between <span class="math notranslate nohighlight">\(d=1\)</span> dimensional random Schrödinger operators (bandwidth <span class="math notranslate nohighlight">\(W=O(1)\)</span>) and mean field Wigner matrices (bandwidth <span class="math notranslate nohighlight">\(W = N\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> is the linear size of the system). Phase transition is expected at <span class="math notranslate nohighlight">\(W = \sqrt{N}\)</span>; this is a major open question. There are similar conjectures in higher dimensional band matrices, but we did not discuss them.</p>
+<p>Finally, we discussed a mysterious connection between the Dyson sine kernel statistics and the location of the zeros of of the zeta function on the critical line. There is only one mathematical result in this direction, Montgomery proved that the two point function of the (appropriately rescaled) zeros follows the sine kernel behavior, but only for test functions with Fourier support in <span class="math notranslate nohighlight">\([-1,1]\)</span>. No progress has been made in the last 40 years to relax this condition.</p>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> Section 5.3 and the entertaining article <a class="reference external" href="http://www.cims.nyu.edu/~bourgade/papers/TeaTime.pdf">“Tea Time in Princeton”</a> by Paul Bourgade about Montgomery’s theorem.</p>
+</section>
+<section id="october-24-recitation">
+<h3>October 24 (Recitation)<a class="headerlink" href="#october-24-recitation" title="Permalink to this headline">#</a></h3>
+<ol class="arabic">
+<li><p>Analytic definition of (multivariate) cumulants <span class="math notranslate nohighlight">\(\kappa_\alpha\)</span> of a random vector <span class="math notranslate nohighlight">\(X=(X_1,\dots,X_n)\)</span> as the coefficients of the log-characteristic function</p>
+<div class="math notranslate nohighlight">
+\[
+    \log \mathbf E e^{i t\cdot X} = \sum_\alpha \kappa_\alpha \frac{(it)^\alpha}{\alpha!}.
+    \]</div>
+</li>
+<li><p>Proof of the cumulant expansion formula</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf E X_i f(X)=\sum_{\alpha} \frac{\kappa_{\alpha, i }}{\alpha!}\mathbf E f^{(\alpha)}(X)
+    \]</div>
+<p>via Fourier transform.</p>
+</li>
+<li><p>Expression of moments in terms of cumulants as the sum of all partitions</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf{E} X_1\dots X_n=\sum_{\mathcal{P}\vdash [n]} \kappa^{\mathcal{P}}=\sum_{\mathcal{P}\vdash [n]}\prod_{P_i\in\mathcal{P}} \kappa( X_j \mid j\in P_i )
+    \]</div>
+</li>
+<li><p>Derivation of the inverse relationship</p>
+<div class="math notranslate nohighlight" id="equation-eq-combcum">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-combcum" title="Permalink to this equation">#</a></span>\[
+    \kappa(X_1,\dots,X_n)=\sum_{\mathcal P\vdash [n]}(-1)^{\lvert\mathcal P\rvert-1}(\lvert\mathcal P\rvert-1)! \prod_{P_i\in\mathcal P} \mathbf E \prod_{j\in P_i} X_j
+    \]</div>
+<p>through <a class="reference external" href="https://en.wikipedia.org/wiki/Incidence_algebra">Möbius inversion</a> on abstract incidence algebras. Note that <a class="reference internal" href="#equation-eq-combcum">(2)</a> can also serve as a purely combinatorial definition of cumulants.</p>
+</li>
+<li><p>Proof that cumulants of random variables which split into two independent subgroups vanish.</p></li>
+</ol>
+</section>
+<section id="october-25">
+<h3>October 25<a class="headerlink" href="#october-25" title="Permalink to this headline">#</a></h3>
+<p>There are two natural ways to put a measure on the space of (hermitian) matrices, hence defining two major classes of random matrix ensembles:</p>
+<ol class="arabic simple">
+<li><p>Choose matrix elements independently (modulo the hermitian symmetry) from some distribution on the complex or real numbers. This results in Wigner matrices (and possible generalizations, when identicality of the distribution is dropped).</p></li>
+<li><p>Equip the space of hermitian matrices with the usual Lebesgue measure and multiply it by a Radon-Nikodym factor that makes the measure finite. We choose the factor invariant under unitary conjugation in the form <span class="math notranslate nohighlight">\(\exp(-\text{Tr}\, V(H))\)</span> for some real valued function <span class="math notranslate nohighlight">\(V\)</span>. These are called invariant ensembles.</p></li>
+</ol>
+<p>Only Gaussian matrices belong to both families.</p>
+<p>For invariant ensembles, the joint probability density function of the eigenvalues can be computed explicitly and it consists of the Vandermonde determinant (to the first or second power, <span class="math notranslate nohighlight">\(\beta=1,2\)</span>, depending on the symmetry class). We sketched of the proof by change of variables.</p>
+<p>Invariant ensembles can also be represented as Gibbs measure of N points on the real line with a one-body potential <span class="math notranslate nohighlight">\(V\)</span> and a logarithmic two-body interaction. This interpretation allows for choosing any <span class="math notranslate nohighlight">\(\beta&gt;0\)</span>, yielding the beta-ensembles, even though there is no matrix or eigenvalues behind them. There are analogous universality statements for beta-ensembles, which assert that the local statistics depend only on the parameter beta and are independent of the potential <span class="math notranslate nohighlight">\(V\)</span>.</p>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> Section 1.1.2</p>
+</section>
+<section id="november-2">
+<h3>November 2<a class="headerlink" href="#november-2" title="Permalink to this headline">#</a></h3>
+<p>Precise statement of the Wigner semicircle law (for i.i.d. case) in the form of weak convergence in probability. In general, there are two methods to prove the semicircle law:</p>
+<ol class="arabic simple">
+<li><p>Moment method: computes <span class="math notranslate nohighlight">\(\text{Tr}\, H^k\)</span>, obtains the distribution of the moments of the eigenvalues. The moments are given by the <a class="reference external" href="https://en.wikipedia.org/wiki/Catalan_number">Catalan numbers</a> and they uniquely identify the semicircle law (calculus exercise) using <a class="reference external" href="https://en.wikipedia.org/wiki/Carleman%27s_condition">Carleman theorem</a> on the uniqueness of the measure if the moments do not grow too fast.</p></li>
+<li><p>Resolvent method: derives an equation for the limiting Stieltjes transform of the empirical density.</p></li>
+</ol>
+<p>The resolvent method in general is more powerful, it works well inside as well as neat the edge of the spectrum. The moment method is powerful only at the extreme edges.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Proof of the Wigner semicircle law by moment method</p>
+<p>Compute</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{N} \mathbb E \text{Tr}\, H^k=\frac{1}{N}\mathbb E\sum_{i_1,\dots,i_k} h_{i_1i_2}h_{i_2i_3}\dots h_{i_{k-1}i_k}h_{i_ki_1}
+\]</div>
+<p>in terms of the number of backtracking paths (only those path give a relevant contribution where every edge is travelled exactly twice and the skeleton of the graph is a tree). We reduced the problem to counting such path — it is an <span class="math notranslate nohighlight">\(N\)</span> independent problem.</p>
+</div>
+</section>
+<section id="november-7">
+<h3>November 7<a class="headerlink" href="#november-7" title="Permalink to this headline">#</a></h3>
+<p>We completed the proof of the Wigner semicircle law by moment method. Last time we showed that to evaluate <span class="math notranslate nohighlight">\(\mathbb E \text{Tr}\, H^{2k}\)</span> is sufficient to count the number of backtracking path of total length <span class="math notranslate nohighlight">\(2k\)</span>. This number has many other combinatorial interpretations. It is the same as the number of rooted, oriented trees on <span class="math notranslate nohighlight">\(k+1\)</span> vertices by a simple one to one correspondance. It is also the same as the number of Dyck paths of length <span class="math notranslate nohighlight">\(2k\)</span>, where a Dyck path is a random walk on the nonnegative integers starting and ending at <span class="math notranslate nohighlight">\(0\)</span>. Finally, we counted the Dyck paths by deriving the recursion</p>
+<div class="math notranslate nohighlight">
+\[
+C_k = C_{k-1} C_0 + C_{k-2} C_1 + … + C_0 C_{k-1}
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(C_0=1\)</span> for their number <span class="math notranslate nohighlight">\(C_k\)</span>. This recursion can be solved by considering the generating
+function</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \sum_{k=0}^\infty C_k x^k
+\]</div>
+<p>and observe that</p>
+<div class="math notranslate nohighlight">
+\[
+xf^2(x) = f(x) - 1.
+\]</div>
+<p>Thus <span class="math notranslate nohighlight">\(f(x)\)</span> can be explicitly computed by the solution formula for the quadratic equation and Taylor expanding around <span class="math notranslate nohighlight">\(x=0\)</span>. After some calculation with the fractional binomial coefficients, we obtain that <span class="math notranslate nohighlight">\(C_k = 1/(k+1) {2k \choose k}\)</span>, i.e. the Catalan numbers.</p>
+<p>Since the Catalan numbers are the moments of the semicircle law (calculus exercise), and these moments do not grow too fast, they identify the measure.</p>
+<p>This proved that the expectation of the empirical eigenvalue density converges to the semicircle in the sense of moments. Using compact support of the measures (for the empirical density we know it from the homework problem since the norm of <span class="math notranslate nohighlight">\(H\)</span> is bounded), by Weierstrass theorem we can extend the
+convergence for any bounded continuous functions.</p>
+<p>Finally, the expectation can be removed, by computing the variance of
+<span class="math notranslate nohighlight">\(N^{-1} \text{Tr}\, H^k\)</span>, again by the graphical representation (now we have two cycles and studied which edge-coincidences give rise to nonzero contribution). We showed that the variance vanishes in the large <span class="math notranslate nohighlight">\(N\)</span> limit and then a Chebyshev inequality converts it into a high probability bound.</p>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> Section 2.3</p>
+</section>
+<section id="november-7-recitation">
+<h3>November 7 (Recitation)<a class="headerlink" href="#november-7-recitation" title="Permalink to this headline">#</a></h3>
+<p>We found yet another combinatorial description of Catalan numbers. <span class="math notranslate nohighlight">\(C_k\)</span> is the number of non-crossing pair partitions of the set <span class="math notranslate nohighlight">\(\{1,\dots,2k\}\)</span>. Indeed, denote the number in question by <span class="math notranslate nohighlight">\(N_k\)</span>. Then there exists some <span class="math notranslate nohighlight">\(j\)</span> such that <span class="math notranslate nohighlight">\(1\)</span> is paired with <span class="math notranslate nohighlight">\(2j\)</span> since due to the absence of crossings there has to be an even number of other integers between <span class="math notranslate nohighlight">\(1\)</span> and its partner. The number of non-crossing pairings of the integers <span class="math notranslate nohighlight">\(\{2,\dots,2j-1\}\)</span> and <span class="math notranslate nohighlight">\(\{2j+1,\dots,2k\}\)</span> are given by <span class="math notranslate nohighlight">\(N_{j-1}\)</span> and <span class="math notranslate nohighlight">\(N_{k-j}\)</span> respectively and it follows that
+<div class="math notranslate nohighlight">
+\[
+N_{k}=\sum_{j=1}^k N_{j-1}N_{k-j}, \qquad N_1=1
+\]</div>
+
+and thus <span class="math notranslate nohighlight">\(N_k=C_k\)</span> since they satisfy the same recursion.</p>
+<p>We defined a commonly used notion of stochastic domination <span class="math notranslate nohighlight">\(X\prec Y\)</span> and stated the following <em>large deviation estimates</em> for families of random variables <span class="math notranslate nohighlight">\(X_i,Y_i\)</span> of zero mean <span class="math notranslate nohighlight">\(\mathbf E X_i=\mathbf E Y_i=0\)</span> and unit variance <span class="math notranslate nohighlight">\(\mathbf E \lvert X_i\rvert^2=\mathbf E \lvert Y_i\rvert^2=1\)</span> and deterministic coefficients <span class="math notranslate nohighlight">\(b_i\)</span>, <span class="math notranslate nohighlight">\(a_{ij}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\left\lvert\sum_{i} b_i X_i\right\rvert\prec \left(\sum_i\lvert b_i\rvert^2\right)^{1/2}
+\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-lde">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-lde" title="Permalink to this equation">#</a></span>\[
+\left\lvert\sum_{i,j} a_{ij} X_i Y_j\right\rvert\prec \left(\sum_{i,j}\lvert a_{ij}\rvert^2\right)^{1/2}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\left\lvert\sum_{i\not=j} a_{ij} X_i X_j\right\rvert\prec \left(\sum_{i\not=j}\lvert a_{ij}\rvert^2\right)^{1/2}
+\]</div>
+<p>We proved <a class="reference internal" href="#equation-eq-lde">(3)</a> only for uniformly subgaussian families of random variables but not that uniformly finite moments of all orders are also sufficient for them to hold.</p>
+</section>
+<section id="november-9">
+<h3>November 9<a class="headerlink" href="#november-9" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Precise statement of the local semicircle laws (entrywise, isotropic, averaged) for Wigner type matrices with moment condition of arbitrary order.</p></li>
+<li><p>Definition of stochastic dominations, some properties.</p></li>
+<li><p>We started the proof of the weak law for Wigner matrices.</p></li>
+<li><p>Schur complement formula. Almost selfconsistent equation for <span class="math notranslate nohighlight">\(m_N = N^{-1} \text{Tr}\, G\)</span> assuming that the fluctuation of the quadratic term is small (will be proven later).</p></li>
+<li><p>The other two errors were shown to be small. The smallness of the single diagonal element <span class="math notranslate nohighlight">\(h_{ii}\)</span> directly follows from the moment condition. The difference of the Stieltjes transform of the resolvent and its minor was estimated via interlacing and integration by parts.</p></li>
+</ul>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> Section 3.1.1.</p>
+</section>
+<section id="november-14">
+<h3>November 14<a class="headerlink" href="#november-14" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Proof of the weak local law in the bulk.</p></li>
+<li><p>Stability of the equation for <span class="math notranslate nohighlight">\(m_{sc}\)</span>, the Stieltjes transform of the semicircle law.</p></li>
+<li><p>Proof for the large eta regime.</p></li>
+<li><p>Breaking the circularity of the argument in two steps: In the first step one proves a weaker bound that allows one to approximate <span class="math notranslate nohighlight">\(m\)</span> via <span class="math notranslate nohighlight">\(m_{sc}\)</span>, then run the argument again but with improved inputs. The bootstrap argument will have the same philosophy next time.</p></li>
+<li><p>Discussion of the uniformity in the spectral parameter. Grid argument to improve the bound for supremum over all <span class="math notranslate nohighlight">\(z\)</span>. This argument works because (i) the probabilistic bound for any fixed <span class="math notranslate nohighlight">\(z\)</span> is very strong (arbitrary <span class="math notranslate nohighlight">\(1/N\)</span>-power) and (ii) the function we consider <span class="math notranslate nohighlight">\((m-m_{sc})(z)\)</span> has some weak but deterministic Lipschitz continuity.</p></li>
+</ul>
+</section>
+<section id="november-14-recitation">
+<h3>November 14 (Recitation)<a class="headerlink" href="#november-14-recitation" title="Permalink to this headline">#</a></h3>
+<p>We presented a cumulant approach to proving local laws for correlated random matrices. Specifically, we gave a heuristic argument that the resolvent <span class="math notranslate nohighlight">\(G\)</span> should be well apprixmated by the unique solution <span class="math notranslate nohighlight">\(M=M(z)\)</span> to the matrix Dyson equation (MDE)
+<div class="math notranslate nohighlight">
+\[
+0=1+zM+\mathcal S[M]M, \quad \Im M&gt;0,\qquad \mathcal S[R]:= \sum_{\alpha,\beta}\text{Cov}(h_\alpha,h_\beta) \Delta^\alpha R\Delta^\beta.
+\]</div>
+
+We furthermore proved that the error matrix
+<div class="math notranslate nohighlight">
+\[
+D=1+zG+\mathcal S[G]G=HG+\mathcal S[G]G
+\]</div>
+
+satisfies
+<div class="math notranslate nohighlight">
+\[
+\mathbf E\lvert\langle x,Dy \rangle\rvert^2 \lesssim \left(\frac{\lVert x\rVert \lVert y\rVert}{\sqrt{N\eta}}\right)^2,\qquad \mathbf E\lvert\langle BD \rangle\rvert^2 \lesssim \left(\frac{\lVert B\rVert}{N\eta}\right)^2
+\]</div>
+
+in the case of Gaussian entries <span class="math notranslate nohighlight">\(h_\alpha\)</span>.</p>
+</section>
+<section id="november-16">
+<h3>November 16<a class="headerlink" href="#november-16" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>We completed the rigorous proof of the weak local semicircle law
+by the bootstrap argument.</p></li>
+<li><p>Then we mentioned two improvements: (i) Strong local law (error bound improved from <span class="math notranslate nohighlight">\((N \eta)^{-1/2}\)</span> to <span class="math notranslate nohighlight">\((N\eta)^{-1}\)</span> and (ii) entrywise local law.</p></li>
+<li><p>Proof of the entrywise local law via the self-consistent vector equation. Stability operator mentioned in the more general setup of Wigner type matrices (when the variance matrix <span class="math notranslate nohighlight">\(S\)</span> is stochastic). Diagonal and offdiagonal elements are estimated separately via a joint control parameter <span class="math notranslate nohighlight">\(\Lambda\)</span>. Main ideas are sketched, the rigorous bootstrap argument was omitted.</p></li>
+</ul>
+<p><strong>Reading.</strong> <a class="reference download internal" download="" href="../_downloads/426b306a2ec325997583cc3dac8ab0be/pcmi.pdf"><span class="xref download myst">PCMI lecture notes</span></a> Sections 4.1–4.3</p>
+</section>
+<section id="november-21">
+<h3>November 21<a class="headerlink" href="#november-21" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Fluctuation averaging phenomenon. Proof of the strong local law in the bulk. Some remarks on the modifications at the edge. Corollaries of the strong local law: optimal estimates on the eigenvalue counting function and rigidity (location of the individual eigenvalues).</p></li>
+<li><p>Bulk universality for Hermitian Wigner matrices. Basic idea: interpolation. Ornstein Uhlenbeck process for matrices (preserves expectation and variance). Crash course on Brownian motion, stochastic integration and Ito’s formula. Dyson Brownian motion (DBM) for the eigenvalues. Local equilibration phenomenon due to the strong level repulsion in the DBM.</p></li>
+</ul>
+</section>
+<section id="november-23">
+<h3>November 23<a class="headerlink" href="#november-23" title="Permalink to this headline">#</a></h3>
+<p>We summarized the three step strategy to prove local spectral universality of Wigner matrices. We discussed the second step: fast convergence to equilibrium of the Dyson Brownian Motion. Relation between SDE and PDE: introduction of the generator. Laplacian is the generator of the standard Brownian motion.</p>
+<p>Basics of large dimensional analysis: Gibbs measure, entropy, Dirichlet form, generator. The total mass of a probability measure is preserved under the dynamics. Relation between various concepts of closeness to equilibrium. Entropy inequality (total variation norm is bounded by the entropy). Logarithmic Sobolev inequality. Spectral gap inequality. Bakry-Emery theory: (i) the Gibbs measure with a convex Hamiltonian satisfies LSI, (ii) entropy and
+Dirichlet form decays exponentially fast.</p>
+</section>
+</section>
+<section id="homework">
+<h2>Homework<a class="headerlink" href="#homework" title="Permalink to this headline">#</a></h2>
+<p>The problem sheets can either be handed in during the lecture or put in the letter box of Dominik Schröder in LBW, 3rd floor.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+<th class="head"><p>published</p></th>
+<th class="head"><p>due</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference download internal" download="" href="../_downloads/10b391a01069118f2147fa4da16afda1/ps1.pdf"><span class="xref download myst">Problem sheet I</span></a></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/c6ee8e0b8afcae0e08fee40bb41ab042/sol1.pdf"><span class="xref download myst">Solutions</span></a></p></td>
+<td><p>Oct 18</p></td>
+<td><p>Oct 25</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference download internal" download="" href="../_downloads/5a598e7f27e0876eca9c693d91893385/ps2.pdf"><span class="xref download myst">Problem sheet II</span></a></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/b006690912b3e86cee033b2c1bc7afbb/sol2.pdf"><span class="xref download myst">Solutions</span></a></p></td>
+<td><p>Oct 25</p></td>
+<td><p>Nov 7</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference download internal" download="" href="../_downloads/2a2ef54901577813f7656b67fccb5689/ps3.pdf"><span class="xref download myst">Problem sheet III</span></a></p></td>
+<td><p><a class="reference download internal" download="" href="../_downloads/e59d8b6f3eafd0ff6298b6ebb3491880/sol3.pdf"><span class="xref download myst">Solutions</span></a></p></td>
+<td><p>Nov 9</p></td>
+<td><p>Nov 21</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Dominik Schröder</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../projects/elo.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">ELO estimate for football</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+      &copy; Copyright 2022, Dominik Schröder.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

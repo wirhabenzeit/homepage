@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>ELO estimate for football</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Random Matrices (2017)" href="../teaching/random_matrices_2017.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/dominik2021-1.jpg" class="logo" alt="logo">
+      
+      
+    </a>
+</div><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Dominik Schröder
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Teaching
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../teaching/random_matrices_2017.html">
+   Random Matrices (2017)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://metaphor.ethz.ch/x/2020/hs/401-4607-70L/">
+   Medley of Advanced Probability
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Projects
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   ELO estimate for football
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Links
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/wirhabenzeit">
+   Github
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://www.instagram.com/wirhabenzeit/">
+   Instagram
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://unsplash.com/@wirhabenzeit">
+   Unsplash
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#elo-history">
+   ELO history
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediction-from-elo-rating">
+   Prediction from ELO rating
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#poisson-sampling">
+   Poisson sampling
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>ELO estimate for football</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#elo-history">
+   ELO history
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prediction-from-elo-rating">
+   Prediction from ELO rating
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#poisson-sampling">
+   Poisson sampling
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="elo-estimate-for-football">
+<h1>ELO estimate for football<a class="headerlink" href="#elo-estimate-for-football" title="Permalink to this headline">#</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import past results</span>
+<span class="n">past_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;AUT.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+    <span class="n">readCSV</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">numGames</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">readCSV</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;2018/2019&quot;</span><span class="p">:</span>
+            <span class="n">past_results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;ht&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;at&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="s2">&quot;hg&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span> <span class="s2">&quot;ag&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">8</span><span class="p">]),</span> <span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="n">numGames</span><span class="o">//</span><span class="mi">6</span><span class="p">})</span>
+            <span class="n">numGames</span> <span class="o">+=</span> <span class="mi">1</span> 
+<span class="n">numRounds</span><span class="o">=</span><span class="n">numGames</span><span class="o">//</span><span class="mi">6</span>
+
+<span class="c1"># Future matches</span>
+<span class="n">remaining_matches</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;LASK Linz&#39;</span><span class="p">,</span><span class="s1">&#39;Wacker Innsbruck&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s1">&#39;Salzburg&#39;</span><span class="p">,</span><span class="s2">&quot;Sturm Graz&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s1">&#39;Austria Vienna&#39;</span><span class="p">,</span><span class="s2">&quot;Altach&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s1">&#39;Mattersburg&#39;</span><span class="p">,</span><span class="s1">&#39;Rapid Vienna&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;Admira&quot;</span><span class="p">,</span><span class="s1">&#39;St. Polten&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s1">&#39;Hartberg&#39;</span><span class="p">,</span><span class="s1">&#39;AC Wolfsberger&#39;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;Sturm Graz&quot;</span><span class="p">,</span><span class="s2">&quot;Austria Vienna&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;Rapid Vienna&quot;</span><span class="p">,</span><span class="s2">&quot;Hartberg&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;St. Polten&quot;</span><span class="p">,</span><span class="s2">&quot;Mattersburg&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;Wacker Innsbruck&quot;</span><span class="p">,</span><span class="s2">&quot;Salzburg&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;Altach&quot;</span><span class="p">,</span><span class="s2">&quot;LASK Linz&quot;</span><span class="p">),</span>
+                     <span class="p">(</span><span class="s2">&quot;AC Wolfsberger&quot;</span><span class="p">,</span><span class="s2">&quot;Admira&quot;</span><span class="p">)]</span>
+
+<span class="c1"># Extract a list of teams            </span>
+<span class="n">teams</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">past_results</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ht&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">:</span>
+        <span class="n">teams</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;ht&#39;</span><span class="p">])</span>
+
+<span class="c1"># Compute current standings</span>
+<span class="n">points</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">goals_scored</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">goals_conceded</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">goals</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">:</span>
+    <span class="n">points</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">goals</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">goals_scored</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">goals_conceded</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">past_results</span><span class="p">:</span>
+    <span class="n">goals_scored</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ht&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span>
+    <span class="n">goals_conceded</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ht&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span>
+    <span class="n">goals_scored</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span>
+    <span class="n">goals_conceded</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span>
+    <span class="n">goals</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span>
+    <span class="n">points</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ht&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="n">points</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">:</span>
+    <span class="n">goals</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals_scored</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">-</span> <span class="n">goals_conceded</span><span class="p">[</span><span class="n">team</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">eloPredictor</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">homefield_adv</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">weight</span><span class="o">=</span><span class="k">lambda</span> <span class="n">nRound</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span>
+                 <span class="n">expected_result</span><span class="o">=</span><span class="k">lambda</span> <span class="n">DeltaH</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">DeltaH</span><span class="o">/</span><span class="mi">400</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
+                 <span class="n">probs_from_E</span><span class="o">=</span><span class="k">lambda</span> <span class="n">E</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">E</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">E</span><span class="o">-</span><span class="mf">.5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mf">.28</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">E</span><span class="o">-</span><span class="mf">.5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mf">.28</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="n">E</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">E</span><span class="o">-</span><span class="mf">.5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="mf">.28</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score_rate</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">concede_rate</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">probs_from_E</span> <span class="o">=</span> <span class="n">probs_from_E</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elo</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">homefield_adv</span> <span class="o">=</span> <span class="n">homefield_adv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__expected_result__</span> <span class="o">=</span> <span class="n">expected_result</span>
+        
+        <span class="c1"># Compute elo from past results</span>
+        <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1500</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">score_rate</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals_scored</span><span class="p">[</span><span class="n">team</span><span class="p">]</span><span class="o">/</span><span class="n">numRounds</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">concede_rate</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="n">goals_conceded</span><span class="p">[</span><span class="n">team</span><span class="p">]</span><span class="o">/</span><span class="n">numRounds</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">past_results</span><span class="p">:</span>
+            <span class="n">G</span> <span class="o">=</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">])</span><span class="o">+</span><span class="mi">11</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;hg&quot;</span><span class="p">]</span><span class="o">&lt;</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ag&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="mf">.5</span>
+            <span class="n">Wh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_result</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ht&quot;</span><span class="p">],</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">])</span>
+            <span class="n">Wa</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">Wh</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ht&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;ht&quot;</span><span class="p">]][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;round&quot;</span><span class="p">])</span><span class="o">*</span><span class="n">G</span><span class="o">*</span><span class="p">(</span><span class="n">W</span><span class="o">-</span><span class="n">Wh</span><span class="p">))</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;round&quot;</span><span class="p">])</span><span class="o">*</span><span class="n">G</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">W</span><span class="o">-</span><span class="n">Wa</span><span class="p">))</span>
+    
+    <span class="c1"># compute adjusted elo diff with homefield advantage</span>
+    <span class="k">def</span> <span class="nf">elo_diff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">teamH</span><span class="p">,</span><span class="n">teamA</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">teamH</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="p">[</span><span class="n">teamA</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">homefield_adv</span>
+    
+    <span class="c1"># compute expected result using supplied formula</span>
+    <span class="k">def</span> <span class="nf">expected_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">teamA</span><span class="p">,</span><span class="n">teamB</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__expected_result__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elo_diff</span><span class="p">(</span><span class="n">teamA</span><span class="p">,</span><span class="n">teamB</span><span class="p">))</span>
+    
+    <span class="c1"># compute winning probabilities from expected result and supplied formula</span>
+    <span class="k">def</span> <span class="nf">probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">teamA</span><span class="p">,</span><span class="n">teamB</span><span class="p">):</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_result</span><span class="p">(</span><span class="n">teamA</span><span class="p">,</span><span class="n">teamB</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">probs_from_E</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+        <span class="n">pD</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pDraw</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+        <span class="n">pW</span> <span class="o">=</span> <span class="n">E</span> <span class="o">-</span> <span class="n">pD</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">pL</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pD</span> <span class="o">-</span> <span class="n">pW</span>
+        <span class="k">return</span><span class="p">[</span><span class="n">pL</span><span class="p">,</span><span class="n">pD</span><span class="p">,</span><span class="n">pW</span><span class="p">]</span>
+    
+    <span class="c1"># plot elo development</span>
+    <span class="k">def</span> <span class="nf">plot_elo_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">team</span><span class="p">,</span> <span class="n">elos</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elo</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">elos</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">team</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>    
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1"># compute probability of advancing to the next round from sampling</span>
+    <span class="k">def</span> <span class="nf">advProb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nSample</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_after</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match_results</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">remaining_matches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">match_results</span><span class="p">[</span><span class="n">match</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">nSample</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">probabilities</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">match_resultsA</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">match_results</span><span class="p">[</span><span class="n">match</span><span class="p">])</span>
+            <span class="n">match_resultsA</span><span class="p">[</span><span class="n">match_resultsA</span> <span class="o">==</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">match_resultsA</span><span class="p">[</span><span class="n">match_resultsA</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">match_resultsA</span><span class="p">[</span><span class="n">match_resultsA</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points_after</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_results</span><span class="p">[</span><span class="n">match</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points_after</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">match_resultsA</span>
+        
+        <span class="c1"># Count number of samples where each team is in the top six </span>
+        <span class="c1"># Rule for equal points: sort teams by goals from past games</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span> <span class="o">=</span> <span class="p">{</span><span class="n">team</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nSample</span><span class="p">):</span>
+            <span class="n">points_temp</span> <span class="o">=</span> <span class="p">{</span><span class="n">team</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">points_after</span><span class="p">[</span><span class="n">team</span><span class="p">][</span><span class="n">k</span><span class="p">],</span><span class="n">goals</span><span class="p">[</span><span class="n">team</span><span class="p">]]</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">points_temp</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">points_temp</span><span class="o">.</span><span class="n">get</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">6</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">orderedTeams</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">team</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">[</span><span class="n">team</span><span class="p">]</span><span class="o">/</span><span class="n">nSample</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">orderedTeams</span><span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">advProbPois</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nSample</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points_after</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goals</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">goals</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match_results</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">remaining_matches</span><span class="p">:</span>
+            <span class="n">goalsA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score_rate</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">concede_rate</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">nSample</span><span class="p">)</span>
+            <span class="n">goalsB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score_rate</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">concede_rate</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">nSample</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goals</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">goalsA</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">goals</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">goalsB</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points_after</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span> <span class="k">if</span> <span class="n">gA</span><span class="o">&gt;</span><span class="n">gB</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">gA</span><span class="o">&lt;</span><span class="n">gB</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="p">(</span><span class="n">gA</span><span class="p">,</span><span class="n">gB</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">goalsA</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="n">goalsB</span><span class="o">.</span><span class="n">tolist</span><span class="p">())])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points_after</span><span class="p">[</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">gA</span><span class="o">&gt;</span><span class="n">gB</span> <span class="k">else</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">gA</span><span class="o">&lt;</span><span class="n">gB</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="p">(</span><span class="n">gA</span><span class="p">,</span><span class="n">gB</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">goalsA</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span><span class="n">goalsB</span><span class="o">.</span><span class="n">tolist</span><span class="p">())])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span> <span class="o">=</span> <span class="p">{</span><span class="n">team</span><span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nSample</span><span class="p">):</span>
+            <span class="n">points_temp</span> <span class="o">=</span> <span class="p">{</span><span class="n">team</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">points_after</span><span class="p">[</span><span class="n">team</span><span class="p">][</span><span class="n">k</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">goals</span><span class="p">[</span><span class="n">team</span><span class="p">][</span><span class="n">k</span><span class="p">]]</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">points_temp</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">points_temp</span><span class="o">.</span><span class="n">get</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">6</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">orderedTeams</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">team</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">numTopSix</span><span class="p">[</span><span class="n">team</span><span class="p">]</span><span class="o">/</span><span class="n">nSample</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">orderedTeams</span><span class="p">}</span>
+        
+    <span class="c1"># plot advancing probabilities</span>
+    <span class="k">def</span> <span class="nf">plot_adv_prob</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nSample</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;elo&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s2">&quot;elo&quot;</span><span class="p">:</span>
+            <span class="n">probs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">advProb</span><span class="p">(</span><span class="n">nSample</span><span class="o">=</span><span class="n">nSample</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">probs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">advProbPois</span><span class="p">(</span><span class="n">nSample</span><span class="o">=</span><span class="n">nSample</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">probs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">probs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">12</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mf">.72</span> <span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">probs</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">.01</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:10.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">probs</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="n">i</span><span class="p">]),</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="elo-history">
+<h2>ELO history<a class="headerlink" href="#elo-history" title="Permalink to this headline">#</a></h2>
+<p>With default parameters</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">()</span><span class="o">.</span><span class="n">plot_elo_history</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_5_0.png" /></p>
+<p>Without homefield advantage</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">(</span><span class="n">homefield_adv</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot_elo_history</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_7_0.png" /></p>
+<p>Double weight for the last five rounds</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="k">lambda</span> <span class="nb">round</span><span class="p">:</span> <span class="mi">60</span> <span class="k">if</span> <span class="nb">round</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="k">else</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">plot_elo_history</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_9_0.png" /></p>
+</section>
+<section id="prediction-from-elo-rating">
+<h2>Prediction from ELO rating<a class="headerlink" href="#prediction-from-elo-rating" title="Permalink to this headline">#</a></h2>
+<p>Default parameters</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">()</span><span class="o">.</span><span class="n">plot_adv_prob</span><span class="p">(</span><span class="n">nSample</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_12_0.png" /></p>
+<p>Assuming that in the remaining matches draw/win/loss are equally likely</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">(</span><span class="n">probs_from_E</span><span class="o">=</span><span class="k">lambda</span> <span class="n">E</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">E</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">E</span><span class="p">])</span><span class="o">.</span><span class="n">plot_adv_prob</span><span class="p">(</span><span class="n">nSample</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_14_0.png" /></p>
+<p>Assuming that the last five rounds carry a bigger weight. This changes the ELO development (see above)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="k">lambda</span> <span class="nb">round</span><span class="p">:</span> <span class="mi">60</span> <span class="k">if</span> <span class="nb">round</span> <span class="o">&gt;</span> <span class="mi">14</span> <span class="k">else</span> <span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">plot_adv_prob</span><span class="p">(</span><span class="n">nSample</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_16_0.png" /></p>
+</section>
+<section id="poisson-sampling">
+<h2>Poisson sampling<a class="headerlink" href="#poisson-sampling" title="Permalink to this headline">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eloPredictor</span><span class="p">()</span><span class="o">.</span><span class="n">plot_adv_prob</span><span class="p">(</span><span class="n">nSample</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;Pois&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="png" src="../_images/elo_18_0.png" /></p>
+</section>
+</section>
+
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../teaching/random_matrices_2017.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Random Matrices (2017)</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+      &copy; Copyright 2022, Dominik Schröder.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

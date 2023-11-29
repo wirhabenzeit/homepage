@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+
+import PageLayout from "@/layouts/Base";
+import Publication from "@/components/Publication";
+import aboutImg from "@/assets/about-astro.png";
+
+const meta = {
+	title: "About",
+	description: "I'm a starter theme for Astro.build",
+};
+
+import biblio from "@/assets/publications.json";
+---
+
+<PageLayout meta={meta}>
+	<div class="space-y-6">
+		<h1 class="title">Publications</h1>
+		<ol class="list-outside list-decimal space-y-4">
+			{
+				biblio.map((publication) => (
+					<li class="p-2">
+						<Publication publication={publication} />
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</PageLayout>

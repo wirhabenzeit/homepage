@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://astro-cactus.chriswilliams.dev/sitemap-index.xml
+Sitemap: https://n.ethz.ch/~dschroeder/sitemap-index.xml

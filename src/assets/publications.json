@@ -1,0 +1,892 @@
+[
+  {
+    "DOI": "10.1007/s11040-014-9164-3",
+    "ISSN": "1385-0172",
+    "URL": "https://doi.org/10.1007/s11040-014-9164-3",
+    "author": [
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Math. Phys. Anal. Geom.",
+    "id": "1407.1552",
+    "issue": "3-4",
+    "issued": {
+      "date-parts": [
+        [
+          2014
+        ]
+      ]
+    },
+    "page": "441-464",
+    "title": "Phase transition in the density of states of quantum spin glasses",
+    "type": "article-journal",
+    "volume": "17"
+  },
+  {
+    "DOI": "10.1093/imrn/rnw330",
+    "ISSN": "1073-7928",
+    "URL": "https://doi.org/10.1093/imrn/rnw330",
+    "author": [
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Int. Math. Res. Not. IMRN",
+    "id": "1608.05163",
+    "issue": "10",
+    "issued": {
+      "date-parts": [
+        [
+          2018
+        ]
+      ]
+    },
+    "page": "3255-3298",
+    "title": "Fluctuations of rectangular Young diagrams of interlacing Wigner eigenvalues",
+    "type": "article-journal"
+  },
+  {
+    "DOI": "10.1214/16-ECP38",
+    "URL": "https://doi.org/10.1214/16-ECP38",
+    "author": [
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Electron. Commun. Probab.",
+    "id": "1610.07084",
+    "issued": {
+      "date-parts": [
+        [
+          2016
+        ]
+      ]
+    },
+    "page": "Paper no. 86, 15",
+    "title": "Fluctuations of functions of Wigner matrices",
+    "type": "article-journal",
+    "volume": "21"
+  },
+  {
+    "DOI": "10.1017/fms.2019.2",
+    "URL": "https://doi.org/10.1017/fms.2019.2",
+    "author": [
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Krüger",
+        "given": "Torben"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Forum Math. Sigma",
+    "id": "1705.10661",
+    "issued": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    },
+    "page": "Paper No. e8, 89",
+    "title": "Random matrices with slow correlation decay",
+    "type": "article-journal",
+    "volume": "7"
+  },
+  {
+    "DOI": "10.1214/19-AOP1379",
+    "ISSN": "0091-1798",
+    "URL": "https://doi.org/10.1214/19-AOP1379",
+    "author": [
+      {
+        "family": "Alt",
+        "given": "Johannes"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Krüger",
+        "given": "Torben"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Ann. Probab.",
+    "id": "1804.07744",
+    "issue": "2",
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "page": "963-1001",
+    "title": "Correlated random matrices: Band rigidity and edge universality",
+    "title-short": "Correlated random matrices",
+    "type": "article-journal",
+    "volume": "48"
+  },
+  {
+    "DOI": "10.1007/s00220-019-03657-4",
+    "ISSN": "0010-3616",
+    "URL": "https://doi.org/10.1007/s00220-019-03657-4",
+    "author": [
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Krüger",
+        "given": "Torben"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Comm. Math. Phys.",
+    "id": "1809.03971",
+    "issue": "2",
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "page": "1203-1278",
+    "title": "Cusp universality for random matrices I: Local law and the complex Hermitian case",
+    "title-short": "Cusp universality for random matrices I",
+    "type": "article-journal",
+    "volume": "378"
+  },
+  {
+    "DOI": "10.2140/paa.2019.1.615",
+    "ISSN": "2578-5885",
+    "URL": "https://doi.org/10.2140/paa.2019.1.615",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Krüger",
+        "given": "Torben"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Pure Appl. Anal.",
+    "id": "1811.04055",
+    "issue": "4",
+    "issued": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    },
+    "page": "615-707",
+    "title": "Cusp universality for random matrices, II: The real symmetric case",
+    "title-short": "Cusp universality for random matrices, II",
+    "type": "article-journal",
+    "volume": "1"
+  },
+  {
+    "DOI": "10.1007/s00440-020-01003-7",
+    "ISSN": "0178-8051",
+    "URL": "https://doi.org/10.1007/s00440-020-01003-7",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Probab. Theory Related Fields",
+    "id": "1908.00969",
+    "issue": "1-2",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "page": "1-28",
+    "title": "Edge universality for non-Hermitian random matrices",
+    "type": "article-journal",
+    "volume": "179"
+  },
+  {
+    "DOI": "10.2140/pmp.2020.1.101",
+    "ISSN": "2690-0998",
+    "URL": "https://doi.org/10.2140/pmp.2020.1.101",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Probab. Math. Phys.",
+    "id": "1908.01653",
+    "issue": "1",
+    "issued": {
+      "date-parts": [
+        [
+          2020
+        ]
+      ]
+    },
+    "page": "101-146",
+    "title": "Optimal lower bound on the least singular value of the shifted Ginibre ensemble",
+    "type": "article-journal",
+    "volume": "1"
+  },
+  {
+    "DOI": "10.1002/cpa.22028",
+    "ISSN": "0010-3640",
+    "URL": "https://doi.org/10.1002/cpa.22028",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Comm. Pure Appl. Math.",
+    "id": "1912.04100",
+    "issue": "5",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "page": "946-1034",
+    "title": "Central limit theorem for linear eigenvalue statistics of non-Hermitian random matrices",
+    "type": "article-journal",
+    "volume": "76"
+  },
+  {
+    "DOI": "10.1214/21-EJP591",
+    "URL": "https://doi.org/10.1214/21-EJP591",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Electron. J. Probab.",
+    "id": "2002.02438",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "page": "Paper No. 24, 61",
+    "title": "Fluctuation around the circular law for random matrices with real entries",
+    "type": "article-journal",
+    "volume": "26"
+  },
+  {
+    "DOI": "10.1007/s00220-021-04239-z",
+    "ISSN": "0010-3616",
+    "URL": "https://doi.org/10.1007/s00220-021-04239-z",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Comm. Math. Phys.",
+    "id": "2012.13215",
+    "issue": "2",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "page": "1005-1048",
+    "title": "Eigenstate thermalization hypothesis for Wigner matrices",
+    "type": "article-journal",
+    "volume": "388"
+  },
+  {
+    "DOI": "10.1214/22-AAP1820",
+    "URL": "https://doi.org/10.1214/22-AAP1820",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdos",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Ann. Appl. Probab.",
+    "id": "2012.13218",
+    "issue": "1",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "page": "448-489",
+    "title": "Function central limit theorems for wigner matrices",
+    "type": "article-journal",
+    "volume": "33"
+  },
+  {
+    "DOI": "10.1016/j.jfa.2022.109394",
+    "ISSN": "0022-1236",
+    "URL": "https://doi.org/10.1016/j.jfa.2022.109394",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "J. Funct. Anal.",
+    "id": "2102.09975",
+    "issue": "8",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "Paper No. 109394, 37",
+    "title": "Thermalisation for Wigner matrices",
+    "type": "article-journal",
+    "volume": "282"
+  },
+  {
+    "DOI": "10.1214/21-aop1552",
+    "ISSN": "0091-1798",
+    "URL": "https://doi.org/10.1214/21-aop1552",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Ann. Probab.",
+    "id": "2103.06730",
+    "issue": "3",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "984-1012",
+    "title": "Normal fluctuation in quantum ergodicity for Wigner matrices",
+    "type": "article-journal",
+    "volume": "50"
+  },
+  {
+    "URL": "https://proceedings.neurips.cc/paper/2021/file/29d74915e1b323676bfc28f91b3c4802-Paper.pdf",
+    "author": [
+      {
+        "family": "Piccolo",
+        "given": "Vanessa"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Advances in neural information processing systems",
+    "editor": [
+      {
+        "family": "Ranzato",
+        "given": "M."
+      },
+      {
+        "family": "Beygelzimer",
+        "given": "A."
+      },
+      {
+        "family": "Dauphin",
+        "given": "Y."
+      },
+      {
+        "family": "Liang",
+        "given": "P. S."
+      },
+      {
+        "family": "Vaughan",
+        "given": "J. Wortman"
+      }
+    ],
+    "id": "2105.05115",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    },
+    "page": "5225-5235",
+    "publisher": "Curran Associates, Inc.",
+    "title": "Analysis of one-hidden-layer neural networks via the resolvent method",
+    "type": "paper-conference",
+    "volume": "34"
+  },
+  {
+    "DOI": "10.1137/21M1424408",
+    "ISSN": "0895-4798",
+    "URL": "https://doi.org/10.1137/21M1424408",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "SIAM J. Matrix Anal. Appl.",
+    "id": "2105.13719",
+    "issue": "3",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "1469-1487",
+    "title": "On the condition number of the shifted real Ginibre ensemble",
+    "type": "article-journal",
+    "volume": "43"
+  },
+  {
+    "DOI": "10.1007/s00023-022-01188-8",
+    "ISSN": "1424-0637",
+    "URL": "https://doi.org/10.1007/s00023-022-01188-8",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Ann. Henri Poincaré",
+    "id": "2105.13720",
+    "issue": "11",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "3981-4002",
+    "title": "Density of Small Singular Values of the Shifted Real Ginibre Ensemble",
+    "type": "article-journal",
+    "volume": "23"
+  },
+  {
+    "DOI": "10.1007/s00440-022-01156-7",
+    "ISSN": "0178-8051",
+    "URL": "https://doi.org/10.1007/s00440-022-01156-7",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Probab. Theory Related Fields",
+    "id": "2106.10200",
+    "issue": "3-4",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "page": "1183-1218",
+    "title": "Quenched universality for deformed Wigner matrices",
+    "type": "article-journal",
+    "volume": "185"
+  },
+  {
+    "DOI": "10.1007/s00220-023-04692-y",
+    "URL": "https://doi.org/10.1007/s00220-023-04692-y",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Commun. Math. Phys.",
+    "id": "2109.06712",
+    "issue": "2",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "page": "1665-1700",
+    "title": "On the Spectral Form Factor for Random Matrices",
+    "type": "article-journal",
+    "volume": "401"
+  },
+  {
+    "DOI": "10.1214/22-ejp838",
+    "URL": "https://doi.org/10.1214/22-ejp838",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Electron. J. Probab.",
+    "id": "2112.13693",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "Paper No. 117, 38",
+    "title": "Optimal multi-resolvent local laws for Wigner matrices",
+    "type": "article-journal",
+    "volume": "27"
+  },
+  {
+    "DOI": "10.1017/fms.2022.86",
+    "URL": "https://doi.org/10.1017/fms.2022.86",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Forum Math. Sigma",
+    "id": "2203.01861",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "Paper No. e96, 43",
+    "title": "Rank-uniform local law for Wigner matrices",
+    "type": "article-journal",
+    "volume": "10"
+  },
+  {
+    "DOI": "10.1063/5.0104290",
+    "ISSN": "0022-2488",
+    "URL": "https://doi.org/10.1063/5.0104290",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      },
+      {
+        "family": "Xu",
+        "given": "Yuanyuan"
+      }
+    ],
+    "container-title": "J. Math. Phys.",
+    "id": "2206.04443",
+    "issue": "10",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "page": "Paper No. 103303, 11",
+    "title": "Directional extremal statistics for Ginibre eigenvalues",
+    "type": "article-journal",
+    "volume": "63"
+  },
+  {
+    "URL": "https://arxiv.org/abs/2206.04448",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      },
+      {
+        "family": "Xu",
+        "given": "Yuanyuan"
+      }
+    ],
+    "id": "2206.04448",
+    "issued": {
+      "date-parts": [
+        [
+          2022
+        ]
+      ]
+    },
+    "note": "Preprint",
+    "title": "On the rightmost eigenvalue of non-Hermitian random matrices",
+    "type": "manuscript"
+  },
+  {
+    "DOI": "10.1007/s00440-023-01229-1",
+    "URL": "https://doi.org/10.1007/s00440-023-01229-1",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "container-title": "Probab. Theory Relat. Fields",
+    "id": "2210.12060",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "title": "Mesoscopic central limit theorem for non-Hermitian random matrices",
+    "type": "article-journal"
+  },
+  {
+    "URL": "https://arxiv.org/abs/2301.03549",
+    "author": [
+      {
+        "family": "Cipolloni",
+        "given": "Giorgio"
+      },
+      {
+        "family": "Erdős",
+        "given": "László"
+      },
+      {
+        "family": "Henheik",
+        "given": "Joscha"
+      },
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      }
+    ],
+    "id": "2301.03549",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "note": "Preprint",
+    "title": "Optimal Lower Bound on Eigenvector Overlaps for non-Hermitian Random Matrices",
+    "type": "manuscript"
+  },
+  {
+    "URL": "https://arxiv.org/abs/2302.00401",
+    "author": [
+      {
+        "family": "Schröder",
+        "given": "Dominik"
+      },
+      {
+        "family": "Cui",
+        "given": "Hugo"
+      },
+      {
+        "family": "Dmitriev",
+        "given": "Daniil"
+      },
+      {
+        "family": "Loureiro",
+        "given": "Bruno"
+      }
+    ],
+    "container-title": "ICML",
+    "id": "2302.00401",
+    "issued": {
+      "date-parts": [
+        [
+          2023
+        ]
+      ]
+    },
+    "title": "Deterministic equivalent and error universality of deep random features learning",
+    "type": "article-journal"
+  }
+]

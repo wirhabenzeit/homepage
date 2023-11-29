@@ -1,97 +1,126 @@
 ---
 import PageLayout from "@/layouts/Base";
-import PostPreview from "@/components/blog/PostPreview";
+import ProjectHero from "@/components/ProjectHero";
 import SocialList from "@/components/SocialList";
 import { getAllPosts, sortMDByDate } from "@/utils";
+import Icon from "astro-icon";
 
-const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
-const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+const allPostsBySlug = allPosts.reduce((acc, post) => ({ ...acc, [post.slug]: post }), {});
+const selectedProjects = ["stravamap", "csp", "pybibget"].map((slug) => allPostsBySlug[slug]);
+const selectedResearch = ["14071552"].map((slug) => allPostsBySlug[slug]);
+console.log(selectedResearch);
+const selectedPublications = ["1407.1552", "1705.10661", "1912.04100", "2012.13215", "2302.00401"];
 
-const cactusTech: Array<{ title: string; desc: string; href: string }> = [
+const cv = [
 	{
-		title: "Astro",
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
+		date: "2010 – 2011",
+		title: "BSc Mathematics",
+		location: "ETH Zürich",
 	},
 	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
+		date: "2011 - 2013",
+		title: "BSc Mathematics",
+		location: "LMU Munich",
 	},
 	{
-		title: "Tailwind CSS",
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
+		date: "2013 - 2014",
+		title: "MSc Theoretical and Mathematical Physics",
+		location: "LMU Munich",
 	},
 	{
-		title: "Markdown",
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
+		date: "2014 - 2015",
+		title: "MASt Mathematics",
+		location: "University of Cambridge",
 	},
 	{
-		title: "MDX",
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
+		date: "2015 - 2019",
+		title: "PhD Mathematics",
+		location: "IST Austria",
 	},
 	{
-		title: "Satori",
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
+		date: "2019 - 2022",
+		title: "Junior Fellow",
+		location: "ETH Institute for Theoretical Studies",
 	},
 	{
-		title: "Pagefind",
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-	},
-	{
-		title: "Astro Icon",
-		desc: "An easy to use Icon component for Astro.",
-		href: "https://github.com/natemoo-re/astro-icon#readme",
+		date: "since 2022",
+		title: "SNF Ambizione Fellow",
+		location: "ETH Zurich",
 	},
 ];
+
+import biblio from "@/assets/publications.json";
+
+import Publication from "@/components/Publication";
+import { attachCookiesToResponse } from "node_modules/astro/dist/core/cookies";
 ---
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Hello World!</h1>
+		<h1 class="title mb-6">Bio</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
-			blog. If you want to know more about how you can customise me, add more posts, and make it
-			your own, click on one the github icon link below which will take you to my repo.
+			After obtaining my PhD in 2019 under the supervision of László Erdős at the Institute of
+			Science and Technology Austria, I have been a junior fellow at the ETH Institute for
+			Theoretical Studies since September 2019. My research interests are probability theory and
+			mathematical physics with a focus on random matrices. I am also interested in universal
+			properties of complex systems and the mathematically rigorous study of machine learning
+			algorithms.
 		</p>
 		<SocialList />
 	</section>
-	<section aria-label="Blog post list" class="mt-16">
-		<h2 class="title mb-4 text-xl">Posts</h2>
-		<ul class="space-y-4 sm:space-y-2">
+	<section aria-label="Curriculum Vitae" class="mt-16">
+		<h2 class="title mb-4 text-xl">Curriculum Vitae</h2>
+		<ol class="relative border-s border-gray-200 dark:border-gray-700">
 			{
-				allPostsByDate.map((p) => (
-					<li class="flex flex-col gap-x-2 sm:flex-row">
-						<PostPreview post={p} />
+				cv.map(({ date, title, location }) => (
+					<li class="mb-4 ms-4">
+						<div class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200 dark:border-gray-900 dark:bg-gray-700" />
+						<time class="mb-1 text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
+							{date}
+						</time>
+						<h3 class="text-base font-semibold text-gray-900 dark:text-white">{title}</h3>
+						<p class="mb-2 text-sm font-normal text-gray-500 dark:text-gray-400">{location}</p>
 					</li>
 				))
 			}
-		</ul>
+		</ol>
+		<a class="inline-block flex items-center p-1 sm:hover:text-link" href="/cv.pdf" target="_blank">
+			<Icon class="h-5 w-5" name="mdi:download" aria-hidden="true" focusable="false" />
+			<span class="ml-2">CV.pdf</span>
+		</a>
 	</section>
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
-		<ul class="space-y-4 sm:space-y-2">
+	<section aria-label="Selected Publications" class="mt-16">
+		<h2 class="title mb-4 text-xl">Selected Publications</h2>
+		<ol class="list-outside space-y-4">
 			{
-				cactusTech.map(({ href, title, desc }) => (
-					<li>
-						<a
-							href={href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="cactus-link inline-block"
-						>
-							{title}
-						</a>: 
-						<p class="inline-block sm:mt-2">{desc}</p>
-					</li>
-				))
+				biblio
+					.filter((p) => selectedPublications.includes(p.id))
+					.map((publication) => (
+						<li class="p-2">
+							<Publication publication={publication} />
+						</li>
+					))
 			}
-		</ul>
+		</ol>
+		<a href="/research" class="cactus-link mb-8 mt-3 inline-block">All publications</a>
+	</section>
+
+	<section>
+		<h2 class="title mb-4 text-2xl">Selected Research</h2>
+		{
+			selectedResearch.map((post, i) => (
+				<ProjectHero data={post.data} slug={post.slug} position={i % 2 == 0 ? "right" : "left"} />
+			))
+		}
+	</section>
+
+	<section>
+		<h2 class="title mb-4 text-2xl">Selected Projects</h2>
+		{
+			selectedProjects.map((post, i) => (
+				<ProjectHero data={post.data} slug={post.slug} position={i % 2 == 0 ? "right" : "left"} />
+			))
+		}
 	</section>
 </PageLayout>

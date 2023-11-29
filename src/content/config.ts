@@ -1,6 +1,6 @@
 import { z, defineCollection } from "astro:content";
 
-function removeDupsAndLowerCase(array: string[]) {
+function removeDups(array: string[]) {
 	if (!array.length) return array;
 	const lowercaseItems = array.map((str) => str.toLowerCase());
 	const distinctItems = new Set(lowercaseItems);
@@ -11,7 +11,7 @@ const post = defineCollection({
 	type: "content",
 	schema: ({ image }) =>
 		z.object({
-			title: z.string().max(60),
+			title: z.string(),
 			description: z.string().min(50).max(160),
 			publishDate: z
 				.string()
@@ -28,8 +28,29 @@ const post = defineCollection({
 				})
 				.optional(),
 			draft: z.boolean().default(false),
-			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
+			tags: z.array(z.string()).default([]).transform(removeDups),
 			ogImage: z.string().optional(),
+			heroImage: z
+				.object({
+					src: image(),
+					alt: z.string(),
+				})
+				.optional(),
+			links: z
+				.array(
+					z.object({
+						href: z.string(),
+						title: z.string(),
+						icon: z.string(),
+					}),
+				)
+				.optional(),
+			arXiv: z.string().optional(),
+			doi: z.string().optional(),
+			mathscinet: z.string().optional(),
+			journal: z.string().optional(),
+			journalRef: z.string().optional(),
+			authors: z.string().optional(),
 		}),
 });
 

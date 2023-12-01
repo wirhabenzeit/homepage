@@ -2,7 +2,6 @@
 import type { SiteMeta } from "@/types";
 import { siteConfig } from "@/site-config";
 import "../styles/global.css";
-import { GoogleAnalytics } from "astro-google-analytics";
 
 type Props = SiteMeta;
 
@@ -11,7 +10,10 @@ const { title, description, ogImage, articleDate } = Astro.props;
 const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url).href;
+const socialImageURL = new URL(
+	ogImage ? ogImage : `${import.meta.env.BASE_URL}/social-card.png`,
+	Astro.url,
+).href;
 ---
 
 <meta charset="utf-8" />
@@ -20,10 +22,10 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <title>{siteTitle}</title>
 
 {/* Icons / Favicon */}
-<link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" href="/icon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} sizes="any" />
+<link rel="icon" href={`${import.meta.env.BASE_URL}/icon.svg`} type="image/svg+xml" />
+<link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`} />
+<link rel="manifest" href={`${import.meta.env.BASE_URL}/manifest.webmanifest`} />
 <link rel="canonical" href={canonicalURL} />
 
 {/* Primary Meta Tags */}
@@ -61,10 +63,18 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 <meta property="twitter:image" content={socialImageURL} />
 
 {/* Sitemap */}
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="sitemap" href=`${import.meta.env.BASE_URL}/sitemap-index.xml` />
 
 {/* RSS auto-discovery */}
-<link rel="alternate" type="application/rss+xml" title={siteConfig.title} href="/rss.xml" />
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={siteConfig.title}
+	href=`${import.meta.env.BASE_URL}/rss.xml`
+/>
+
+{/* katex */}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
 
 {/* Webmentions */}
 {

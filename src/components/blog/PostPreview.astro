@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import type { HTMLTag, Polymorphic } from "astro/types";
 import Tags from "@/components/blog/Tags";
+import { Image } from "astro:assets";
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	post: CollectionEntry<"post">;
@@ -9,14 +10,104 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	withTags?: boolean;
 };
 
-const { post, as: Tag = "div", withDesc = false, withTags = false } = Astro.props;
-//const postDate = post.data.updatedDate ?? post.data.publishDate;
+const {
+	post,
+	withDesc = true,
+	withTags = true,
+	large = false,
+	text = "left",
+	number = undefined,
+	withAuthor = true,
+	withJournalDetails = true,
+	titleClass = "text-l font-bold",
+} = Astro.props;
+
+const colSpan = (cols: number) => ({
+	left: `col-start-1 col-span-${cols}`,
+	right: `col-start-${13 - cols} col-span-${cols}`,
+});
+
+// col-start-1 col-start-2 col-start-3 col-start-4 col-start-5 col-start-6 col-start-7 col-start-8 col-start-9 col-start-10 col-start-11 col-start-12
+// col-span-1 col-span-2 col-span-3 col-span-4 col-span-5 col-span-6 col-span-7 col-span-8 col-span-9 col-span-10 col-span-11 col-span-12
+// col-end-1 col-end-2 col-end-3 col-end-4 col-end-5 col-end-6 col-end-7 col-end-8 col-end-9 col-end-10 col-end-11 col-end-12
+
+const imgCols = colSpan(large ? 8 : 5)[text == "right" ? "left" : "right"];
+
+const contentCols = colSpan(post.data.heroImage ? (large ? 8 : 10) : 12)[text] + ` text-${text}`;
+
+const imgClass =
+	"rounded-lg shadow-xl m-0 h-auto w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105 group";
+
+const narrow = `${
+	text == "right" ? "ml-auto mr-0" : "ml-0 mr-auto"
+} w-full sm:max-w-[50%] mb-1 p-1`;
+
+const wide = `relative z-20 text-s block rounded-lg p-2 text-gray-600 ${
+	post.data.heroImage ? "sm:bg-white sm:shadow-xl" : ""
+}`;
 ---
 
-<Tag>
-	<a href={`/posts/${post.slug}/`} class="cactus-link" rel="prefetch">
-		<h2 class="text-xl font-bold">{post.data.title}</h2>
-	</a>
-	{withTags && !!post.data.tags?.length && <Tags tags={post.data.tags} />}
-</Tag>
-{withDesc && <p class="line-clamp-3 block">{post.data.description}</p>}
+<div class="not-prose relative grid w-full grid-cols-12 gap-4">
+	{
+		post.data.heroImage && (
+			<div class:list={["group relative row-span-full hover:z-30 sm:z-10", imgCols]}>
+				<a href={`${import.meta.env.BASE_URL}/posts/${post.slug}`} class="group">
+					<Image
+						src={post.data.heroImage.src}
+						alt={post.data.heroImage.alt}
+						loading="eager"
+						fetchpriority="high"
+						class:list={[imgClass]}
+					/>
+					{post.data.heroImageHover && (
+						<Image
+							src={post.data.heroImageHover.src}
+							alt={post.data.heroImageHover.alt}
+							loading="eager"
+							fetchpriority="auto"
+							class:list={[
+								imgClass,
+								"absolute inset-0 hidden transform transition-opacity transition-transform delay-500 duration-500 ease-in-out group-hover:block",
+							]}
+						/>
+					)}
+				</a>
+			</div>
+		)
+	}
+
+	<div
+		class:list={[
+			"relative row-span-full rounded-xl bg-white shadow-lg sm:bg-transparent sm:shadow-none",
+			contentCols,
+		]}
+	>
+		<p class:list={[narrow, titleClass]}>
+			{number !== undefined ? `${number + 1}. ` : ""}
+			<a
+				class:list={["text-accent", titleClass]}
+				href={`${import.meta.env.BASE_URL}/posts/${post.slug}`}
+			>
+				{post.data.title}
+			</a>
+		</p>
+		{
+			withAuthor && post.data.authors && (
+				<p class:list={[narrow, "text-xs italic"]}>{post.data.authors.join(", ")}</p>
+			)
+		}
+		{
+			post.data.journal && (
+				<p class={"mb-1 text-xs " + narrow}>
+					<span class="font-bold">{post.data.journal}</span>
+					{"volume" in post.data && withJournalDetails && <span>Vol. {post.data.volume}</span>}
+					{"year" in post.data && withJournalDetails && `(${post.data.year})`}
+					{"issue" in post.data && withJournalDetails && <span>| Issue {post.data.issue}</span>}
+					{"page" in post.data && withJournalDetails && <span>| {post.data.page}</span>}
+				</p>
+			)
+		}
+		{withDesc && <div class={wide}>{post.data.description}</div>}
+		{!!post.data.tags?.length && withTags && <Tags tags={post.data.tags} class={narrow} />}
+	</div>
+</div>

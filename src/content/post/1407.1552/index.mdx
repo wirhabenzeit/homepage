@@ -1,0 +1,57 @@
+---
+title: "Phase Transition in the Density of States of Quantum Spin Glasses"
+description: "We demonstrate a transition between Gaussian and semicircular laws using q-Hermite polynomials. This work has inspired large amounts of follow-up research on the SYK model for quantum gravity."
+publishDate: "Jul 2014"
+tags: ["research", "spin glass", "SYK"]
+arxiv: "1407.1552"
+doi: "10.1007/s11040-014-9164-3"
+mathscinet: "MR3291938"
+authors: ["László Erdős", "Dominik Schröder"]
+journal: "Math. Phys. Anal. Geom."
+volume: "17"
+year: "2014"
+page: "441--464"
+issue: "3-4"
+heroImage:
+  src: "./dos.jpg"
+  alt: "Density of States"
+heroImageHover:
+  src: "./dos.gif"
+  alt: "Animated Density of States"
+---
+
+import paper from "./paper.pdf";
+
+## Summary
+
+{frontmatter.description}
+
+![Animation of the phase transition](./dos.gif)
+
+The density of states
+
+$$
+\rho(x,q):= \frac{\sqrt{1-q}}{\pi \sqrt{1-(1-q) x^2/4}}\prod_{k=1}^\infty \frac{1-q^{2 k+2}}{1-q^{2 k+1}}\left(1-\frac{(1-q) x^2 q^k}{(1+q^k)^2}\right)
+$$
+
+interpolates between the Gaussian and semicircular densities
+
+$$
+\rho(x,0) = \frac{\sqrt{4-x^2}}{2\pi},\qquad \rho(x,1)=\frac{\exp(-x^2/2)}{\sqrt{2\pi}}.
+$$
+
+<br />
+
+## Abstract
+
+We prove that the empirical density of states of quantum spin glasses on arbitrary graphs converges to a normal distribution as long as the maximal degree is negligible compared with the total number of edges. This extends the recent results of Keating et al. (2014) that were proved for graphs with bounded chromatic number and with symmetric coupling distribution. Furthermore, we generalise the result to arbitrary hypergraphs. We test the optimality of our condition on the maximal degree for $p$-uniform hypergraphs that correspond to $p$-spin glass Hamiltonians acting on $n$ distinguishable spin-1/2 particles. At the critical threshold $p = n^{1/2}$ we find a sharp classical-quantum phase transition between the normal distribution and the Wigner semicircle law. The former is characteristic to classical systems with commuting variables, while the latter is a signature of noncommutative random matrix theory.
+
+## Paper
+
+<object data={paper} type="application/pdf" width="100%" height="800px">
+	<p>
+		Unable to display PDF file.
+		<a href={`https://arxiv.com/pdf/${frontmatter.arxiv}.pdf`}>Download</a>
+		instead.
+	</p>
+</object>

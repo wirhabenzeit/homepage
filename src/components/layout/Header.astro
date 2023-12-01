@@ -42,9 +42,9 @@ const url = new URL(Astro.request.url);
 >
 	<div class="flex sm:flex-col">
 		<a
-			href="/"
+			href={`${import.meta.env.BASE_URL}/`}
 			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
-			aria-current={url.pathname === "/" ? "page" : false}
+			aria-current={url.pathname === `${import.meta.env.BASE_URL}/` ? "page" : false}
 		>
 			<Image
 				src={profileImage}

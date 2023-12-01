@@ -1,0 +1,54 @@
+---
+const cv = [
+	{
+		date: "2010 – 2011",
+		title: "BSc Mathematics",
+		location: "ETH Zürich",
+	},
+	{
+		date: "2011 - 2013",
+		title: "BSc Mathematics",
+		location: "LMU Munich",
+	},
+	{
+		date: "2013 - 2014",
+		title: "MSc Theoretical and Mathematical Physics",
+		location: "LMU Munich",
+	},
+	{
+		date: "2014 - 2015",
+		title: "MASt Mathematics",
+		location: "University of Cambridge",
+	},
+	{
+		date: "2015 - 2019",
+		title: "PhD Mathematics",
+		location: "IST Austria",
+	},
+	{
+		date: "2019 - 2022",
+		title: "Junior Fellow",
+		location: "ETH Institute for Theoretical Studies",
+	},
+	{
+		date: "since 2022",
+		title: "SNF Ambizione Fellow",
+		location: "ETH Zurich",
+	},
+];
+---
+
+<ol class="not-prose relative border-s border-gray-200 dark:border-gray-700">
+	{
+		cv.map(({ date, title, location }) => (
+			<li class="mb-4 ms-4">
+				<div class="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200 dark:border-gray-900 dark:bg-gray-700" />
+				<time class="mb-1 text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
+					{date}
+				</time>
+				<h3 class="text-base font-semibold text-gray-900 dark:text-white">{title}</h3>
+				<p class="mb-2 text-sm font-normal text-gray-500 dark:text-gray-400">{location}</p>
+			</li>
+		))
+	}
+</ol>

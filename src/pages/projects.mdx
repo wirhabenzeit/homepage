@@ -1,0 +1,13 @@
+---
+layout: ../layouts/Markdown.astro
+title: Projects
+toc: true
+---
+
+import PostList from "../components/blog/PostList.astro";
+
+<PostList
+	filter={(post) => post.data.tags.includes("project")}
+	large={true}
+	titleClass="text-accent text-xl font-bold"
+/>

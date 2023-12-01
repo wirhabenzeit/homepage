@@ -4,15 +4,16 @@ import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import prefetch from "@astrojs/prefetch";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import remarkUnwrapImages from "remark-unwrap-images";
-import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
-// https://astro.build/config
 export default defineConfig({
-	// ! Please remember to replace the following site property with your own domain
 	site: "https://n.ethz.ch/~dschroeder/",
+	base: "/~dschroeder",
 	markdown: {
-		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
+		remarkPlugins: [remarkUnwrapImages, remarkMath],
+		rehypePlugins: [rehypeKatex],
 		remarkRehype: { footnoteLabelProperties: { className: [""] } },
 		shikiConfig: {
 			theme: "dracula",
@@ -31,19 +32,11 @@ export default defineConfig({
 		domains: ["webmention.io"],
 	},
 	vite: {
-		plugins: [
-			rawFonts([".ttf"]),
-			{
-				name: "build-script",
-				buildStart(options) {
-					console.log("Converting BibTeX to JSON...");
-				},
-			},
-		],
+		plugins: [rawFonts([".ttf"])],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
-		assetsInclude: ["**/*.bib"],
+		assetsInclude: ["**/*.bib", "**/*.pdf"],
 	},
 });
 

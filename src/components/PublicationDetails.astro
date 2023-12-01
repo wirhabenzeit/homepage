@@ -1,0 +1,52 @@
+---
+const { publication } = Astro.props;
+const fields = [
+	{ field: "arxiv", label: "arXiv", url: (number) => `https://arxiv.org/abs/${number}` },
+	{ field: "doi", label: "doi", url: (number) => `https://doi.org/${number}` },
+	{
+		field: "mathscinet",
+		label: "MathSciNet",
+		url: (number) => `https://mathscinet.ams.org/mathscinet-getitem?mr=${number}`,
+	},
+];
+
+/*const bibtex = `@article{${publication.arxiv},
+  author = {${publication.authors.join(", ")}},
+  title = {${publication.title}},
+  journal = {${publication.journal}},
+  volume = {${publication.volume}},
+  number = {${publication.issue}},
+  year = {${publication.year}},
+  pages = {${publication.page}},
+  doi = {${publication.doi}},
+  mrnumber = {${publication.mathscinet.slice(3)}},
+  url = {https://doi.org/${publication.doi}},
+  eprint = {${publication.arxiv}},
+  archiveprefix = "arXiv"
+}`;*/
+---
+
+<p class="mb-1 text-sm text-gray-500">
+	{publication.authors.join(", ")}
+</p>
+<div class="mb-1">
+	<span class="font-bold">{"journal" in publication ? publication.journal : "Preprint"}</span>
+	{"volume" in publication && <span>Vol. {publication.volume}</span>}
+	{"year" in publication && `(${publication.year})`}
+	{"issue" in publication && <span>| Issue {publication.issue}</span>}
+	{"page" in publication && <span>| {publication.page}</span>}
+	{
+		fields.map(({ field, label, url }) => {
+			if (field in publication) {
+				return (
+					<div>
+						{label} |
+						<a href={url(publication[field])} class="cactus-link">
+							{publication[field]}
+						</a>
+					</div>
+				);
+			}
+		})
+	}
+</div>

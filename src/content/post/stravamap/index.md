@@ -2,7 +2,7 @@
 title: "StravaMap"
 description: "Web app to display personal outdoor activities on a map, with advanced filtering and data visualization."
 publishDate: "22 Nov 2023"
-tags: ["projects", "React.js", "d3.js"]
+tags: ["project", "React.js", "d3.js"]
 links:
   - title: "Demo"
     href: "https://wirhabenzeit.github.io/stravamap/?athlete=6824046"

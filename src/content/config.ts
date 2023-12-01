@@ -12,7 +12,7 @@ const post = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
-			description: z.string().min(50).max(160),
+			description: z.string(),
 			publishDate: z
 				.string()
 				.or(z.date())
@@ -36,6 +36,12 @@ const post = defineCollection({
 					alt: z.string(),
 				})
 				.optional(),
+			heroImageHover: z
+				.object({
+					src: image(),
+					alt: z.string(),
+				})
+				.optional(),
 			links: z
 				.array(
 					z.object({
@@ -45,12 +51,17 @@ const post = defineCollection({
 					}),
 				)
 				.optional(),
-			arXiv: z.string().optional(),
+			arxiv: z.string().optional(),
 			doi: z.string().optional(),
 			mathscinet: z.string().optional(),
 			journal: z.string().optional(),
-			journalRef: z.string().optional(),
-			authors: z.string().optional(),
+			year: z
+				.string()
+				.optional()
+				.transform((str) => (str ? parseInt(str) : undefined)),
+			volume: z.string().optional(),
+			issue: z.string().optional(),
+			authors: z.array(z.string()).optional(),
 		}),
 });
 

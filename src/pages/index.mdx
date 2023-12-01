@@ -1,0 +1,60 @@
+---
+layout: ../layouts/Markdown.astro
+title: Home
+toc: true
+---
+
+export const selectedResearch = ["14071552", "230200401", "170510661", "191204100"];
+export const selectedProjects = ["stravamap", "csp", "pybibget"];
+
+import SocialList from "../components/SocialList.astro";
+import PostList from "../components/blog/PostList.astro";
+import CV from "../components/CV.astro";
+
+After obtaining my PhD under the supervision of László Erdős at the Institute of
+Science and Technology Austria, I have been a postdoctoral researcher at ETH Zurich. My research interests are _probability theory_ (in particular random matrices), _statistical physics_, and and _statistical learning theory_.
+
+<SocialList />
+
+## CV
+
+<CV />
+
+[Download CV](/~dschroeder/cv.pdf)
+
+## Selected research
+
+<PostList
+	filter={(post) => selectedResearch.includes(post.slug)}
+	sort={(a, b) => selectedResearch.indexOf(a.slug) - selectedResearch.indexOf(b.slug)}
+	large={true}
+	titleClass="text-accent text-xl font-bold"
+	withAuthor={false}
+	withJournalDetails={false}
+/>
+
+[List of all publications](/~dschroeder/research)
+
+## Selected projects
+
+<PostList
+	filter={(post) => selectedProjects.includes(post.slug)}
+	sort={(a, b) => selectedProjects.indexOf(a.slug) - selectedProjects.indexOf(b.slug)}
+	large={true}
+	titleClass="text-accent text-xl font-bold"
+/>
+
+[List of all projects](/~dschroeder/projects)
+
+## Contact
+
+- **Email** [dominik.schroeder[at]math.ethz.ch](mailto:dominik.schroeder@math.ethz.ch)
+- **Phone** +41 44 633 84 43
+- **Office** HG E 66.1
+
+```
+ETH Zurich
+Rämistrasse 101
+HG E 66.1
+8092 Zurich
+```

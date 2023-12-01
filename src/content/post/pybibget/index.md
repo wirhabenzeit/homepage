@@ -2,7 +2,7 @@
 title: "pybibget"
 description: "A simple Python script to download BibTeX entries from DOI / MathSciNet / arXiv / PubMed"
 publishDate: "22 Feb 2023"
-tags: ["projects", "latex"]
+tags: ["project", "latex"]
 heroImage:
   src: "./pybibget.png"
   alt: "pybibget"

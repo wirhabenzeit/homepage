@@ -2,7 +2,10 @@
 title: "Photocal"
 description: "Wall photo calendar in LaTeX with a minimalistic design. Written with TikZ."
 publishDate: "22 Feb 2023"
-tags: ["projects", "latex", "photography"]
+tags: ["project", "latex", "photography"]
+heroImage:
+  src: "./example-1.jpg"
+  alt: "Example Calendar Page"
 ---
 
 Minimalistic photo calendar in LaTeX ([Github](https://github.com/wirhabenzeit/photocal))

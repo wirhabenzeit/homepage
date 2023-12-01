@@ -1,0 +1,29 @@
+---
+import PostPreview from "./PostPreview.astro";
+import { getAllPosts } from "@/utils";
+const allPosts = await getAllPosts();
+
+const {
+	filter = () => true,
+	sort = (a, b) => a.slug > b.slug,
+	numbered = false,
+	...args
+} = Astro.props;
+
+const selectedPosts = allPosts.filter(filter);
+---
+
+<ul class="space-y-8">
+	{
+		selectedPosts.sort(sort).map((p, i) => (
+			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
+				<PostPreview
+					post={p}
+					{...args}
+					{...(numbered ? { number: i } : {})}
+					text={i % 2 == 0 ? "right" : "left"}
+				/>
+			</li>
+		))
+	}
+</ul>

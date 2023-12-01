@@ -1,0 +1,29 @@
+---
+layout: ../layouts/Markdown.astro
+title: Research Overview
+toc: true
+---
+
+import PostList from "../components/blog/PostList.astro";
+
+## Publications
+
+All my publications can be found on the [arXiv](https://arxiv.org/a/schroder_d_1.html), on [Google Scholar](https://scholar.google.de/citations?user=u3ilHrcAAAAJ) and on the [MathSciNet](https://mathscinet.ams.org/mathscinet/search/publications.html?pg1=INDI&s1=1090611).
+
+<PostList filter={(post) => post.data.tags.includes("research")} numbered={true} />
+
+## Theses
+
+- [PhD Thesis](thesis.pdf) _From Dyson to Pearcey: Universal Statistics in Random Matrix Theory_ for a **PhD in Mathematics** supervised by [László Erdős](http://www.mathematik.uni-muenchen.de/~lerdos/)
+- [MSc Thesis](master-thesis.pdf) _Phase Transition in the Density of States of Quantum Spin Glasses_ for the **MSc in Theoretical and Mathematical Physics** supervised by [László Erdős](http://www.mathematik.uni-muenchen.de/~lerdos/)
+- [Essay](essay.pdf) _Interlacing Families and the Kadison–Singer Problem_ for the **Master of Advanced Studies in Mathematics** supervised by [Timothy Gowers](https://www.dpmms.cam.ac.uk/~wtg10/)
+- [BSc Thesis](bachelor-thesis.pdf) _Integrated Density of States of Random Schrödinger Operators with Alloy-Type Potential_ for the **BSc in Mathematics** supervised by [Peter Müller](http://www.mathematik.uni-muenchen.de/~mueller/)
+
+## Research Rotations
+
+- **Limits to gene regulation due to crosstalk.**
+  with **[Gašper Tkačik](http://gtkacik.pages.ist.ac.at)**
+  [Internal report](report_tkacik.pdf) (2015)
+- **Analyzing response of retinal neurons in fish** and **Generalization bounds for active task selection.**
+  with **[Christoph Lampert](https://cvml.ist.ac.at)**
+  [Internal report](report_lampert.pdf) (2016)

@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import FormattedDate from "../FormattedDate.astro";
 import Tags from "./Tags.astro";
+import PublicationDetails from "../PublicationDetails.astro";
 
 interface Props {
 	content: CollectionEntry<"post">;
@@ -33,14 +33,5 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
 	)
 }
 <h1 class="title mb-3 sm:mb-1">{data.title}</h1>
-<div class="flex flex-wrap items-center gap-x-3 gap-y-2">
-	{
-		data.updatedDate && (
-			<span class="rounded-lg bg-quote/10 p-1 text-quote">
-				Last Updated:
-				<FormattedDate class="ms-1" date={data.updatedDate} dateTimeOptions={dateTimeOptions} />
-			</span>
-		)
-	}
-</div>
+{data.tags.includes("research") && <PublicationDetails publication={data} />}
 {!!data.tags?.length && <Tags tags={data.tags} />}

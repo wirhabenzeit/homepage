@@ -31,18 +31,18 @@ export const siteConfig: SiteConfig = {
 export const menuLinks: Array<{ title: string; path: string }> = [
 	{
 		title: "Home",
-		path: "/",
+		path: `${import.meta.env.BASE_URL}/`,
 	},
 	{
 		title: "Research",
-		path: "/research/",
+		path: `${import.meta.env.BASE_URL}/research`,
 	},
 	{
 		title: "Projects",
-		path: "/tags/projects/",
+		path: `${import.meta.env.BASE_URL}/projects`,
 	},
 	{
 		title: "Teaching",
-		path: "/tags/teaching/",
+		path: `${import.meta.env.BASE_URL}/teaching`,
 	},
 ];

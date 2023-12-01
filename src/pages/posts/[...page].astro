@@ -92,7 +92,11 @@ const paginationProps = {
 						))}
 					</ul>
 					<span class="mt-4 block sm:text-end">
-						<a class="sm:hover:text-accent" href="/tags/" aria-label="View all blog categories">
+						<a
+							class="sm:hover:text-accent"
+							href={`${import.meta.env.BASE_URL}/tags/`}
+							aria-label="View all blog categories"
+						>
 							View all →
 						</a>
 					</span>

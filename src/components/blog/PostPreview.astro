@@ -45,33 +45,37 @@ const descCols = right
 ---
 
 <div class="grid w-full grid-cols-12 grid-rows-[auto_auto_auto_1fr]">
-	<div class:list={["col-span-12 row-span-1 row-start-2 sm:row-span-4 sm:row-start-1", imgCols]}>
-		<div class:list={["group relative hover:z-30 sm:z-10"]}>
-			<a href={`${import.meta.env.BASE_URL}/posts/${post.slug}`} class="group">
-				<Image
-					src={post.data.heroImage.src}
-					alt={post.data.heroImage.alt}
-					loading="eager"
-					fetchpriority="high"
-					class:list={[imgClass]}
-				/>
-				{
-					post.data.heroImageHover && (
+	{
+		post.data.heroImage && (
+			<div
+				class:list={["col-span-12 row-span-1 row-start-2 sm:row-span-4 sm:row-start-1", imgCols]}
+			>
+				<div class:list={["group relative hover:z-30 sm:z-10"]}>
+					<a href={`${import.meta.env.BASE_URL}/posts/${post.slug}`} class="group">
 						<Image
-							src={post.data.heroImageHover.src}
-							alt={post.data.heroImageHover.alt}
+							src={post.data.heroImage.src}
+							alt={post.data.heroImage.alt}
 							loading="eager"
-							fetchpriority="auto"
-							class:list={[
-								imgClass,
-								"absolute inset-0 hidden transform transition-opacity transition-transform delay-500 duration-500 ease-in-out group-hover:block",
-							]}
+							fetchpriority="high"
+							class:list={[imgClass]}
 						/>
-					)
-				}
-			</a>
-		</div>
-	</div>
+						{post.data.heroImageHover && (
+							<Image
+								src={post.data.heroImageHover.src}
+								alt={post.data.heroImageHover.alt}
+								loading="eager"
+								fetchpriority="auto"
+								class:list={[
+									imgClass,
+									"absolute inset-0 hidden transform transition-opacity transition-transform delay-500 duration-500 ease-in-out group-hover:block",
+								]}
+							/>
+						)}
+					</a>
+				</div>
+			</div>
+		)
+	}
 	<div class:list={["col-span-full row-span-1 row-start-1 text-right", titleCols]}>
 		<p class={titleClass}>
 			{number !== undefined ? `${number + 1}. ` : ""}

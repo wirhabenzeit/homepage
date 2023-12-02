@@ -14,52 +14,49 @@ const {
 	post,
 	withDesc = true,
 	withTags = true,
-	large = false,
-	text = "left",
+	large = true,
+	right = true,
 	number = undefined,
 	withAuthor = true,
 	withJournalDetails = true,
-	titleClass = "text-l font-bold",
+	titleClass = "text-xl font-bold",
 } = Astro.props;
-
-const colSpan = (cols: number) => ({
-	left: `col-start-1 col-span-${cols}`,
-	right: `col-start-${13 - cols} col-span-${cols}`,
-});
-
-// col-start-1 col-start-2 col-start-3 col-start-4 col-start-5 col-start-6 col-start-7 col-start-8 col-start-9 col-start-10 col-start-11 col-start-12
-// col-span-1 col-span-2 col-span-3 col-span-4 col-span-5 col-span-6 col-span-7 col-span-8 col-span-9 col-span-10 col-span-11 col-span-12
-// col-end-1 col-end-2 col-end-3 col-end-4 col-end-5 col-end-6 col-end-7 col-end-8 col-end-9 col-end-10 col-end-11 col-end-12
-
-const imgCols = colSpan(large ? 8 : 5)[text == "right" ? "left" : "right"];
-
-const contentCols = colSpan(post.data.heroImage ? (large ? 8 : 10) : 12)[text] + ` text-${text}`;
 
 const imgClass =
 	"rounded-lg shadow-xl m-0 h-auto w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105 group";
 
-const narrow = `${
-	text == "right" ? "ml-auto mr-0" : "ml-0 mr-auto"
-} w-full sm:max-w-[50%] mb-1 p-1`;
-
-const wide = `relative z-20 text-s block rounded-lg p-2 text-gray-600 ${
-	post.data.heroImage ? "sm:bg-white sm:shadow-xl" : ""
-}`;
+const imgCols = right
+	? large
+		? "sm:col-span-7 sm:col-start-1"
+		: "sm:col-span-5 sm:col-start-1"
+	: large
+	  ? "sm:col-span-7 sm:col-start-6"
+	  : "sm:col-span-5 sm:col-start-8";
+const titleCols = right
+	? "sm:text-right sm:ml-2 " +
+	  (large ? "sm:col-span-5 sm:col-start-8" : "sm:col-span-7 sm:col-start-6")
+	: "sm:text-left sm:mr-2 " +
+	  (large ? "sm:col-span-5 sm:col-start-1" : "sm:col-span-7 sm:col-start-1");
+const descCols = right
+	? "sm:text-right sm:ml-2 " +
+	  (large ? "sm:col-span-8 sm:col-start-5" : "sm:col-span-10 sm:col-start-3")
+	: "sm:text-left sm:mr-2 " +
+	  (large ? "sm:col-span-8 sm:col-start-1" : "sm:col-span-10 sm:col-start-1");
 ---
 
-<div class="not-prose relative grid w-full grid-cols-12 gap-4">
-	{
-		post.data.heroImage && (
-			<div class:list={["group relative row-span-full hover:z-30 sm:z-10", imgCols]}>
-				<a href={`${import.meta.env.BASE_URL}/posts/${post.slug}`} class="group">
-					<Image
-						src={post.data.heroImage.src}
-						alt={post.data.heroImage.alt}
-						loading="eager"
-						fetchpriority="high"
-						class:list={[imgClass]}
-					/>
-					{post.data.heroImageHover && (
+<div class="grid w-full grid-cols-12 grid-rows-[auto_auto_auto_1fr]">
+	<div class:list={["col-span-12 row-span-1 row-start-2 sm:row-span-4 sm:row-start-1", imgCols]}>
+		<div class:list={["group relative hover:z-30 sm:z-10"]}>
+			<a href={`${import.meta.env.BASE_URL}/posts/${post.slug}`} class="group">
+				<Image
+					src={post.data.heroImage.src}
+					alt={post.data.heroImage.alt}
+					loading="eager"
+					fetchpriority="high"
+					class:list={[imgClass]}
+				/>
+				{
+					post.data.heroImageHover && (
 						<Image
 							src={post.data.heroImageHover.src}
 							alt={post.data.heroImageHover.alt}
@@ -70,19 +67,13 @@ const wide = `relative z-20 text-s block rounded-lg p-2 text-gray-600 ${
 								"absolute inset-0 hidden transform transition-opacity transition-transform delay-500 duration-500 ease-in-out group-hover:block",
 							]}
 						/>
-					)}
-				</a>
-			</div>
-		)
-	}
-
-	<div
-		class:list={[
-			"relative row-span-full rounded-xl bg-white shadow-lg sm:bg-transparent sm:shadow-none",
-			contentCols,
-		]}
-	>
-		<p class:list={[narrow, titleClass]}>
+					)
+				}
+			</a>
+		</div>
+	</div>
+	<div class:list={["col-span-full row-span-1 row-start-1 text-right", titleCols]}>
+		<p class={titleClass}>
 			{number !== undefined ? `${number + 1}. ` : ""}
 			<a
 				class:list={["text-accent", titleClass]}
@@ -90,15 +81,14 @@ const wide = `relative z-20 text-s block rounded-lg p-2 text-gray-600 ${
 			>
 				{post.data.title}
 			</a>
-		</p>
-		{
+		</p>{
 			withAuthor && post.data.authors && (
-				<p class:list={[narrow, "text-xs italic"]}>{post.data.authors.join(", ")}</p>
+				<p class:list={["text-xs italic"]}>{post.data.authors.join(", ")}</p>
 			)
 		}
 		{
 			post.data.journal && (
-				<p class={"mb-1 text-xs " + narrow}>
+				<p class={"mb-1 text-xs"}>
 					<span class="font-bold">{post.data.journal}</span>
 					{"volume" in post.data && withJournalDetails && <span>Vol. {post.data.volume}</span>}
 					{"year" in post.data && withJournalDetails && `(${post.data.year})`}
@@ -107,7 +97,20 @@ const wide = `relative z-20 text-s block rounded-lg p-2 text-gray-600 ${
 				</p>
 			)
 		}
-		{withDesc && <div class={wide}>{post.data.description}</div>}
-		{!!post.data.tags?.length && withTags && <Tags tags={post.data.tags} class={narrow} />}
+	</div>
+	{
+		withDesc && (
+			<div
+				class:list={[
+					"z-20 col-span-full row-start-3 my-1 rounded-xl p-2 sm:bg-white sm:shadow-lg",
+					descCols,
+				]}
+			>
+				{post.data.description}
+			</div>
+		)
+	}
+	<div class:list={["col-span-full row-start-4", titleCols]}>
+		{!!post.data.tags?.length && withTags && <Tags tags={post.data.tags} />}
 	</div>
 </div>

@@ -58,5 +58,7 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: "|1|IzVmLdW9nBM03Ax1SbsDoKajQDE=|Ep0WOtWyRuOjnEZKlEONzmnNHJo= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+9TmitZ2JGXcAgPEVVfMko56mEgjpia6C36bYvaIMQUqjY2wLEfHnpzzh3wMvHgiTJLmPt6AqU1/bcxYu1eQVoARoJzqsWglU2ZJ3kDD6w3LiBg0HVFiWp0HgKcdsVD+jFP2Ryt5+Egd98kdJOPEwvhPk/uoV+eFbrBysGxKtY0X05pzBSo/Udx3Lbs+F9yKTvDpPIBMY7QdyRThxWxWrj+7QRCtIcITneso1MlTuc80W/JRZJI9YnvtFDgJMXxlqa/o43//WrCcuhQV9zyWXooNcSJ+MjXXz1rIZ2AeYQ+3EFO4qxHWKBZ9rk8IUNrqtL/dHmqRzFPRIQQODmhjn"
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H slab1.ethz.ch >> ~/.ssh/known_hosts
       - name: Deploy
         run: rsync -aPz dist/ dschroeder@slab1.ethz.ch:homepage

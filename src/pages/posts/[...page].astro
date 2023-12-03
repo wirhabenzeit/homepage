@@ -14,7 +14,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 }) satisfies GetStaticPaths;
 
 interface Props {
-	page: Page<CollectionEntry<"post">>;
+	page: Page<CollectionEntry<"posts">>;
 	uniqueTags: string[];
 }
 
@@ -28,13 +28,13 @@ const meta = {
 const paginationProps = {
 	...(page.url.prev && {
 		prevUrl: {
-			url: page.url.prev,
+			url: import.meta.env.BASE_URL + page.url.prev,
 			text: `← Previous Posts`,
 		},
 	}),
 	...(page.url.next && {
 		nextUrl: {
-			url: page.url.next,
+			url: import.meta.env.BASE_URL + page.url.next,
 			text: `Next Posts →`,
 		},
 	}),
@@ -83,7 +83,7 @@ const paginationProps = {
 							<li>
 								<a
 									class="flex items-center justify-center rounded-lg bg-accent p-1"
-									href={`/tags/${tag}/`}
+									href={`${import.meta.env.BASE_URL}/tags/${tag}/`}
 									aria-label={`View all posts with the tag: ${tag}`}
 								>
 									{tag}

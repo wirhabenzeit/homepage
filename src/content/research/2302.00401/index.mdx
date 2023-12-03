@@ -1,0 +1,36 @@
+---
+title: "Deterministic equivalent and error universality of deep random features learning"
+description: "We show that the generalization error of deep random feature models is the same as the generalization error of Gaussian features with matched covariance, and derive an explicit expression for the generalization error."
+publishDate: "Feb 2023"
+tags: ["ml"]
+type: "research"
+arxiv: "2302.00401"
+authors: ["Dominik Schröder", "Hugo Cui", "Daniil Dmitriev", "Bruno Loureiro"]
+journal: "ICML"
+year: "2023"
+heroImage:
+  src: "./genErr.png"
+  alt: "Generalization error"
+---
+
+import paper from "./paper.pdf";
+
+## Summary
+
+{frontmatter.description}
+
+<br />
+
+## Abstract
+
+This manuscript considers the problem of learning a random Gaussian network function using a fully connected network with frozen intermediate layers and trainable readout layer. This problem can be seen as a natural generalization of the widely studied random features model to deeper architectures. First, we prove Gaussian universality of the test error in a ridge regression setting where the learner and target networks share the same intermediate layers, and provide a sharp asymptotic formula for it. Establishing this result requires proving a deterministic equivalent for traces of the deep random features sample covariance matrices which can be of independent interest. Second, we conjecture the asymptotic Gaussian universality of the test error in the more general setting of arbitrary convex losses and generic learner/target architectures. We provide extensive numerical evidence for this conjecture, which requires the derivation of closed-form expressions for the layer-wise post-activation population covariances. In light of our results, we investigate the interplay between architecture design and implicit regularization.
+
+## Paper
+
+<object data={paper} type="application/pdf" width="100%" height="800px">
+	<p>
+		Unable to display PDF file.
+		<a href={`https://arxiv.com/pdf/${frontmatter.arxiv}.pdf`}>Download</a>
+		instead.
+	</p>
+</object>

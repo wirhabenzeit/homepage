@@ -7,6 +7,7 @@
 		color-scheme: light;
 		/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
 		--theme-bg: 0deg 0% 98%;
+		--theme-bg-alt: 0deg 0% 95%;
 		--theme-link: 172deg 18% 41%;
 		--theme-text: 203deg 11% 15%;
 		--theme-accent: 351deg 66% 48%;
@@ -17,6 +18,7 @@
 	:root.dark {
 		color-scheme: dark;
 		--theme-bg: 210deg 6% 12%;
+		--theme-bg-alt: 210deg 6% 20%;
 		--theme-link: 330deg 49% 67%;
 		--theme-text: 220deg 3% 79%;
 		--theme-accent: 159deg 64% 45%;

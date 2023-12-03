@@ -1,0 +1,61 @@
+---
+title: "Random matrices with slow correlation decay"
+description: "We prove universality for a large class of random matrices with correlated entries. This very general result has been used numerous times, also in more applied research."
+publishDate: "May 2017"
+tags: ["universality"]
+type: "research"
+arxiv: "1705.10661"
+doi: "10.1017/fms.2019.2"
+mathscinet: "MR3941370"
+authors: ["László Erdős", "Dominik Schröder"]
+journal: "Forum Math. Sigma"
+volume: "7"
+year: "2017"
+page: "Paper No. e8, 89"
+heroImage:
+  src: "./dbm.jpg"
+  alt: "Universality via Dyson Brownian motion"
+heroImageHover:
+  src: "./dbm.gif"
+  alt: "Universality via Dyson Brownian motion animation"
+---
+
+import paper from "./paper.pdf";
+
+## Summary
+
+{frontmatter.description}
+
+<br />
+
+### Main result
+
+The first main result asserts that the resolvent $G(z):=(H-z)^{-1}$ of an $n\times n$ random matrix $H$ with correlated entries is well approximated by the unique solution $M(z)$ to the _Matrix Dyson Equation_
+
+$$
+-M(z)^{-1} = \mathbf{E} (H-\mathbf E H) M(z) (H-\mathbf E H) + z - \mathbf E H.
+$$
+
+The second main result is that the local eigenvalue statistics of $H$ are given by the universal _Sine kernel_ statistics.
+
+### Proof
+
+One key ingredient for the proof is the fast relaxation to equilibrium of _Dyson Brownian motion_:
+
+![Universality via Dyson Brownian motion animation](./dbm.gif)
+
+Here there are two classes of _particles_ (red and black) which initially are independent from each other. Then both particles are evolved using the same DBM and already after a short time the trajectories merge.
+
+## Abstract
+
+We consider large random matrices with a general slowly decaying correlation among its entries. We prove universality of the local eigenvalue statistics and optimal local laws for the resolvent away from the spectral edges, generalizing the recent result of [arXiv:1604.08188](https://arxiv.com/abs/1604.08188) to allow slow correlation decay and arbitrary expectation. The main novel tool is a systematic diagrammatic control of a multivariate cumulant expansion.
+
+## Paper
+
+<object data={paper} type="application/pdf" width="100%" height="800px">
+	<p>
+		Unable to display PDF file.
+		<a href={`https://arxiv.com/pdf/${frontmatter.arxiv}.pdf`}>Download</a>
+		instead.
+	</p>
+</object>

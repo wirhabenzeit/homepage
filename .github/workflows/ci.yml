@@ -55,6 +55,7 @@ jobs:
 
       - name: Add SSH key
         run: |
+          eval `ssh-agent -s`
           mkdir ~/.ssh
           touch ~/.ssh/known_hosts ~/.ssh/id_rsa_ethz ~/.ssh/id_rsa_ethz.pub
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts

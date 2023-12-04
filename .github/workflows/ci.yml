@@ -55,6 +55,7 @@ jobs:
 
       - name: Add SSH key
         run: |
+          touch ~/.ssh/known_hosts ~/.ssh/id_rsa_ethz ~/.ssh/id_rsa_ethz.pub
           echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_ethz
           echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa_ethz.pub

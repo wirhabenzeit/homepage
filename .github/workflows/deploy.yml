@@ -30,6 +30,9 @@ jobs:
           name_is_regexp: false
           check_artifacts: false
 
+      - name: DEBUG
+        run: ls -la dist/
+
       - name: Add SSH key
         run: |
           mkdir -p ~/.ssh/

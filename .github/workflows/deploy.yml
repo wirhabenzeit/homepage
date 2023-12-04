@@ -29,6 +29,7 @@ jobs:
           name: dist
           name_is_regexp: false
           check_artifacts: false
+          path: dist
 
       - name: DEBUG
         run: ls -la .

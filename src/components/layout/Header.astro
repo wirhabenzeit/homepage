@@ -1,6 +1,5 @@
 ---
 import ThemeToggle from "../ThemeToggle.astro";
-import Search from "../Search.astro";
 import { menuLinks } from "@/site-config";
 import { Image } from "astro:assets";
 import profileImage from "@/assets/profile.jpg";
@@ -74,7 +73,6 @@ const url = new URL(Astro.request.url);
 			}
 		</nav>
 	</div>
-	{/*<Search />*/}
 	<ThemeToggle />
 	<mobile-button>
 		<button

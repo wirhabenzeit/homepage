@@ -25,7 +25,6 @@ jobs:
         with:
           workflow: ci.yml
           workflow_conclusion: success
-          branch: main
           run_id: ${{ github.event.workflow_run.id }}
           name: dist
           name_is_regexp: false

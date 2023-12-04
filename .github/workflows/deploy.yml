@@ -31,7 +31,7 @@ jobs:
           check_artifacts: false
 
       - name: DEBUG
-        run: ls -la dist/
+        run: ls -la .
 
       - name: Add SSH key
         run: |

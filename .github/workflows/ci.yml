@@ -53,12 +53,17 @@ jobs:
       - name: Run build
         run: pnpm build
 
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: "|1|IzVmLdW9nBM03Ax1SbsDoKajQDE=|Ep0WOtWyRuOjnEZKlEONzmnNHJo= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+9TmitZ2JGXcAgPEVVfMko56mEgjpia6C36bYvaIMQUqjY2wLEfHnpzzh3wMvHgiTJLmPt6AqU1/bcxYu1eQVoARoJzqsWglU2ZJ3kDD6w3LiBg0HVFiWp0HgKcdsVD+jFP2Ryt5+Egd98kdJOPEwvhPk/uoV+eFbrBysGxKtY0X05pzBSo/Udx3Lbs+F9yKTvDpPIBMY7QdyRThxWxWrj+7QRCtIcITneso1MlTuc80W/JRZJI9YnvtFDgJMXxlqa/o43//WrCcuhQV9zyWXooNcSJ+MjXXz1rIZ2AeYQ+3EFO4qxHWKBZ9rk8IUNrqtL/dHmqRzFPRIQQODmhjn"
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H slab1.ethz.ch >> ~/.ssh/known_hosts
+      - name: Add SSH key
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p /home/runner/.ssh
+          ssh-keyscan slab1.ethz.ch >> /home/runner/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
+          chmod 600 /home/runner/.ssh/github_actions
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add /home/runner/.ssh/github_actions
       - name: Deploy
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: rsync -aPz dist/ dschroeder@slab1.ethz.ch:homepage

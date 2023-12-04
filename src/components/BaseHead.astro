@@ -11,7 +11,7 @@ const titleSeparator = "•";
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(
-	ogImage ? ogImage : `${import.meta.env.BASE_URL}/social-card.png`,
+	ogImage ? ogImage : `${import.meta.env.BASE_URL}/apple-touch-icon.png`,
 	Astro.url,
 ).href;
 ---
@@ -23,7 +23,6 @@ const socialImageURL = new URL(
 
 {/* Icons / Favicon */}
 <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`} sizes="any" />
-<link rel="icon" href={`${import.meta.env.BASE_URL}/icon.svg`} type="image/svg+xml" />
 <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`} />
 <link rel="manifest" href={`${import.meta.env.BASE_URL}/manifest.webmanifest`} />
 <link rel="canonical" href={canonicalURL} />
@@ -65,25 +64,34 @@ const socialImageURL = new URL(
 {/* Sitemap */}
 <link rel="sitemap" href=`${import.meta.env.BASE_URL}/sitemap-index.xml` />
 
-{/* RSS auto-discovery */}
 <link
 	rel="alternate"
 	type="application/rss+xml"
 	title={siteConfig.title}
-	href=`${import.meta.env.BASE_URL}/rss.xml`
+	href=`${import.meta.env.BASE_URL}/posts/rss.xml`
 />
+
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={`${siteConfig.title} - Research`}
+	href=`${import.meta.env.BASE_URL}/research/rss.xml`
+/>
+
+<script type="text/javascript">
+	(function (c, l, a, r, i, t, y) {
+		c[a] =
+			c[a] ||
+			function () {
+				(c[a].q = c[a].q || []).push(arguments);
+			};
+		t = l.createElement(r);
+		t.async = 1;
+		t.src = "https://www.clarity.ms/tag/" + i;
+		y = l.getElementsByTagName(r)[0];
+		y.parentNode.insertBefore(t, y);
+	})(window, document, "clarity", "script", "k0kelifjja");
+</script>
 
 {/* katex */}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
-
-{/* Webmentions */}
-{
-	siteConfig.webmentions && (
-		<>
-			<link rel="webmention" href={siteConfig.webmentions.link} />
-			{siteConfig.webmentions.pingback && (
-				<link rel="pingback" href={siteConfig.webmentions.pingback} />
-			)}
-		</>
-	)
-}

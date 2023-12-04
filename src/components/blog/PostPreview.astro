@@ -60,6 +60,8 @@ const descCols = post.data.heroImage
 							src={post.data.heroImage.src}
 							alt={post.data.heroImage.alt}
 							loading="eager"
+							width={600}
+							densities={[1, 2, 3]}
 							fetchpriority="high"
 							class:list={[imgClass]}
 						/>
@@ -68,6 +70,8 @@ const descCols = post.data.heroImage
 								src={post.data.heroImageHover.src}
 								alt={post.data.heroImageHover.alt}
 								loading="eager"
+								width={600}
+								densities={[1, 2, 3]}
 								fetchpriority="auto"
 								class:list={[
 									imgClass,
@@ -81,7 +85,7 @@ const descCols = post.data.heroImage
 		)
 	}
 	<div class:list={["col-span-full row-span-1 row-start-1 text-right", titleCols]}>
-		<p class={titleClass}>
+		<h2 class={titleClass}>
 			{number !== undefined ? `${number}. ` : ""}
 			<a
 				class:list={["text-accent", titleClass]}
@@ -89,7 +93,7 @@ const descCols = post.data.heroImage
 			>
 				{post.data.title}
 			</a>
-		</p>{
+		</h2>{
 			withAuthor && post.data.authors && (
 				<p class:list={["text-xs italic"]}>{post.data.authors.join(", ")}</p>
 			)

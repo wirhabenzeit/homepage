@@ -1,7 +1,7 @@
 {
-	"name": "Astro Theme Cactus Demo",
-	"short_name": "Astro_Cactus",
-	"description": "Starter blog site for Astro",
+	"name": "Dominik Schröder",
+	"short_name": "Dominik Schräder",
+	"description": "Personal Homepage of Dominik Schröder",
 	"icons": [
 		{
 			"src": "/192x192.png",

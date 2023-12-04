@@ -60,7 +60,9 @@ jobs:
           mkdir -p /home/runner/.ssh
           ssh-keyscan slab1.ethz.ch >> /home/runner/.ssh/known_hosts
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > /home/runner/.ssh/github_actions
+          chmod 700 /home/runner/.ssh
           chmod 600 /home/runner/.ssh/github_actions
+          chmod 600 /home/runner/.ssh/known_hosts
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add /home/runner/.ssh/github_actions
       - name: Deploy

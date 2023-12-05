@@ -20,4 +20,5 @@ const { Content } = await entry.render();
 
 <PostLayout post={entry}>
 	<Content />
+	<PDFViewer url={`${entry.slug}.pdf`} filename={`${entry.data.arxiv}.pdf`} />
 </PostLayout>

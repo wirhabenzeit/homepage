@@ -1,8 +1,37 @@
 ---
-const { url } = Astro.props;
+const { url, filename } = Astro.props;
 ---
 
-<iframe src={`http://docs.google.com/gview?url=${url}&embedded=true`} width="100%" height="500px"
-></iframe>
+<div id="adobe" data-url={url} data-filename={filename} class="hidden"></div>
+<div id="adobe-dc-view" style="height: 600px; width: 100%; border: 1px solid #dadada;"></div>
+<script type="module" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
+<script type="module">
+	var viewerConfig = {
+		embedMode: "IN_LINE",
+	};
+	document.addEventListener("adobe_dc_view_sdk.ready", function () {
+		var adobeDCView = new AdobeDC.View({
+			clientId:
+				window.location.hostname == "localhost"
+					? "d491edda673641f7ad315010422303dd"
+					: "68cce88a30544f5fbca4b1c4ef33e537",
+			divId: "adobe-dc-view",
+		});
 
-<!-- <object data={src} content-type="application/pdf" width="100%" height="800px"></object> -->
+		adobeDCView.previewFile(
+			{
+				content: {
+					location: {
+						url: document.getElementById("adobe").dataset.url,
+					},
+				},
+				/* Pass meta data of file */
+				metaData: {
+					/* file name */
+					fileName: document.getElementById("adobe").dataset.filename,
+				},
+			},
+			{},
+		);
+	});
+</script>

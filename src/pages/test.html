@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Adobe Acrobat Services PDF Embed API Sample</title>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<!-- Customize page layout style according to your need and PDF file for best viewing experience -->
+	<body style="margin: 100px 0 0 200px">
+		<div id="adobe-dc-view" style="height: 476px; width: 600px; border: 1px solid #dadada"></div>
+		<script
+			type="text/javascript"
+			src="https://acrobatservices.adobe.com/view-sdk/viewer.js"
+		></script>
+		<script>
+			var viewerConfig = {
+				embedMode: "SIZED_CONTAINER",
+			};
+
+			/* Wait for Adobe Acrobat Services PDF Embed API to be ready */
+			document.addEventListener("adobe_dc_view_sdk.ready", function () {
+				/* Initialize the AdobeDC View object */
+				var adobeDCView = new AdobeDC.View({
+					/* Pass your registered client id */
+					clientId: "d491edda673641f7ad315010422303dd", // "68cce88a30544f5fbca4b1c4ef33e537",
+					/* Pass the div id in which PDF should be rendered */
+					divId: "adobe-dc-view",
+				});
+
+				/* Invoke the file preview API on Adobe DC View object */
+				adobeDCView.previewFile(
+					{
+						/* Pass information on how to access the file */
+						content: {
+							/* Location of file where it is hosted */
+							location: {
+								url: "https://acrobatservices.adobe.com/view-sdk-demo/PDFs/Bodea Brochure.pdf",
+								/*
+			             If the file URL requires some additional headers, then it can be passed as follows:-
+			             header: [
+			                 {
+			                     key: "<HEADER_KEY>",
+			                     value: "<HEADER_VALUE>",
+			                 }
+			             ]
+			             */
+							},
+						},
+						/* Pass meta data of file */
+						metaData: {
+							/* file name */
+							fileName: "Bodea Brochure.pdf",
+						},
+					},
+					viewerConfig,
+				);
+			});
+		</script>
+	</body>
+</html>

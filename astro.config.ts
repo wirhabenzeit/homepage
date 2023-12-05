@@ -8,13 +8,18 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import remarkUnwrapImages from "remark-unwrap-images";
 
+// https://astro.build/config
 export default defineConfig({
 	site: "https://n.ethz.ch/~dschroeder/",
 	base: "/~dschroeder",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkMath],
 		rehypePlugins: [rehypeKatex],
-		remarkRehype: { footnoteLabelProperties: { className: [""] } },
+		remarkRehype: {
+			footnoteLabelProperties: {
+				className: [""],
+			},
+		},
 		shikiConfig: {
 			theme: "dracula",
 			wrap: true,
@@ -39,7 +44,6 @@ export default defineConfig({
 		assetsInclude: ["**/*.bib", "**/*.pdf"],
 	},
 });
-
 function rawFonts(ext: Array<string>) {
 	return {
 		name: "vite-plugin-raw-fonts",

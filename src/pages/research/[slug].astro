@@ -2,6 +2,7 @@
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import PostLayout from "@/layouts/BlogPost";
 import { getAll } from "@/utils";
+import PDFViewer from "@/components/PDFViewer";
 
 export const getStaticPaths = (async () => {
 	const blogEntries = await getAll("research");

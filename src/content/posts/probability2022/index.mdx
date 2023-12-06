@@ -8,6 +8,7 @@ heroImage:
   alt: "Whiteboard"
 ---
 
+import PDFViewer from "@/components/PDFViewer";
 import notes from "./notes.pdf";
 
 ## Content
@@ -23,10 +24,4 @@ import notes from "./notes.pdf";
 
 ## Lecture notes
 
-<object data={notes} type="application/pdf" width="100%" height="800px">
-	<p>
-		Unable to display PDF file.
-		<a href={notes}>Download</a>
-		instead.
-	</p>
-</object>
+<PDFViewer url={notes} filename="notes.pdf" embedMode="" class="h-[60rem] w-[100%]" />

@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.1.5
     version: 1.1.5(astro@3.6.4)
   '@astrojs/rss':
-    specifier: ^3.0.0
-    version: 3.0.0
+    specifier: ^4.0.1
+    version: 4.0.1
   '@astrojs/sitemap':
     specifier: ^3.0.4
     version: 3.0.4
@@ -20,9 +20,6 @@ dependencies:
   astro:
     specifier: 3.6.4
     version: 3.6.4(typescript@5.3.3)
-  astro-google-analytics:
-    specifier: ^1.0.3
-    version: 1.0.3
   astro-icon:
     specifier: ^1.0.1
     version: 1.0.1
@@ -83,8 +80,8 @@ devDependencies:
     specifier: ^3.6.1
     version: 3.6.1(@typescript-eslint/parser@6.17.0)(eslint-plugin-import@2.29.1)(eslint@8.56.0)
   eslint-plugin-astro:
-    specifier: ^0.30.0
-    version: 0.30.0(eslint@8.56.0)
+    specifier: ^0.31.0
+    version: 0.31.0(eslint@8.56.0)
   eslint-plugin-import:
     specifier: ^2.29.1
     version: 2.29.1(@typescript-eslint/parser@6.17.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
@@ -279,8 +276,8 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/rss@3.0.0:
-    resolution: {integrity: sha512-PMX8iqByk9gtOrusikten/oF5uHjOCZigL6RuXFBUu+xtdKQxXzfIohJ99V2haA4FJjVDyibDTGzXR81POBMxQ==}
+  /@astrojs/rss@4.0.1:
+    resolution: {integrity: sha512-fzXWsrAp17atO02OZJETM8e8McRz+dNWzMeO7ENb6xgod2nWj5mH/auPBFs1a9FzMUi1nOQmzSPHO1hxZZpkwQ==}
     dependencies:
       fast-xml-parser: 4.3.2
       kleur: 4.1.5
@@ -1882,10 +1879,6 @@ packages:
       - supports-color
     dev: true
 
-  /astro-google-analytics@1.0.3:
-    resolution: {integrity: sha512-5bD7jA15yxVaUFVVEFG6KKMphYJ4AKP4+HSqCVBpTBnqh8LL0giTdAHpG9KJs3JaFbGQUTWP5Pqt8+twz7f55Q==}
-    dev: false
-
   /astro-icon@1.0.1:
     resolution: {integrity: sha512-NtPyGeoSe/TJsGsea6T+8SDcW/wwZ7OIUq731DT7M6nw2B1p5BHuChiQI0bQvIIL79r48nMN7mQ8GBtwsDEucA==}
     dependencies:
@@ -2895,8 +2888,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-astro@0.30.0(eslint@8.56.0):
-    resolution: {integrity: sha512-LDbbs836SiHqhuiuAF4CPqSSWsfa7R8vfX5lckphCUD/kBFIsobViI8fuTyMktQ9isCg+Q86LIQAHTFl3PWKTA==}
+  /eslint-plugin-astro@0.31.0(eslint@8.56.0):
+    resolution: {integrity: sha512-oNZj7bcpCPkebKD7ZfGflAFVUwz78ItdXeK5aVAqFpZZk1JhGaseWdU24f8r26hRte9rrT3EQV4Qwbngp2xSPA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=7.0.0'

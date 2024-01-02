@@ -3,10 +3,10 @@ import fs from "fs";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import prefetch from "@astrojs/prefetch";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import remarkUnwrapImages from "remark-unwrap-images";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,13 +26,14 @@ export default defineConfig({
 		},
 	},
 	integrations: [
+		icon(),
 		mdx({}),
 		tailwind({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
-		prefetch(),
 	],
+  prefetch: true,
 	image: {
 		domains: ["webmention.io"],
 	},

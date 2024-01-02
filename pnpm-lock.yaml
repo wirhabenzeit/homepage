@@ -33,8 +33,8 @@ dependencies:
     specifier: ^0.0.24
     version: 0.0.24
   pdfjs:
-    specifier: ^2.5.2
-    version: 2.5.2
+    specifier: ^2.5.3
+    version: 2.5.3
   posthog-js:
     specifier: ^1.96.1
     version: 1.96.1
@@ -8081,8 +8081,8 @@ packages:
     resolution: {integrity: sha512-d+RQGp0MAYTIaDBIMmOfMwz3E+LOZnxx1HZd5R18mmCZY0QBlK0LDZfPc8FW8Ed2DlvsuE6PRjroDY+wg4+j/Q==}
     dev: false
 
-  /pdfjs@2.5.2:
-    resolution: {integrity: sha512-jfjtP5bclEs58udYKPkVNjRi11OadBmMxuVaN4DQh5l8tMCm7MXSFFzDvcZAsf1ravqtt07q5sVPHaLugB2BAQ==}
+  /pdfjs@2.5.3:
+    resolution: {integrity: sha512-XSFh7/znM7gJAVABFvrtIkxi6TcHyHUCYpwaRUv1h0ln2ZQel0s8nKgsvmo+D7IKkkXKEQNtMU/hdmF/MUeaHg==}
     engines: {node: '>=7'}
     dependencies:
       '@rkusa/linebreak': 1.0.0

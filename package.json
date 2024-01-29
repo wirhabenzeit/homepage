@@ -19,7 +19,7 @@
 		"astro-icon": "^1.0.3",
 		"posthog-js": "^1.103.1",
 		"rehype-katex": "^7.0.0",
-		"remark-math": "^5.1.1",
+		"remark-math": "^6.0.0",
 		"satori": "0.10.11",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.33.2"

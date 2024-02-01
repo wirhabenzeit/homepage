@@ -17,7 +17,7 @@
 		"@astrojs/tailwind": "^5.1.0",
 		"astro": "3.6.4",
 		"astro-icon": "^1.0.3",
-		"posthog-js": "^1.103.1",
+		"posthog-js": "^1.104.2",
 		"rehype-katex": "^7.0.0",
 		"remark-math": "^5.1.1",
 		"satori": "0.10.11",

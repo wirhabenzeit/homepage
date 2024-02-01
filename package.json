@@ -16,7 +16,7 @@
 		"@astrojs/sitemap": "^3.0.5",
 		"@astrojs/tailwind": "^5.1.0",
 		"astro": "3.6.4",
-		"astro-icon": "^1.0.3",
+		"astro-icon": "^1.0.4",
 		"posthog-js": "^1.103.1",
 		"rehype-katex": "^7.0.0",
 		"remark-math": "^5.1.1",

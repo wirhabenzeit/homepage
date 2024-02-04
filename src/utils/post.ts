@@ -1,4 +1,4 @@
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry, CollectionKey } from "astro:content";
 import { getCollection } from "astro:content";
 
 /** Note: this function filters out draft posts based on the environment */
@@ -9,12 +9,10 @@ export async function getAllPosts() {
 }
 
 export async function getAll() {
-	var posts = [];
-	for (let name of ["post", "research", "thesis", "project"]) {
-		const collection = await getCollection(name);
-		posts = posts.concat(collection);
-	}
-	return posts;
+	const collectionNames = ["post", "research", "thesis", "project"] as CollectionKey[];
+	const collectionsPromises = collectionNames.map((name) => getCollection(name));
+	const collections = await Promise.all(collectionsPromises);
+	return collections.flat();
 }
 
 export function sortMDByDate(posts: Array<CollectionEntry<"post">>) {
@@ -26,17 +24,41 @@ export function sortMDByDate(posts: Array<CollectionEntry<"post">>) {
 }
 
 /** Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so. */
-export function getAllTags(posts: Array<CollectionEntry<"post">>) {
+export function getAllTags(
+	posts: Array<
+		| CollectionEntry<"post">
+		| CollectionEntry<"research">
+		| CollectionEntry<"thesis">
+		| CollectionEntry<"teaching">
+		| CollectionEntry<"project">
+	>,
+) {
 	return posts.flatMap((post) => [...post.data.tags]);
 }
 
 /** Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so. */
-export function getUniqueTags(posts: Array<CollectionEntry<"post">>) {
+export function getUniqueTags(
+	posts: Array<
+		| CollectionEntry<"post">
+		| CollectionEntry<"research">
+		| CollectionEntry<"thesis">
+		| CollectionEntry<"teaching">
+		| CollectionEntry<"project">
+	>,
+) {
 	return [...new Set(getAllTags(posts))];
 }
 
 /** Note: This function doesn't filter draft posts, pass it the result of getAllPosts above to do so. */
-export function getUniqueTagsWithCount(posts): Array<[string, number]> {
+export function getUniqueTagsWithCount(
+	posts: Array<
+		| CollectionEntry<"post">
+		| CollectionEntry<"research">
+		| CollectionEntry<"thesis">
+		| CollectionEntry<"teaching">
+		| CollectionEntry<"project">
+	>,
+): Array<[string, number]> {
 	return [
 		...getAllTags(posts).reduce(
 			(acc, t) => acc.set(t, (acc.get(t) || 0) + 1),

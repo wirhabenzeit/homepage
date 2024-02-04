@@ -1,11 +1,9 @@
 ---
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import PostLayout from "@/layouts/Post";
-import Markdown from "@/layouts/Markdown";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import PDFViewer from "@/components/PDFViewer";
-import Markdown from "@/layouts/Markdown";
 
 export const getStaticPaths = (async () => {
 	const researchItems = (await getCollection(

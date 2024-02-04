@@ -13,11 +13,11 @@ const allPosts = (await getCollection("thesis", () => true)) as CollectionEntry<
 	{
 		allPosts.map((post, i) => (
 			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
-				<FancyPostPreview large={false} url={`thesis/${post.slug}`}>
+				<FancyPostPreview large={false} url={`${post.slug}`}>
 					<div slot="title">
 						<h2 class="mb-1 text-xl font-bold">
 							{numbered && `${i + 1}. `}
-							<a href={`thesis/${post.slug}`} class="text-accent">
+							<a href={`${post.slug}`} class="text-accent">
 								{post.data.title}
 							</a>
 						</h2>

@@ -33,12 +33,12 @@ for (let post of allPosts) {
 					{...(post.data.heroImage ? { heroImage: post.data.heroImage } : {})}
 					{...(post.data.heroImageHover ? { heroImageHover: post.data.heroImageHover } : {})}
 					large={large}
-					url={`research/${post.slug}`}
+					url={`${post.slug}`}
 				>
 					<div slot="title">
 						<h2 class="mb-1 text-xl font-bold">
 							{numbered && `${i + 1}. `}
-							<a href={`research/${post.slug}`} class="text-accent">
+							<a href={`${post.slug}`} class="text-accent">
 								{post.data.title}
 							</a>
 						</h2>

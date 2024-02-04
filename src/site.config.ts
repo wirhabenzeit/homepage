@@ -24,15 +24,15 @@ export const menuLinks: Array<{ title: string; path: string }> = [
 	},
 	{
 		title: "Research",
-		path: `${import.meta.env.BASE_URL}/research`,
+		path: `${import.meta.env.BASE_URL}/research/`,
 	},
 	{
 		title: "Projects",
-		path: `${import.meta.env.BASE_URL}/project`,
+		path: `${import.meta.env.BASE_URL}/project/`,
 	},
 	{
 		title: "Teaching",
-		path: `${import.meta.env.BASE_URL}/teaching`,
+		path: `${import.meta.env.BASE_URL}/teaching/`,
 	},
 ];
 

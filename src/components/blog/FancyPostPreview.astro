@@ -65,7 +65,7 @@ const descCols = heroImage
 				class:list={["col-span-12 row-span-1 row-start-2 sm:row-span-4 sm:row-start-1", imgCols]}
 			>
 				<div class:list={["group relative hover:z-30 sm:z-10"]}>
-					<a href={`${import.meta.env.BASE_URL}/${url}`} class="group">
+					<a href={url} class="group">
 						<Image
 							src={heroImage.src}
 							alt={heroImage.alt}
@@ -99,7 +99,7 @@ const descCols = heroImage
 	</div>
 	<blockquote
 		class:list={[
-			"bg-bgColorAlt z-20 col-span-full row-start-3 my-1 p-2",
+			"z-20 col-span-full row-start-3 my-1 bg-bgColorAlt p-2",
 			descCols,
 			heroImage ? "rounded-xl sm:shadow-lg" : "border-l-4 border-accent",
 		]}

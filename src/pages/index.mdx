@@ -9,7 +9,7 @@ export const selectedProjects = ["stravamap", "csp", "pybibget"];
 
 import SocialList from "../components/SocialList.astro";
 import ResearchList from "../components/blog/ResearchList.astro";
-import ProjectList from "../components/blog/ProjectList.astro";
+import PostList from "../components/blog/PostList.astro";
 import CV from "../components/CV.astro";
 
 After obtaining my PhD under the supervision of László Erdős at the Institute of
@@ -31,7 +31,11 @@ Science and Technology Austria, I have been a postdoctoral researcher at ETH Zur
 
 ## Selected projects
 
-<ProjectList filter={(post) => selectedProjects.includes(post.slug)} large={true} />
+<PostList
+	filter={(post) => selectedProjects.includes(post.slug)}
+	large={true}
+	collection="project"
+/>
 
 [List of all projects](/~dschroeder/project)
 

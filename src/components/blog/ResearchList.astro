@@ -30,15 +30,18 @@ for (let post of allPosts) {
 			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
 				<FancyPostPreview
 					right={isRight[i]}
-					{...(post.data.heroImage ? { heroImage: post.data.heroImage } : {})}
-					{...(post.data.heroImageHover ? { heroImageHover: post.data.heroImageHover } : {})}
+					{...(post.data.heroImageHover
+						? { heroImage: post.data.heroImageHover }
+						: post.data.heroImage
+							? { heroImage: post.data.heroImage }
+							: {})}
 					large={large}
-					url={`${post.slug}`}
+					url={`${import.meta.env.BASE_URL}/research/${post.slug}`}
 				>
 					<div slot="title">
 						<h2 class="mb-1 text-xl font-bold">
 							{numbered && `${i + 1}. `}
-							<a href={`${post.slug}`} class="text-accent">
+							<a href={`${import.meta.env.BASE_URL}/research/${post.slug}`} class="text-accent">
 								{post.data.title}
 							</a>
 						</h2>

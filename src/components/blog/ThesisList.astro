@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import FancyPostPreview from "./FancyPostPreview.astro";
+import type { CollectionEntry } from "astro:content";
+import Tags from "./Tags.astro";
+
+const { numbered = false } = Astro.props;
+
+const allPosts = (await getCollection("thesis", () => true)) as CollectionEntry<"thesis">[];
+---
+
+<ul class="not-prose space-y-8">
+	{
+		allPosts.map((post, i) => (
+			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
+				<FancyPostPreview large={false} url={`thesis/${post.slug}`}>
+					<div slot="title">
+						<h2 class="mb-1 text-xl font-bold">
+							{numbered && `${i + 1}. `}
+							<a href={`thesis/${post.slug}`} class="text-accent">
+								{post.data.title}
+							</a>
+						</h2>
+					</div>
+					<p class="text-md" slot="description">
+						{post.data.description}
+					</p>
+					<Tags tags={post.data.tags} slot="tags" />
+				</FancyPostPreview>
+			</li>
+		))
+	}
+</ul>

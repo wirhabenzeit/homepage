@@ -1,33 +1,32 @@
 ---
-import PostPreview from "./PostPreview.astro";
-import { getAll } from "@/utils";
+import { getCollection } from "astro:content";
+import FancyPostPreview from "./FancyPostPreview.astro";
+import type { CollectionEntry } from "astro:content";
+import Tags from "./Tags.astro";
 
-const {
-	filter = () => true,
-	sort = (a, b) => a.slug > b.slug,
-	numbered = false,
-	collection = "posts",
-	...args
-} = Astro.props;
+const { numbered = false } = Astro.props;
 
-const allPosts = await getAll(collection);
-
-const selectedPosts = allPosts
-	.filter(filter)
-	.sort(sort)
-	.reduce((prev, post) => {
-		const prevRight = prev.length > 0 ? prev[prev.length - 1].right : true;
-		const prevNum = prev.length > 0 ? prev[prev.length - 1].number : 0;
-		const right = post.data.heroImage ? !prevRight : prevRight;
-		return [...prev, { ...{ post: post, right }, ...(numbered ? { number: prevNum + 1 } : {}) }];
-	}, []);
+const allPosts = (await getCollection("post", () => true)) as CollectionEntry<"post">[];
 ---
 
 <ul class="not-prose space-y-8">
 	{
-		selectedPosts.map((props) => (
+		allPosts.map((post, i) => (
 			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
-				<PostPreview {...props} {...args} />
+				<FancyPostPreview large={false} url={`post/${post.slug}`}>
+					<div slot="title">
+						<h2 class="mb-1 text-xl font-bold">
+							{numbered && `${i + 1}. `}
+							<a href={`post/${post.slug}`} class="text-accent">
+								{post.data.title}
+							</a>
+						</h2>
+					</div>
+					<p class="text-md" slot="description">
+						{post.data.description}
+					</p>
+					<Tags tags={post.data.tags} slot="tags" />
+				</FancyPostPreview>
 			</li>
 		))
 	}

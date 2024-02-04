@@ -3,48 +3,57 @@ import fs from "fs";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
+import remarkUnwrapImages from "remark-unwrap-images";
+import rehypeExternalLinks from "rehype-external-links";
+import { remarkReadingTime } from "./src/utils/remark-reading-time";
+import icon from "astro-icon";
+import expressiveCode from "astro-expressive-code";
+import { expressiveCodeOptions } from "./src/site.config";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import remarkUnwrapImages from "remark-unwrap-images";
-import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
+	// ! Please remember to replace the following site property with your own domain
 	site: "https://n.ethz.ch/~dschroeder/",
 	base: "/~dschroeder",
 	markdown: {
-		remarkPlugins: [remarkUnwrapImages, remarkMath],
-		rehypePlugins: [rehypeKatex],
+		remarkPlugins: [remarkUnwrapImages, remarkReadingTime, remarkMath],
+		rehypePlugins: [
+			rehypeKatex,
+			[
+				rehypeExternalLinks,
+				{
+					target: "_blank",
+					rel: ["nofollow, noopener, noreferrer"],
+				},
+			],
+		],
 		remarkRehype: {
 			footnoteLabelProperties: {
 				className: [""],
 			},
 		},
-		shikiConfig: {
-			theme: "dracula",
-			wrap: true,
-		},
 	},
 	integrations: [
+		expressiveCode(expressiveCodeOptions),
 		icon(),
-		mdx({}),
 		tailwind({
 			applyBaseStyles: false,
 		}),
 		sitemap(),
+		mdx(),
 	],
-  prefetch: true,
-	image: {
-		domains: ["webmention.io"],
-	},
+	// https://docs.astro.build/en/guides/prefetch/
+	prefetch: true,
 	vite: {
-		plugins: [rawFonts([".ttf"])],
+		plugins: [rawFonts([".ttf", ".woff"])],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
-		assetsInclude: ["**/*.bib", "**/*.pdf"],
 	},
 });
+
 function rawFonts(ext: Array<string>) {
 	return {
 		name: "vite-plugin-raw-fonts",

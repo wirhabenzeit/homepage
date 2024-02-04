@@ -1,38 +1,14 @@
 ---
-const { publication } = Astro.props;
-const fields = [
-	{ field: "arxiv", label: "arXiv", url: (number) => `https://arxiv.org/abs/${number}` },
-	{ field: "doi", label: "doi", url: (number) => `https://doi.org/${number}` },
-	{
-		field: "mathscinet",
-		label: "MathSciNet",
-		url: (number) => `https://mathscinet.ams.org/mathscinet-getitem?mr=${number}`,
-	},
-];
-
+const { volume, year, issue, journal, page, authors } = Astro.props;
+var journalInfo = [];
+if (volume) journalInfo.push(`Vol. ${volume}`);
+if (year) journalInfo.push(`(${year})`);
+if (issue) journalInfo.push(`| Issue ${issue}`);
+if (page) journalInfo.push(` ${page}`);
 ---
 
-<p class="mb-1 text-sm text-gray-500">
-	{publication.authors.join(", ")}
+{authors && <p class:list={["text-xs italic"]}>{authors.join(", ")}</p>}
+<p class={"mb-1 text-xs"}>
+	<span class="mr-2 font-bold">{journal}</span>
+	{journalInfo.length > 0 && <span class="text-accent"> {journalInfo.join(" ")}</span>}
 </p>
-<div class="mb-1">
-	<span class="font-bold">{"journal" in publication ? publication.journal : "Preprint"}</span>
-	{"volume" in publication && <span>Vol. {publication.volume}</span>}
-	{"year" in publication && `(${publication.year})`}
-	{"issue" in publication && <span>| Issue {publication.issue}</span>}
-	{"page" in publication && <span>| {publication.page}</span>}
-	{
-		fields.map(({ field, label, url }) => {
-			if (field in publication) {
-				return (
-					<div>
-						{label} |
-						<a href={url(publication[field])} class="cactus-link">
-							{publication[field]}
-						</a>
-					</div>
-				);
-			}
-		})
-	}
-</div>

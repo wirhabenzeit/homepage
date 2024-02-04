@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import fs from "fs";
-import { getAll } from "@/utils";
+import { getCollection } from "astro:content";
 
 export const GET: APIRoute = async function GET({ props }) {
 	console.log(props);
@@ -14,7 +14,7 @@ export const GET: APIRoute = async function GET({ props }) {
 };
 
 export const getStaticPaths = async () => {
-	const blogEntries = await getAll("research");
+	const blogEntries = await getCollection("research");
 	return blogEntries.map((entry) => {
 		return {
 			params: { id: entry.slug },

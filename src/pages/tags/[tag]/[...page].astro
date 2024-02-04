@@ -1,0 +1,68 @@
+---
+import type { Page, GetStaticPaths } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import PageLayout from "@/layouts/Base";
+import PostPreview from "@/components/blog/PostPreview";
+import Pagination from "@/components/Paginator";
+import { getAll, getUniqueTags, sortMDByDate } from "@/utils";
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+	var posts = await getAll();
+	const allTags = posts.flatMap((post) => [...post.data.tags]);
+	const uniqueTags = [...new Set(allTags)];
+	return uniqueTags.flatMap((tag) => {
+		const filterPosts = posts.filter((post) => post.data.tags.includes(tag));
+		return paginate(filterPosts, {
+			params: { tag },
+			pageSize: 10,
+		});
+	});
+};
+
+interface Props {
+	page: Page<CollectionEntry<"post">>;
+}
+
+const { page } = Astro.props;
+const { tag } = Astro.params;
+
+const meta = {
+	title: `Tag: ${tag}`,
+	description: `View all posts with the tag - ${tag}`,
+};
+
+const paginationProps = {
+	...(page.url.prev && {
+		prevUrl: {
+			url: page.url.prev,
+			text: `← Previous Tags`,
+		},
+	}),
+	...(page.url.next && {
+		nextUrl: {
+			url: page.url.next,
+			text: `Next Tags →`,
+		},
+	}),
+};
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-6 flex items-center">
+		<a href="/tags/" class="text-accent sm:hover:underline">Tags</a>
+		<span class="me-3 ms-2">→</span>
+		<span class="text-xl">#{tag}</span>
+	</h1>
+	<section aria-label="Blog post list">
+		<ul class="space-y-8">
+			{
+				page.data.map((p) => (
+					<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
+						<PostPreview post={p} as="h2" withDesc />
+					</li>
+				))
+			}
+		</ul>
+		<Pagination {...paginationProps} />
+	</section>
+</PageLayout>

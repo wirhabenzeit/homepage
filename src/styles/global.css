@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
+	:root,
+	:root[data-theme="light"] {
 		color-scheme: light;
 		/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
 		--theme-bg: 0deg 0% 98%;
@@ -15,7 +16,7 @@
 		--theme-quote: 351deg 66% 48%;
 	}
 
-	:root.dark {
+	:root[data-theme="dark"] {
 		color-scheme: dark;
 		--theme-bg: 210deg 6% 12%;
 		--theme-bg-alt: 210deg 6% 20%;
@@ -27,10 +28,10 @@
 	}
 
 	html {
-		@apply overflow-x-hidden scroll-smooth;
+		@apply scroll-smooth;
 	}
 
 	html body {
-		@apply mx-auto flex min-h-screen max-w-4xl flex-col overflow-x-hidden bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply mx-auto flex min-h-screen max-w-4xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
 }

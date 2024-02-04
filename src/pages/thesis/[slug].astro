@@ -1,0 +1,23 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import PostLayout from "@/layouts/Post";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export const getStaticPaths = (async () => {
+	const researchItems = (await getCollection("thesis")) as CollectionEntry<"thesis">[];
+	return researchItems.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<PostLayout post={entry}>
+	<Content />
+</PostLayout>

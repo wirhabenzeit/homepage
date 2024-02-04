@@ -8,7 +8,8 @@ export const selectedResearch = ["14071552", "230200401", "170510661", "19120410
 export const selectedProjects = ["stravamap", "csp", "pybibget"];
 
 import SocialList from "../components/SocialList.astro";
-import PostList from "../components/blog/PostList.astro";
+import ResearchList from "../components/blog/ResearchList.astro";
+import ProjectList from "../components/blog/ProjectList.astro";
 import CV from "../components/CV.astro";
 
 After obtaining my PhD under the supervision of László Erdős at the Institute of
@@ -24,28 +25,15 @@ Science and Technology Austria, I have been a postdoctoral researcher at ETH Zur
 
 ## Selected research
 
-<PostList
-	filter={(post) => selectedResearch.includes(post.slug)}
-	sort={(a, b) => selectedResearch.indexOf(a.slug) - selectedResearch.indexOf(b.slug)}
-	large={true}
-	titleClass="text-accent text-xl font-bold"
-	withAuthor={false}
-	withJournalDetails={false}
-	collection="research"
-/>
+<ResearchList filter={(post) => selectedResearch.includes(post.slug)} large={true} />
 
 [List of all publications](/~dschroeder/research)
 
 ## Selected projects
 
-<PostList
-	filter={(post) => selectedProjects.includes(post.slug)}
-	sort={(a, b) => selectedProjects.indexOf(a.slug) - selectedProjects.indexOf(b.slug)}
-	large={true}
-	titleClass="text-accent text-xl font-bold"
-/>
+<ProjectList filter={(post) => selectedProjects.includes(post.slug)} large={true} />
 
-[List of all projects](/~dschroeder/projects)
+[List of all projects](/~dschroeder/project)
 
 ## Contact
 

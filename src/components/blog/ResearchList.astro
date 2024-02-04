@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import FancyPostPreview from "./FancyPostPreview.astro";
+import type { CollectionEntry } from "astro:content";
+import PublicationDetails from "../PublicationDetails.astro";
+import Tags from "./Tags.astro";
+
+interface Props {
+	numbered?: boolean;
+	large?: boolean;
+	filter?: (post: CollectionEntry<"research">) => boolean;
+}
+
+const { numbered = false, large = false, filter = () => true } = Astro.props;
+
+const allPosts = (await getCollection("research", filter)) as CollectionEntry<"research">[];
+
+var isRight = [] as boolean[];
+
+for (let post of allPosts) {
+	isRight.push(
+		post.data.heroImage ? !isRight[isRight.length - 1] : isRight[isRight.length - 1] || false,
+	);
+}
+---
+
+<ul class="not-prose space-y-8">
+	{
+		allPosts.map((post, i) => (
+			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
+				<FancyPostPreview
+					right={isRight[i]}
+					{...(post.data.heroImage ? { heroImage: post.data.heroImage } : {})}
+					{...(post.data.heroImageHover ? { heroImageHover: post.data.heroImageHover } : {})}
+					large={large}
+					url={`research/${post.slug}`}
+				>
+					<div slot="title">
+						<h2 class="mb-1 text-xl font-bold">
+							{numbered && `${i + 1}. `}
+							<a href={`research/${post.slug}`} class="text-accent">
+								{post.data.title}
+							</a>
+						</h2>
+						<PublicationDetails {...post.data} />
+					</div>
+					<p class="text-md" slot="description">
+						{post.data.description}
+					</p>
+					<Tags tags={post.data.tags} slot="tags" />
+				</FancyPostPreview>
+			</li>
+		))
+	}
+</ul>

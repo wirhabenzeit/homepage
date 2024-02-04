@@ -30,7 +30,7 @@ const { tags, collection, class: className } = Astro.props;
 					<a
 						class="cactus-link inline-block text-xs"
 						aria-label={`View more posts with the tag ${tag}`}
-						href={`${import.meta.env.BASE_URL}/${collection}/tags/${tag}/`}
+						href={`${import.meta.env.BASE_URL}/tags/${tag}/`}
 						data-pagefind-filter="tag"
 					>
 						#{tag}

@@ -1,0 +1,112 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+import { Image } from "astro:assets";
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
+	url: string;
+	large?: boolean | undefined;
+	right?: boolean | undefined;
+	heroImage?:
+		| {
+				alt: string;
+				src: {
+					height: number;
+					width: number;
+					format: "svg" | "avif" | "png" | "webp" | "jpeg" | "jpg" | "tiff" | "gif";
+					src: string;
+				};
+		  }
+		| undefined;
+	heroImageHover?:
+		| {
+				alt: string;
+				src: {
+					height: number;
+					width: number;
+					format: "svg" | "avif" | "png" | "webp" | "jpeg" | "jpg" | "tiff" | "gif";
+					src: string;
+				};
+		  }
+		| undefined;
+};
+
+const { heroImage, heroImageHover, url, large, right } = Astro.props;
+
+const imgClass =
+	"rounded-lg sm:shadow-lg my-2 sm:my_0 h-auto w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105 group";
+
+const imgCols = right
+	? large
+		? "sm:col-span-7 sm:col-start-1"
+		: "sm:col-span-5 sm:col-start-1"
+	: large
+		? "sm:col-span-7 sm:col-start-6"
+		: "sm:col-span-5 sm:col-start-8";
+const titleCols = heroImage
+	? right
+		? "sm:text-right sm:ml-2 " +
+			(large ? "sm:col-span-5 sm:col-start-8" : "sm:col-span-7 sm:col-start-6")
+		: "sm:text-left sm:mr-2 " +
+			(large ? "sm:col-span-5 sm:col-start-1" : "sm:col-span-7 sm:col-start-1")
+	: "sm:text-left sm:col-span-full";
+const descCols = heroImage
+	? right
+		? "sm:text-right sm:ml-2 " +
+			(large ? "sm:col-span-8 sm:col-start-5" : "sm:col-span-10 sm:col-start-3")
+		: "sm:text-left sm:mr-2 " +
+			(large ? "sm:col-span-8 sm:col-start-1" : "sm:col-span-10 sm:col-start-1")
+	: "sm:text-left sm:col-span-full";
+---
+
+<div class="grid w-full grid-cols-12 grid-rows-[auto_auto_auto_1fr]">
+	{
+		heroImage && (
+			<div
+				class:list={["col-span-12 row-span-1 row-start-2 sm:row-span-4 sm:row-start-1", imgCols]}
+			>
+				<div class:list={["group relative hover:z-30 sm:z-10"]}>
+					<a href={`${import.meta.env.BASE_URL}/${url}`} class="group">
+						<Image
+							src={heroImage.src}
+							alt={heroImage.alt}
+							loading="eager"
+							width={600}
+							densities={[1, 2, 3]}
+							fetchpriority="high"
+							class:list={[imgClass]}
+						/>
+						{heroImageHover && (
+							<Image
+								src={heroImageHover.src}
+								alt={heroImageHover.alt}
+								loading="eager"
+								width={600}
+								densities={[1, 2, 3]}
+								fetchpriority="auto"
+								class:list={[
+									imgClass,
+									"absolute inset-0 hidden transform transition-opacity transition-transform delay-500 duration-500 ease-in-out group-hover:block",
+								]}
+							/>
+						)}
+					</a>
+				</div>
+			</div>
+		)
+	}
+	<div class:list={["col-span-full row-span-1 row-start-1 text-right", titleCols]}>
+		<slot name="title" />
+	</div>
+	<blockquote
+		class:list={[
+			"bg-bgColorAlt z-20 col-span-full row-start-3 my-1 p-2",
+			descCols,
+			heroImage ? "rounded-xl sm:shadow-lg" : "border-l-4 border-accent",
+		]}
+	>
+		<slot name="description" />
+	</blockquote>
+	<div class:list={["col-span-full row-start-4", titleCols]}>
+		<slot name="tags" />
+	</div>
+</div>

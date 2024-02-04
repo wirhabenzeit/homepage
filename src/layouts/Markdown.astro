@@ -10,7 +10,7 @@ const { frontmatter, headings } = Astro.props;
 		<article class="flex-grow break-words" data-pagefind-body>
 			{frontmatter.title && <h1 class="title mb-3 sm:mb-1">{frontmatter.title}</h1>}
 			<div
-				class="prose prose-sm prose-cactus mt-12 max-w-4xl max-w-none prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
+				class="prose prose-sm prose-cactus mt-12 max-w-none prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
 			>
 				<slot />
 			</div>

@@ -4,15 +4,16 @@ import FancyPostPreview from "./FancyPostPreview.astro";
 import type { CollectionEntry } from "astro:content";
 import PublicationDetails from "../PublicationDetails.astro";
 import Tags from "./Tags.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
 	numbered?: boolean;
 	large?: boolean;
 	filter?: (post: CollectionEntry<"research">) => boolean;
-	reversed?: boolean;
+	reversable?: boolean;
 }
 
-const { numbered = false, large = false, filter = () => true } = Astro.props;
+const { numbered = false, large = false, filter = () => true, reversable = false } = Astro.props;
 
 const allPosts = ((await getCollection("research", filter)) as CollectionEntry<"research">[]).sort(
 	(a, b) => -b.data.publishDate.getTime() + a.data.publishDate.getTime(),
@@ -27,18 +28,21 @@ for (let post of allPosts) {
 }
 ---
 
-<label class="group relative flex items-center justify-between p-2 text-xl">
-	Most recent first
-	<input
-		type="checkbox"
-		class="peer absolute left-1/2 h-full w-full -translate-x-1/2 appearance-none rounded-md"
-		id="reverse"
-	/>
-	<span
-		class="ml-4 flex h-10 w-16 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-8 after:w-8 after:rounded-full after:bg-white after:shadow-md after:duration-300 group-hover:after:translate-x-1 peer-checked:bg-green-400 peer-checked:after:translate-x-6"
-	></span>
-</label>
-<ol class="not-prose flex flex-col space-y-8" id="research-list">
+{
+	reversable && (
+		<label class="cursor-pointer">
+			<input type="checkbox" id="reverse" class="hidden" />
+			<div class="relative">
+				<Icon
+					name="mdi:chevron-down"
+					class="absolute -top-8 right-0 rotate-180 transform transition-transform duration-300"
+					id="arrow-icon"
+				/>
+			</div>
+		</label>
+	)
+}
+<ol class="not-prose flex flex-col-reverse gap-8" id="research-list">
 	{
 		allPosts.map((post, i) => (
 			<li class="flex flex-auto flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
@@ -71,12 +75,20 @@ for (let post of allPosts) {
 	}
 </ol>
 
-<script>
-	const button = document.querySelector("#reverse");
-	const list = document.querySelector("#research-list");
+<script is:inline>
+	const reverseButtonListener = () => {
+		const button = document.querySelector("#reverse");
+		const list = document.querySelector("#research-list");
+		const arrowIcon = document.querySelector("#arrow-icon");
 
-	button?.addEventListener("click", () => {
-		list?.classList.toggle("flex-col-reverse");
-		list?.classList.toggle("flex-col");
+		button.addEventListener("change", () => {
+			list.classList.toggle("flex-col-reverse");
+			list.classList.toggle("flex-col");
+			arrowIcon.classList.toggle("rotate-180");
+		});
+	};
+
+	["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
+		document.addEventListener(event, reverseButtonListener);
 	});
 </script>

@@ -9,11 +9,14 @@ interface Props {
 	numbered?: boolean;
 	large?: boolean;
 	filter?: (post: CollectionEntry<"research">) => boolean;
+	reversed?: boolean;
 }
 
 const { numbered = false, large = false, filter = () => true } = Astro.props;
 
-const allPosts = (await getCollection("research", filter)) as CollectionEntry<"research">[];
+const allPosts = ((await getCollection("research", filter)) as CollectionEntry<"research">[]).sort(
+	(a, b) => -b.data.publishDate.getTime() + a.data.publishDate.getTime(),
+);
 
 var isRight = [] as boolean[];
 
@@ -24,10 +27,21 @@ for (let post of allPosts) {
 }
 ---
 
-<ul class="not-prose space-y-8">
+<label class="group relative flex items-center justify-between p-2 text-xl">
+	Most recent first
+	<input
+		type="checkbox"
+		class="peer absolute left-1/2 h-full w-full -translate-x-1/2 appearance-none rounded-md"
+		id="reverse"
+	/>
+	<span
+		class="ml-4 flex h-10 w-16 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-8 after:w-8 after:rounded-full after:bg-white after:shadow-md after:duration-300 group-hover:after:translate-x-1 peer-checked:bg-green-400 peer-checked:after:translate-x-6"
+	></span>
+</label>
+<ol class="not-prose flex flex-col space-y-8" id="research-list">
 	{
 		allPosts.map((post, i) => (
-			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
+			<li class="flex flex-auto flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
 				<FancyPostPreview
 					right={isRight[i]}
 					{...(post.data.heroImageHover
@@ -55,4 +69,14 @@ for (let post of allPosts) {
 			</li>
 		))
 	}
-</ul>
+</ol>
+
+<script>
+	const button = document.querySelector("#reverse");
+	const list = document.querySelector("#research-list");
+
+	button?.addEventListener("click", () => {
+		list?.classList.toggle("flex-col-reverse");
+		list?.classList.toggle("flex-col");
+	});
+</script>

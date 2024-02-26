@@ -9,13 +9,78 @@ authors: ["Dominik Schröder", "Hugo Cui", "Daniil Dmitriev", "Bruno Loureiro"]
 journal: "Preprint"
 year: "2024"
 heroImage:
-  src: "./genErr.png"
+  src: "./genErrorPlot.svg"
   alt: "Generalization error"
 ---
 
 ## Summary
 
 {frontmatter.description}
+
+<br />
+
+A widely observed phenomen in deep learning is that the generalization error of a trained model is often well-predicted by the so-called "double descent" curve. This curve is characterized by a peak in the generalization error for a certain model complexity, followed by a decrease in the error as the model complexity increases. The following plot shows the generalization error computed using our asymptotic formula for a deep neural network with structured features. The double descent curve is visible for sufficiently big additive noise.
+
+<iframe
+	width="100%"
+	height="596"
+	frameborder="0"
+	src="https://observablehq.com/embed/032a635ef9ea1df1?cells=viewof+noise%2CgenErrorPlot"
+></iframe>
+
+## Asymptotic formula for the generalization error
+
+For $n$ independent samples $x_i\in\mathbb{R}^p$ of a zero mean random vector with covariance matrix
+
+$$
+\Omega := \mathbf E\, x_i x_i^\top
+$$
+
+define the sample covariance matrix, and the Gram matrices
+
+$$
+\frac{XX^\top}{p}\quad\text{and}\quad \frac{X^\top X}{p}
+$$
+
+and the corresponding resolvents
+
+$$
+G(\lambda):=\Bigl(\frac{XX^\top}{p}+\lambda\Bigr)^{-1}, \qquad \check G(\lambda):=\Bigl(\frac{X^\top X}{p}+\lambda\Bigr)^{-1}.
+$$
+
+The deterministic equivalents of these matrices are
+
+$$
+G(\lambda)\approx M(\lambda),\quad \check G(\lambda)\approx m(\lambda)I,
+$$
+
+where $m(\lambda)$ is the solution of the self-consistent equation
+
+$$
+\frac{1}{m(\lambda)}=\lambda + \lambda \langle\Omega M(\lambda)\rangle = \lambda + \Bigl\langle \Omega\Bigl(1+\frac{n}{p}m(\lambda)\Omega\Bigr)^{-1}\Bigr\rangle.
+$$
+
+and
+
+$$
+M(\lambda):= \Bigl(\lambda + \frac{n}{p}\lambda m(\lambda)\Omega\Bigr)^{-1}.
+$$
+
+The generalization error of ridge regression is given by
+
+$$
+\begin{split}
+\mathcal E_\mathrm{gen}^\mathrm{rmt}(\lambda)&:=\frac{1}{k}\theta_\ast^\top \frac{ \Psi-\frac{n}{p} m\lambda \Phi (M+\lambda M^2)\Phi^\top}{1-\frac{n}{p}(\lambda m)^2\braket{\Omega M\Omega M}}\theta_\ast  + \braket{\Sigma}  \frac{ (\lambda m)^2\frac{n}{p} \braket{ M\Omega M\Omega  }}{1-\frac{n}{p}(\lambda m)^2\braket{\Omega M\Omega M}},
+\end{split}
+$$
+
+where $\Omega,\Phi,\Psi$ are the covariances of the student features $x$ and the teacher features $z$
+
+$$
+\Omega := \mathbf E\, x x^\top\in\mathbf R^{p\times p},\quad \Phi := \mathbf E\, x z^\top\in\mathbf R^{p\times k},\quad \Psi := \mathbf E\, z z^\top\in\mathbf R^{k\times k},
+$$
+
+$\theta_\ast\in\R^{k}$ is the target weight vector, and $\Sigma\in\R^{k\times k}$ is covariance of the additive noise.
 
 <br />
 

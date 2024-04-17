@@ -5,6 +5,8 @@ publishDate: "22 Feb 2020"
 tags: ["projects", "Python"]
 ---
 
+During my PhD our department was asked by Austrian national television to predict the outcome of the remaining rounds of the Austrian national football league. I wrote a simple [ELO](https://en.wikipedia.org/wiki/Elo_rating_system) based prediction algorithm in Python. Not to be taken seriously or used for for betting purposes, it's a simplistic toy model. The bookmakers are much better at this.
+
 ```python
 import numpy as np
 import copy

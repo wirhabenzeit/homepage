@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -27,8 +27,8 @@ dependencies:
     specifier: ^1.1.0
     version: 1.1.0
   posthog-js:
-    specifier: ^1.126.0
-    version: 1.126.0
+    specifier: ^1.130.1
+    version: 1.130.1
   rehype-external-links:
     specifier: ^3.0.0
     version: 3.0.0
@@ -6188,8 +6188,8 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.2.0
 
-  /posthog-js@1.126.0:
-    resolution: {integrity: sha512-8qCdPE9RZkyXI3kKCnkXWxK0jn2mLZg6g5a6KezDPqH7mHTG66v7ANU31hcwzQGV5F5UW1GXw0xL0PaC3HkA6g==}
+  /posthog-js@1.130.1:
+    resolution: {integrity: sha512-BC283kxeJnVIeAxn7ZPHf5sCTA6oXs4uvo9fdGAsbKwwfmF9g09rnJOOaoF95J/auf8HT4YB6Vt2KytqtJD44w==}
     dependencies:
       fflate: 0.4.8
       preact: 10.20.2

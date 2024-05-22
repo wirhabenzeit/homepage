@@ -47,4 +47,4 @@ jobs:
           ssh-add -l
 
       - name: Deploy
-        run: rsync -aPz dist/ dschroeder@slab1.ethz.ch:homepage
+        run: rsync -aPz --delete dist/ dschroeder@slab1.ethz.ch:homepage

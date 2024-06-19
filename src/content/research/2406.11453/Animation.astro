@@ -2,8 +2,8 @@
 
 ---
 
-<form style="display: flex; align-items: center;" id="scrubber">
-	<label style="display: flex; align-items: center; flex-grow: 1">
+<form id="scrubber" class="dispay-flex hidden">
+	<label class="flex flex-grow items-center">
 		<button name="b" type="button" class="w-5 text-xl"></button>
 		<input
 			name="i"
@@ -15,10 +15,10 @@
 			class="range slider mx-2 flex-grow"
 		/>
 		λ =
-		<output name="o" style="margin-left: 0.4em;"></output>
+		<output name="o" class="ml-1"></output>
 	</label>
 </form>
-<div id="myplot" style="width: 100%"></div>
+<div id="myplot" class="full-width -mt-6"></div>
 
 <script>
 	// @ts-nocheck
@@ -48,6 +48,7 @@
 				"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
 			x: { domain: [-2.5, 2.5] },
 			width: width,
+			height: width * 0.5,
 			marks: [
 				Plot.rect(
 					dataF.filter((x) => x.type == "emp"),
@@ -111,6 +112,7 @@
 		form.i.min = 0;
 		form.i.max = values.length - 1;
 		form.i.valueAsNumber = initial;
+		form.classList.toggle("hidden");
 		let frame = null;
 		let timer = null;
 		let interval = null;

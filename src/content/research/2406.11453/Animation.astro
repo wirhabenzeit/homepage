@@ -2,25 +2,47 @@
 
 ---
 
-<div id="scrubber"></div>
+<form style="display: flex; align-items: center;" id="scrubber">
+	<label style="display: flex; align-items: center; flex-grow: 1">
+		<button name="b" type="button" class="w-5 text-xl"></button>
+		<input
+			name="i"
+			type="range"
+			min="0"
+			max="10"
+			value="0"
+			step="1"
+			class="range slider mx-2 flex-grow"
+		/>
+		λ =
+		<output name="o" style="margin-left: 0.4em;"></output>
+	</label>
+</form>
 <div id="myplot" style="width: 100%"></div>
 
 <script>
+	// @ts-nocheck
 	import * as Plot from "@observablehq/plot";
 	import * as d3 from "d3";
-	import * as htl from "htl";
 
 	const url = `${import.meta.env.BASE_URL}/scovAnim.csv`;
-	const data = await d3.csv(url, d3.autoType);
+	const data = (await d3.csv(url, d3.autoType)) as {
+		x0: number;
+		x1: number;
+		x: number;
+		rho: number;
+		lambda: number;
+		type: string;
+	}[];
 	const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
-	const div = document.querySelector("#myplot");
+	const div = document.querySelector("#myplot") as HTMLElement;
 	var width = div.offsetWidth;
 
-	const plot = (lambda) => {
+	const plot = (lambda: number) => {
 		const dataF = data.filter((x) => Math.abs(x.lambda - lambda) < 1e-3);
 		return Plot.plot({
 			grid: true,
-			color: { legend: true, title: "Type" },
+			color: { legend: true },
 			y: { type: "sqrt", domain: [0, 1], label: "ρ" },
 			caption:
 				"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
@@ -71,9 +93,10 @@
 	};
 
 	function Scrubber(
-		values,
+		form: HTMLElement,
+		values: number[],
 		{
-			format = (value) => value,
+			format = (value: number) => value,
 			initial = 0,
 			direction = 1,
 			delay = null,
@@ -85,23 +108,9 @@
 		} = {},
 	) {
 		values = Array.from(values);
-		const form = htl.html`<form
-			style="display: flex; align-items: center;"
-		>
-			<button name="b" type="button" class="text-xl w-5"></button>
-			<label style="display: flex; align-items: center; flex-grow: 1">
-				<input
-					name="i"
-					type="range"
-					min="0"
-					max=${values.length - 1}
-					value=${initial}
-					step="1"
-                    class="range flex-grow mx-2 slider" 
-				/>
-				<output name="o" style="margin-left: 0.4em;"></output>
-			</label>
-		</form>`;
+		form.i.min = 0;
+		form.i.max = values.length - 1;
+		form.i.valueAsNumber = initial;
 		let frame = null;
 		let timer = null;
 		let interval = null;
@@ -153,14 +162,12 @@
 		if (autoplay) start();
 		else stop();
 		form.addEventListener("input", () => onChange(values[form.i.valueAsNumber]));
-		return form;
 	}
-	const scrubberDiv = document.querySelector("#scrubber");
+	const form = document.querySelector("#scrubber");
 	const lambdaInit = lambdas[lambdas.length / 2];
-	const scrubber = Scrubber(lambdas, {
-		format: (value) => `λ = ${value.toFixed(1)}`,
+	Scrubber(form, lambdas, {
+		format: (value) => `${value.toFixed(1)}`,
 		autoplay: false,
-		initial: 0,
 		delay: 100,
 		initial: lambdas.indexOf(lambdaInit),
 		loop: true,
@@ -170,7 +177,6 @@
 			div.append(plot(value));
 		},
 	});
-	scrubberDiv.append(scrubber);
 	div.append(plot(lambdaInit));
 
 	var ro = new ResizeObserver((entries) => {
@@ -178,7 +184,7 @@
 			width = entry.contentRect.width;
 		}
 		div.innerHTML = "";
-		div.append(plot(lambdas[scrubber.i.valueAsNumber]));
+		div.append(plot(lambdas[form.i.valueAsNumber]));
 	});
 
 	ro.observe(div);

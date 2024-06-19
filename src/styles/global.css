@@ -26,12 +26,27 @@
 		--theme-accent-2: 0deg 0% 93%;
 		--theme-quote: 102deg 100% 86%;
 	}
-
 	html {
-		@apply scroll-smooth;
+		@apply relative box-border max-w-full overflow-x-hidden scroll-smooth;
 	}
 
 	html body {
-		@apply mx-auto flex min-h-screen max-w-4xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply relative mx-auto box-border flex min-h-screen max-w-4xl flex-col overflow-x-hidden bg-bgColor px-6 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
+}
+
+.slider {
+	appearance: none;
+	height: 0.2em;
+	background: var(--tw-prose-captions);
+	outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+	appearance: none;
+	width: 0.4em;
+	border-radius: 0.2em;
+	height: 1em;
+	background: var(--tw-prose-body);
+	position: relative;
 }

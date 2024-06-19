@@ -4,8 +4,15 @@ title: Home
 toc: true
 ---
 
-export const selectedResearch = ["14071552", "230200401", "170510661", "191204100", "240213999"];
-export const selectedProjects = ["stravamap", "csp", "pybibget"];
+export const selectedResearch = [
+	"14071552",
+	"230200401",
+	"170510661",
+	"191204100",
+	"240213999",
+	"240611453",
+];
+export const selectedProjects = ["activitymap", "csp", "pybibget"];
 
 import SocialList from "../components/SocialList.astro";
 import ResearchList from "../components/blog/ResearchList.astro";
@@ -22,13 +29,17 @@ I am a postdoctoral researcher and lecturer at ETH Zurich. My research interests
 
 [Download CV](/~dschroeder/cv.pdf)
 
-## Selected research
+## Research
+
+My research focuses on _random matrices_, _free probability_ and _statistical learning theory_. For a list of all publications, see the [publication list](/~dschroeder/research), the [arXiv](https://arxiv.org/a/schroder_d_1), or my [Google Scholar profile](https://scholar.google.com/citations?user=u3ilHrcAAAAJ). Below are some recent or selected publications.
 
 <ResearchList filter={(post) => selectedResearch.includes(post.slug)} large={true} />
 
-[List of all publications](/~dschroeder/research)
+[List all research](/~dschroeder/research)
 
-## Selected projects
+## Projects
+
+Next to my research, I have worked on various _applied machine learning_ and _open-source software_ projects. Below is a list of selected projects, the full list can be found [here](/~dschroeder/project), or on my [GitHub profile](https://github.com/wirhabenzeit).
 
 <PostList
 	filter={(post) => selectedProjects.includes(post.slug)}
@@ -36,7 +47,7 @@ I am a postdoctoral researcher and lecturer at ETH Zurich. My research interests
 	collection="project"
 />
 
-[List of all projects](/~dschroeder/project)
+[List all projects](/~dschroeder/project)
 
 ## Contact
 

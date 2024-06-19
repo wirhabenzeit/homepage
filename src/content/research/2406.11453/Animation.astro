@@ -1,0 +1,185 @@
+---
+
+---
+
+<div id="scrubber"></div>
+<div id="myplot" style="width: 100%"></div>
+
+<script>
+	import * as Plot from "@observablehq/plot";
+	import * as d3 from "d3";
+	import * as htl from "htl";
+
+	const url = `${import.meta.env.BASE_URL}/scovAnim.csv`;
+	const data = await d3.csv(url, d3.autoType);
+	const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
+	const div = document.querySelector("#myplot");
+	var width = div.offsetWidth;
+
+	const plot = (lambda) => {
+		const dataF = data.filter((x) => Math.abs(x.lambda - lambda) < 1e-3);
+		return Plot.plot({
+			grid: true,
+			color: { legend: true, title: "Type" },
+			y: { type: "sqrt", domain: [0, 1], label: "ρ" },
+			caption:
+				"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
+			x: { domain: [-2.5, 2.5] },
+			width: width,
+			marks: [
+				Plot.rect(
+					dataF.filter((x) => x.type == "emp"),
+					{
+						x1: "x0",
+						x2: "x1",
+						y2: "rho",
+						y1: () => 0,
+						opacity: 0.2,
+					},
+				),
+				Plot.rect(
+					dataF.filter((x) => x.type == "empMax"),
+					{
+						x1: "x0",
+						x2: "x1",
+						y2: "rho",
+						y1: () => 0,
+						opacity: 0.5,
+						fill: () => "max",
+					},
+				),
+				Plot.rect(
+					dataF.filter((x) => x.type == "empMin"),
+					{
+						x1: "x0",
+						x2: "x1",
+						y2: "rho",
+						y1: () => 0,
+						opacity: 0.5,
+						fill: () => "min",
+					},
+				),
+				Plot.line(
+					dataF.filter((x) => x.type == "free"),
+					{
+						x: "x",
+						y: "rho",
+					},
+				),
+			],
+		});
+	};
+
+	function Scrubber(
+		values,
+		{
+			format = (value) => value,
+			initial = 0,
+			direction = 1,
+			delay = null,
+			autoplay = true,
+			loop = true,
+			loopDelay = null,
+			alternate = false,
+			onChange = () => {},
+		} = {},
+	) {
+		values = Array.from(values);
+		const form = htl.html`<form
+			style="display: flex; align-items: center;"
+		>
+			<button name="b" type="button" class="text-xl w-5"></button>
+			<label style="display: flex; align-items: center; flex-grow: 1">
+				<input
+					name="i"
+					type="range"
+					min="0"
+					max=${values.length - 1}
+					value=${initial}
+					step="1"
+                    class="range flex-grow mx-2 slider" 
+				/>
+				<output name="o" style="margin-left: 0.4em;"></output>
+			</label>
+		</form>`;
+		let frame = null;
+		let timer = null;
+		let interval = null;
+		function start() {
+			form.b.textContent = "⏸";
+			if (delay === null) frame = requestAnimationFrame(tick);
+			else interval = setInterval(tick, delay);
+		}
+		function stop() {
+			form.b.textContent = "⏵";
+			if (frame !== null) cancelAnimationFrame(frame), (frame = null);
+			if (timer !== null) clearTimeout(timer), (timer = null);
+			if (interval !== null) clearInterval(interval), (interval = null);
+		}
+		function running() {
+			return frame !== null || timer !== null || interval !== null;
+		}
+		function tick() {
+			if (form.i.valueAsNumber === (direction > 0 ? values.length - 1 : direction < 0 ? 0 : NaN)) {
+				if (!loop) return stop();
+				if (alternate) direction = -direction;
+				if (loopDelay !== null) {
+					if (frame !== null) cancelAnimationFrame(frame), (frame = null);
+					if (interval !== null) clearInterval(interval), (interval = null);
+					timer = setTimeout(() => (step(), start()), loopDelay);
+					return;
+				}
+			}
+			if (delay === null) frame = requestAnimationFrame(tick);
+			step();
+		}
+		function step() {
+			form.i.valueAsNumber = (form.i.valueAsNumber + direction + values.length) % values.length;
+			form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
+		}
+		form.i.oninput = (event) => {
+			if (event && event.isTrusted && running()) stop();
+			form.value = values[form.i.valueAsNumber];
+			form.o.value = format(form.value, form.i.valueAsNumber, values);
+		};
+		form.b.onclick = () => {
+			if (running()) return stop();
+			direction = alternate && form.i.valueAsNumber === values.length - 1 ? -1 : 1;
+			form.i.valueAsNumber = (form.i.valueAsNumber + direction) % values.length;
+			form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
+			start();
+		};
+		form.i.oninput();
+		if (autoplay) start();
+		else stop();
+		form.addEventListener("input", () => onChange(values[form.i.valueAsNumber]));
+		return form;
+	}
+	const scrubberDiv = document.querySelector("#scrubber");
+	const lambdaInit = lambdas[lambdas.length / 2];
+	const scrubber = Scrubber(lambdas, {
+		format: (value) => `λ = ${value.toFixed(1)}`,
+		autoplay: false,
+		initial: 0,
+		delay: 100,
+		initial: lambdas.indexOf(lambdaInit),
+		loop: true,
+		alternate: true,
+		onChange: (value) => {
+			div.innerHTML = "";
+			div.append(plot(value));
+		},
+	});
+	scrubberDiv.append(scrubber);
+	div.append(plot(lambdaInit));
+
+	var ro = new ResizeObserver((entries) => {
+		for (let entry of entries) {
+			width = entry.contentRect.width;
+		}
+		div.innerHTML = "";
+		div.append(plot(lambdas[scrubber.i.valueAsNumber]));
+	});
+
+	ro.observe(div);
+</script>

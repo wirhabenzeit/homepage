@@ -5,7 +5,7 @@ publishDate: "Jun 2024"
 tags: ["free probability"]
 type: "research"
 arxiv: "2406.11453"
-authors: ["Afonso Bandeira", "Giorgio Cipolloni","Ramon van Handel","Dominik Schröder"]
+authors: ["Afonso Bandeira", "Giorgio Cipolloni", "Ramon van Handel", "Dominik Schröder"]
 journal: "preprint"
 year: "2024"
 heroImage:
@@ -13,11 +13,51 @@ heroImage:
   alt: "Outlier phase transition"
 ---
 
+import Animation from "Animation.astro";
+
 ## Summary
 
 {frontmatter.description}
 
 <br />
+
+## Example: Sample covariance matrix
+
+Consider a rank-one perturbation of the identity matrix $I\in \mathbb R^{p\times p}$ as a population covariance matrix
+
+$$
+\Sigma = I + \lambda vv^\top,
+$$
+
+where $v\in\mathbb{R}^p$ is a unit vector and $\lambda>0$ is a parameter. Then draw $n$ random vectors $x_1, \ldots, x_n$ from the distribution $\mathcal N(0, \Sigma)$ and consider the sample covariance matrix
+
+$$
+\hat \Sigma = \frac{1}{n}\sum_{i=1}^n x_i x_i^\top.
+$$
+
+We are able to show that this model exhibits two phase transitions. Denoting the the ratio of dimensions $p,n$ by $\delta:=p/n$ the largest eigenvalue $\lambda_{\max}(\hat\Sigma-\Sigma)$ satisfies
+
+$$
+  \lambda_{\max} \approx \begin{cases}
+  (1 + \sqrt\delta)^2 - 1, & \text{ if } \lambda < 1 + \sqrt\delta,\\
+  \frac{1 + \lambda}{2\lambda}  (\sqrt\delta + \sqrt{\delta + 4  \lambda})  \sqrt\delta, & \text{ if } \lambda \geq 1 + \sqrt\delta,
+  \end{cases}
+$$
+
+while the smallest eigenvalue $\lambda_{\min}(\hat\Sigma-\Sigma)$ satisfies
+
+$$
+\lambda_{\min} \approx \begin{cases}
+  (1 - \sqrt\delta)^2 - 1, & \text{ if } \lambda < 1 - \sqrt\delta,\\
+  \frac{1 + \lambda}{2\lambda}  (\sqrt\delta - \sqrt{\delta + 4  \lambda})  \sqrt\delta, & \text{ if } \lambda \geq 1 - \sqrt\delta
+  \end{cases}
+$$
+
+exactly as the corresponding _free_ model suggests.
+
+### Numerical illustration
+
+<Animation />
 
 ## Abstract
 

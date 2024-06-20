@@ -51,6 +51,11 @@ export default defineConfig({
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
+		resolve: {
+			alias: {
+				"./runtimeConfig": "./runtimeConfig.browser",
+			},
+		},
 	},
 });
 function rawFonts(ext: Array<string>) {

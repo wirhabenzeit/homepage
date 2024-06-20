@@ -2,9 +2,7 @@
 import * as d3 from "d3";
 import { JSDOM } from "jsdom";
 import * as Plot from "@observablehq/plot";
-import fs from "node:fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import csv from "./scovAnim.csv?raw";
 
 const jsdom = new JSDOM("");
 global.window = jsdom.window as any as Window & typeof globalThis;
@@ -22,12 +20,8 @@ type Data = {
 	lambda: number;
 };
 
-console.log("FILE", path.dirname(import.meta.url));
-
-const data = d3.csvParse(
-	fs.readFileSync(fileURLToPath(`${path.dirname(import.meta.url)}/scovAnim.csv`)).toString(),
-	d3.autoType,
-) as Data[];
+//const data = d3.csvParse(fs.readFileSync(csvReference).toString(), d3.autoType) as Data[];
+const data = d3.csvParse(csv, d3.autoType) as Data[];
 
 const plot = ({ data, width }: { data: Data[]; width: number }) => {
 	return Plot.plot({

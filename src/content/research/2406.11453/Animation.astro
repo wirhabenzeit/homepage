@@ -22,7 +22,13 @@ type Data = {
 
 const data = d3.csvParse(csv, d3.autoType) as Data[];
 
-const plot = ({ data, width }: { data: Data[]; width: number }) => {
+const plot = ({ dataFiltered, width = 832 }: { dataFiltered: Data[]; width: number }) => {
+	const rect = {
+		x1: "x0",
+		x2: "x1",
+		y2: "rho",
+		y1: () => 0,
+	};
 	return Plot.plot({
 		grid: true,
 		color: { legend: true },
@@ -34,39 +40,24 @@ const plot = ({ data, width }: { data: Data[]; width: number }) => {
 		height: width * 0.5,
 		marks: [
 			Plot.rect(
-				data.filter((x) => x.type == "emp"),
+				dataFiltered.filter((x) => x.type == "emp"),
 				{
-					x1: "x0",
-					x2: "x1",
-					y2: "rho",
-					y1: () => 0,
+					...rect,
 					opacity: 0.2,
 				},
 			),
-			Plot.rect(
-				data.filter((x) => x.type == "empMax"),
-				{
-					x1: "x0",
-					x2: "x1",
-					y2: "rho",
-					y1: () => 0,
-					opacity: 0.5,
-					fill: () => "max",
-				},
-			),
-			Plot.rect(
-				data.filter((x) => x.type == "empMin"),
-				{
-					x1: "x0",
-					x2: "x1",
-					y2: "rho",
-					y1: () => 0,
-					opacity: 0.5,
-					fill: () => "min",
-				},
+			...["Max", "Min"].map((type) =>
+				Plot.rect(
+					dataFiltered.filter((x) => x.type == `emp${type}`),
+					{
+						...rect,
+						opacity: 0.5,
+						fill: () => type,
+					},
+				),
 			),
 			Plot.line(
-				data.filter((x) => x.type == "free"),
+				dataFiltered.filter((x) => x.type == "free"),
 				{
 					x: "x",
 					y: "rho",
@@ -79,7 +70,7 @@ const plot = ({ data, width }: { data: Data[]; width: number }) => {
 const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
 const lambdaInit = lambdas[lambdas.length / 2];
 const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
-const chart = plot({ data: data.filter((x) => x.lambda == lambdaInit), width: 832 });
+const chart = plot({ dataFiltered: data.filter((x) => x.lambda == lambdaInit), width: 832 });
 ---
 
 <plot-chart data-data={JSON.stringify(data)}>
@@ -205,6 +196,12 @@ const chart = plot({ data: data.filter((x) => x.lambda == lambdaInit), width: 83
 		};
 		plot = () => {
 			const data = this.data.filter((x) => x.lambda == this.lambdas[this.idx]);
+			const rect = {
+				x1: "x0",
+				x2: "x1",
+				y2: "rho",
+				y1: () => 0,
+			};
 			const plt = Plot.plot({
 				grid: true,
 				color: { legend: true },
@@ -218,34 +215,19 @@ const chart = plot({ data: data.filter((x) => x.lambda == lambdaInit), width: 83
 					Plot.rect(
 						data.filter((x) => x.type == "emp"),
 						{
-							x1: "x0",
-							x2: "x1",
-							y2: "rho",
-							y1: () => 0,
+							...rect,
 							opacity: 0.2,
 						},
 					),
-					Plot.rect(
-						data.filter((x) => x.type == "empMax"),
-						{
-							x1: "x0",
-							x2: "x1",
-							y2: "rho",
-							y1: () => 0,
-							opacity: 0.5,
-							fill: () => "max",
-						},
-					),
-					Plot.rect(
-						data.filter((x) => x.type == "empMin"),
-						{
-							x1: "x0",
-							x2: "x1",
-							y2: "rho",
-							y1: () => 0,
-							opacity: 0.5,
-							fill: () => "min",
-						},
+					...["Max", "Min"].map((type) =>
+						Plot.rect(
+							data.filter((x) => x.type == `emp${type}`),
+							{
+								...rect,
+								opacity: 0.5,
+								fill: () => type,
+							},
+						),
 					),
 					Plot.line(
 						data.filter((x) => x.type == "free"),

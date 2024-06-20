@@ -20,7 +20,6 @@ type Data = {
 	lambda: number;
 };
 
-//const data = d3.csvParse(fs.readFileSync(csvReference).toString(), d3.autoType) as Data[];
 const data = d3.csvParse(csv, d3.autoType) as Data[];
 
 const plot = ({ data, width }: { data: Data[]; width: number }) => {
@@ -83,166 +82,184 @@ const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
 const chart = plot({ data: data.filter((x) => x.lambda == lambdaInit), width: 832 });
 ---
 
-<form id="scrubber" class="dispay-flex">
-	<label class="flex flex-grow items-center">
-		<button name="b" type="button" class="w-5 text-xl">⏵</button>
-		<input
-			name="i"
-			type="range"
-			min="0"
-			max={lambdas.length - 1}
-			value={lambdaInitIndex}
-			step="1"
-			class="range slider mx-2 flex-grow"
-		/>
-		λ =
-		<output name="o" class="ml-1">{lambdaInit}</output>
-	</label>
-</form>
-<div id="myplot" class="full-width -mt-5" set:html={chart.outerHTML} />
+<plot-chart data-data={JSON.stringify(data)}>
+	<form id="scrubber" class="dispay-flex">
+		<label class="flex flex-grow items-center">
+			<button name="b" type="button" class="w-5 text-xl">⏵</button>
+			<input
+				name="i"
+				type="range"
+				min="0"
+				max={lambdas.length - 1}
+				value={lambdaInitIndex}
+				step="1"
+				class="range slider mx-2 flex-grow"
+			/>
+			λ =
+			<output name="o" class="ml-1">{lambdaInit}</output>
+		</label>
+	</form>
+	<div id="myplot" class="full-width -mt-5" set:html={chart.outerHTML} />
+</plot-chart>
 
-<script type="module" define:vars={{ data, lambdas, lambdaInit }}>
-	import * as Plot from "https://cdn.skypack.dev/@observablehq/plot@0.6";
-	import * as d3 from "https://cdn.skypack.dev/d3@7";
-	const div = document.querySelector("#myplot");
-	const form = document.querySelector("#scrubber");
-	var width = div.offsetWidth;
+<script>
+	import * as Plot from "@observablehq/plot";
 
-	const plot = ({ data, width }) => {
-		return Plot.plot({
-			grid: true,
-			color: { legend: true },
-			y: { type: "sqrt", domain: [0, 1], label: "ρ" },
-			caption:
-				"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
-			x: { domain: [-2.5, 2.5] },
-			width: width,
-			height: width * 0.5,
-			marks: [
-				Plot.rect(
-					data.filter((x) => x.type == "emp"),
-					{
-						x1: "x0",
-						x2: "x1",
-						y2: "rho",
-						y1: () => 0,
-						opacity: 0.2,
-					},
-				),
-				Plot.rect(
-					data.filter((x) => x.type == "empMax"),
-					{
-						x1: "x0",
-						x2: "x1",
-						y2: "rho",
-						y1: () => 0,
-						opacity: 0.5,
-						fill: () => "max",
-					},
-				),
-				Plot.rect(
-					data.filter((x) => x.type == "empMin"),
-					{
-						x1: "x0",
-						x2: "x1",
-						y2: "rho",
-						y1: () => 0,
-						opacity: 0.5,
-						fill: () => "min",
-					},
-				),
-				Plot.line(
-					data.filter((x) => x.type == "free"),
-					{
-						x: "x",
-						y: "rho",
-					},
-				),
-			],
-		});
+	type Data = {
+		x0: number;
+		x1: number;
+		rho: number;
+		type: string;
+		lambda: number;
 	};
 
-	const delay = 100;
-	var direction = 1;
-	const loop = true;
-	const alternate = true;
-	const loopDelay = null;
-	const autoplay = false;
+	class PlotChart extends HTMLElement {
+		width: number;
+		idx: number;
+		lambdas: number[];
+		data: Data[];
+		form: HTMLFormElement;
+		div: HTMLDivElement;
+		delay: number = 100;
+		direction: number = 1;
+		loop: boolean = true;
+		alternate: boolean = true;
+		loopDelay: number | null = null;
+		autoplay: boolean = false;
+		frame: number | null = null;
+		timer: ReturnType<typeof setTimeout> | null = null;
+		interval: ReturnType<typeof setTimeout> | null = null;
+		constructor() {
+			super();
+			this.div = this.querySelector("div")!;
+			this.form = this.querySelector("form")!;
+			this.data = JSON.parse(this.dataset.data!);
+			this.lambdas = Array.from(new Set(this.data.map((x) => x.lambda)));
+			this.width = this.div!.offsetWidth;
+			this.idx = this.form.i.valueAsNumber;
+			this.form.i.oninput = (event: Event) => {
+				if (event && event.isTrusted && this.running()) this.stop();
+				this.form.value = this.lambdas[this.form.i.valueAsNumber];
+				this.form.o.value = this.lambdas[this.form.i.valueAsNumber]!.toFixed(1);
+			};
+			this.form.b.onclick = () => {
+				if (this.running()) return this.stop();
+				this.direction =
+					this.alternate && this.form.i.valueAsNumber === this.lambdas.length - 1 ? -1 : 1;
+				this.form.i.valueAsNumber =
+					(this.form.i.valueAsNumber + this.direction) % this.lambdas.length;
+				this.form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
+				this.start();
+			};
+			this.form.i.oninput();
+			if (this.autoplay) this.start();
+			else this.stop();
+			this.form.addEventListener("input", () => {
+				this.idx = this.form.i.valueAsNumber;
+				this.plot();
+			});
+			const ro = new ResizeObserver((entries) => {
+				for (let entry of entries) {
+					this.width = entry.contentRect.width;
+				}
+				this.plot();
+			});
 
-	let frame = null;
-	let timer = null;
-	let interval = null;
-
-	function start() {
-		form.b.textContent = "⏸";
-		if (delay === null) frame = requestAnimationFrame(tick);
-		else interval = setInterval(tick, delay);
-	}
-	function stop() {
-		form.b.textContent = "⏵";
-		if (frame !== null) cancelAnimationFrame(frame), (frame = null);
-		if (timer !== null) clearTimeout(timer), (timer = null);
-		if (interval !== null) clearInterval(interval), (interval = null);
-	}
-	function running() {
-		return frame !== null || timer !== null || interval !== null;
-	}
-	function tick() {
-		if (form.i.valueAsNumber === (direction > 0 ? lambdas.length - 1 : direction < 0 ? 0 : NaN)) {
-			if (!loop) return stop();
-			if (alternate) direction = -direction;
-			if (loopDelay !== null) {
-				if (frame !== null) cancelAnimationFrame(frame), (frame = null);
-				if (interval !== null) clearInterval(interval), (interval = null);
-				timer = setTimeout(() => (step(), start()), loopDelay);
-				return;
+			ro.observe(this.div);
+		}
+		start = () => {
+			this.form.b.textContent = "⏸";
+			if (this.delay === null) this.frame = requestAnimationFrame(this.tick);
+			else this.interval = setInterval(this.tick, this.delay);
+		};
+		stop = () => {
+			this.form.b.textContent = "⏵";
+			if (this.frame !== null) cancelAnimationFrame(this.frame), (this.frame = null);
+			if (this.timer !== null) clearTimeout(this.timer), (this.timer = null);
+			if (this.interval !== null) clearInterval(this.interval), (this.interval = null);
+		};
+		running = () => {
+			return this.frame !== null || this.timer !== null || this.interval !== null;
+		};
+		tick = () => {
+			if (
+				this.form.i.valueAsNumber ===
+				(this.direction > 0 ? this.lambdas.length - 1 : this.direction < 0 ? 0 : NaN)
+			) {
+				if (!this.loop) return stop();
+				if (this.alternate) this.direction = -this.direction;
+				if (this.loopDelay !== null) {
+					if (this.frame !== null) cancelAnimationFrame(this.frame), (this.frame = null);
+					if (this.interval !== null) clearInterval(this.interval), (this.interval = null);
+					this.timer = setTimeout(() => (this.step(), this.start()), this.loopDelay);
+					return;
+				}
 			}
-		}
-		if (delay === null) frame = requestAnimationFrame(tick);
-		step();
+			if (this.delay === null) this.frame = requestAnimationFrame(this.tick);
+			this.step();
+		};
+		step = () => {
+			this.form.i.valueAsNumber =
+				(this.form.i.valueAsNumber + this.direction + this.lambdas.length) % this.lambdas.length;
+			this.form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
+		};
+		plot = () => {
+			const data = this.data.filter((x) => x.lambda == this.lambdas[this.idx]);
+			const plt = Plot.plot({
+				grid: true,
+				color: { legend: true },
+				y: { type: "sqrt", domain: [0, 1], label: "ρ" },
+				caption:
+					"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
+				x: { domain: [-2.5, 2.5] },
+				width: this.width,
+				height: this.width * 0.5,
+				marks: [
+					Plot.rect(
+						data.filter((x) => x.type == "emp"),
+						{
+							x1: "x0",
+							x2: "x1",
+							y2: "rho",
+							y1: () => 0,
+							opacity: 0.2,
+						},
+					),
+					Plot.rect(
+						data.filter((x) => x.type == "empMax"),
+						{
+							x1: "x0",
+							x2: "x1",
+							y2: "rho",
+							y1: () => 0,
+							opacity: 0.5,
+							fill: () => "max",
+						},
+					),
+					Plot.rect(
+						data.filter((x) => x.type == "empMin"),
+						{
+							x1: "x0",
+							x2: "x1",
+							y2: "rho",
+							y1: () => 0,
+							opacity: 0.5,
+							fill: () => "min",
+						},
+					),
+					Plot.line(
+						data.filter((x) => x.type == "free"),
+						{
+							x: "x",
+							y: "rho",
+						},
+					),
+				],
+			});
+			this.div.innerHTML = "";
+			this.div.append(plt);
+		};
 	}
-	function step() {
-		form.i.valueAsNumber = (form.i.valueAsNumber + direction + lambdas.length) % lambdas.length;
-		form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
-	}
-	form.i.oninput = (event) => {
-		if (event && event.isTrusted && running()) stop();
-		form.value = lambdas[form.i.valueAsNumber];
-		form.o.value = lambdas[form.i.valueAsNumber].toFixed(1);
-	};
-	form.b.onclick = () => {
-		if (running()) return stop();
-		direction = alternate && form.i.valueAsNumber === lambdas.length - 1 ? -1 : 1;
-		form.i.valueAsNumber = (form.i.valueAsNumber + direction) % lambdas.length;
-		form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
-		start();
-	};
-	form.i.oninput();
-	if (autoplay) start();
-	else stop();
-	form.addEventListener("input", () => {
-		div.innerHTML = "";
-		div.append(
-			plot({
-				data: data.filter((x) => Math.abs(x.lambda - form.value) < 1e-3),
-				width,
-			}),
-		);
-	});
 
-	var ro = new ResizeObserver((entries) => {
-		for (let entry of entries) {
-			width = entry.contentRect.width;
-			console.log(width);
-		}
-		div.innerHTML = "";
-		div.append(
-			plot({
-				data: data.filter((x) => Math.abs(x.lambda - form.value) < 1e-3),
-				width,
-			}),
-		);
-	});
-
-	ro.observe(div);
+	customElements.define("plot-chart", PlotChart);
 </script>

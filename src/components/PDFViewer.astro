@@ -2,8 +2,6 @@
 import { Icon } from "astro-icon/components";
 
 const { url, filename, class: classList = "", embedMode = undefined } = Astro.props;
-
-console.log(url);
 ---
 
 <div
@@ -24,7 +22,7 @@ console.log(url);
 		{filename}
 	</div>
 </a>
-<script type="module" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
+<!-- <script type="module" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
 <script type="module">
 	const data = document.getElementById("adobe").dataset;
 	var viewerConfig =
@@ -52,4 +50,4 @@ console.log(url);
 			viewerConfig,
 		);
 	});
-</script>
+</script> -->

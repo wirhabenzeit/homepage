@@ -1,45 +1,120 @@
 ---
+import * as d3 from "d3";
+import { JSDOM } from "jsdom";
+import * as Plot from "@observablehq/plot";
+import fs from "node:fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const jsdom = new JSDOM("");
+global.window = jsdom.window;
+global.document = jsdom.window.document;
+global.Event = jsdom.window.Event;
+global.Node = jsdom.window.Node;
+global.NodeList = jsdom.window.NodeList;
+global.HTMLCollection = jsdom.window.HTMLCollection;
+
+type Data = {
+	x0: number;
+	x1: number;
+	rho: number;
+	type: string;
+	lambda: number;
+};
+
+console.log("FILE", path.dirname(import.meta.url));
+
+const data = d3.csvParse(
+	fs.readFileSync(fileURLToPath(`${path.dirname(import.meta.url)}/scovAnim.csv`)).toString(),
+	d3.autoType,
+) as Data[];
+
+const plot = ({ data, width }: { data: Data[]; width: number }) => {
+	return Plot.plot({
+		grid: true,
+		color: { legend: true },
+		y: { type: "sqrt", domain: [0, 1], label: "ρ" },
+		caption:
+			"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
+		x: { domain: [-2.5, 2.5] },
+		width: width,
+		height: width * 0.5,
+		marks: [
+			Plot.rect(
+				data.filter((x) => x.type == "emp"),
+				{
+					x1: "x0",
+					x2: "x1",
+					y2: "rho",
+					y1: () => 0,
+					opacity: 0.2,
+				},
+			),
+			Plot.rect(
+				data.filter((x) => x.type == "empMax"),
+				{
+					x1: "x0",
+					x2: "x1",
+					y2: "rho",
+					y1: () => 0,
+					opacity: 0.5,
+					fill: () => "max",
+				},
+			),
+			Plot.rect(
+				data.filter((x) => x.type == "empMin"),
+				{
+					x1: "x0",
+					x2: "x1",
+					y2: "rho",
+					y1: () => 0,
+					opacity: 0.5,
+					fill: () => "min",
+				},
+			),
+			Plot.line(
+				data.filter((x) => x.type == "free"),
+				{
+					x: "x",
+					y: "rho",
+				},
+			),
+		],
+	});
+};
+
+const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
+const lambdaInit = lambdas[lambdas.length / 2];
+const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
+const chart = plot({ data: data.filter((x) => x.lambda == lambdaInit), width: 832 });
 ---
 
-<form id="scrubber" class="dispay-flex hidden">
+<form id="scrubber" class="dispay-flex">
 	<label class="flex flex-grow items-center">
-		<button name="b" type="button" class="w-5 text-xl"></button>
+		<button name="b" type="button" class="w-5 text-xl">⏵</button>
 		<input
 			name="i"
 			type="range"
 			min="0"
-			max="10"
-			value="0"
+			max={lambdas.length - 1}
+			value={lambdaInitIndex}
 			step="1"
 			class="range slider mx-2 flex-grow"
 		/>
 		λ =
-		<output name="o" class="ml-1"></output>
+		<output name="o" class="ml-1">{lambdaInit}</output>
 	</label>
 </form>
-<div id="myplot" class="full-width -mt-6"></div>
+<div id="myplot" class="full-width -mt-5" set:html={chart.outerHTML} />
 
-<script>
-	// @ts-nocheck
-	import * as Plot from "@observablehq/plot";
-	import * as d3 from "d3";
-
-	const url = `${import.meta.env.BASE_URL}/scovAnim.csv`;
-	const data = (await d3.csv(url, d3.autoType)) as {
-		x0: number;
-		x1: number;
-		x: number;
-		rho: number;
-		lambda: number;
-		type: string;
-	}[];
-	const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
-	const div = document.querySelector("#myplot") as HTMLElement;
+<script type="module" define:vars={{ data, lambdas, lambdaInit }}>
+	import * as Plot from "https://cdn.skypack.dev/@observablehq/plot@0.6";
+	import * as d3 from "https://cdn.skypack.dev/d3@7";
+	const div = document.querySelector("#myplot");
+	const form = document.querySelector("#scrubber");
 	var width = div.offsetWidth;
 
-	const plot = (lambda: number) => {
-		const dataF = data.filter((x) => Math.abs(x.lambda - lambda) < 1e-3);
+	const plot = ({ data, width }) => {
 		return Plot.plot({
 			grid: true,
 			color: { legend: true },
@@ -51,7 +126,7 @@
 			height: width * 0.5,
 			marks: [
 				Plot.rect(
-					dataF.filter((x) => x.type == "emp"),
+					data.filter((x) => x.type == "emp"),
 					{
 						x1: "x0",
 						x2: "x1",
@@ -61,7 +136,7 @@
 					},
 				),
 				Plot.rect(
-					dataF.filter((x) => x.type == "empMax"),
+					data.filter((x) => x.type == "empMax"),
 					{
 						x1: "x0",
 						x2: "x1",
@@ -72,7 +147,7 @@
 					},
 				),
 				Plot.rect(
-					dataF.filter((x) => x.type == "empMin"),
+					data.filter((x) => x.type == "empMin"),
 					{
 						x1: "x0",
 						x2: "x1",
@@ -83,7 +158,7 @@
 					},
 				),
 				Plot.line(
-					dataF.filter((x) => x.type == "free"),
+					data.filter((x) => x.type == "free"),
 					{
 						x: "x",
 						y: "rho",
@@ -93,100 +168,86 @@
 		});
 	};
 
-	function Scrubber(
-		form: HTMLElement,
-		values: number[],
-		{
-			format = (value: number) => value,
-			initial = 0,
-			direction = 1,
-			delay = null,
-			autoplay = true,
-			loop = true,
-			loopDelay = null,
-			alternate = false,
-			onChange = () => {},
-		} = {},
-	) {
-		values = Array.from(values);
-		form.i.min = 0;
-		form.i.max = values.length - 1;
-		form.i.valueAsNumber = initial;
-		form.classList.toggle("hidden");
-		let frame = null;
-		let timer = null;
-		let interval = null;
-		function start() {
-			form.b.textContent = "⏸";
-			if (delay === null) frame = requestAnimationFrame(tick);
-			else interval = setInterval(tick, delay);
-		}
-		function stop() {
-			form.b.textContent = "⏵";
-			if (frame !== null) cancelAnimationFrame(frame), (frame = null);
-			if (timer !== null) clearTimeout(timer), (timer = null);
-			if (interval !== null) clearInterval(interval), (interval = null);
-		}
-		function running() {
-			return frame !== null || timer !== null || interval !== null;
-		}
-		function tick() {
-			if (form.i.valueAsNumber === (direction > 0 ? values.length - 1 : direction < 0 ? 0 : NaN)) {
-				if (!loop) return stop();
-				if (alternate) direction = -direction;
-				if (loopDelay !== null) {
-					if (frame !== null) cancelAnimationFrame(frame), (frame = null);
-					if (interval !== null) clearInterval(interval), (interval = null);
-					timer = setTimeout(() => (step(), start()), loopDelay);
-					return;
-				}
-			}
-			if (delay === null) frame = requestAnimationFrame(tick);
-			step();
-		}
-		function step() {
-			form.i.valueAsNumber = (form.i.valueAsNumber + direction + values.length) % values.length;
-			form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
-		}
-		form.i.oninput = (event) => {
-			if (event && event.isTrusted && running()) stop();
-			form.value = values[form.i.valueAsNumber];
-			form.o.value = format(form.value, form.i.valueAsNumber, values);
-		};
-		form.b.onclick = () => {
-			if (running()) return stop();
-			direction = alternate && form.i.valueAsNumber === values.length - 1 ? -1 : 1;
-			form.i.valueAsNumber = (form.i.valueAsNumber + direction) % values.length;
-			form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
-			start();
-		};
-		form.i.oninput();
-		if (autoplay) start();
-		else stop();
-		form.addEventListener("input", () => onChange(values[form.i.valueAsNumber]));
+	const delay = 100;
+	var direction = 1;
+	const loop = true;
+	const alternate = true;
+	const loopDelay = null;
+	const autoplay = false;
+
+	let frame = null;
+	let timer = null;
+	let interval = null;
+
+	function start() {
+		form.b.textContent = "⏸";
+		if (delay === null) frame = requestAnimationFrame(tick);
+		else interval = setInterval(tick, delay);
 	}
-	const form = document.querySelector("#scrubber");
-	const lambdaInit = lambdas[lambdas.length / 2];
-	Scrubber(form, lambdas, {
-		format: (value) => `${value.toFixed(1)}`,
-		autoplay: false,
-		delay: 100,
-		initial: lambdas.indexOf(lambdaInit),
-		loop: true,
-		alternate: true,
-		onChange: (value) => {
-			div.innerHTML = "";
-			div.append(plot(value));
-		},
+	function stop() {
+		form.b.textContent = "⏵";
+		if (frame !== null) cancelAnimationFrame(frame), (frame = null);
+		if (timer !== null) clearTimeout(timer), (timer = null);
+		if (interval !== null) clearInterval(interval), (interval = null);
+	}
+	function running() {
+		return frame !== null || timer !== null || interval !== null;
+	}
+	function tick() {
+		if (form.i.valueAsNumber === (direction > 0 ? lambdas.length - 1 : direction < 0 ? 0 : NaN)) {
+			if (!loop) return stop();
+			if (alternate) direction = -direction;
+			if (loopDelay !== null) {
+				if (frame !== null) cancelAnimationFrame(frame), (frame = null);
+				if (interval !== null) clearInterval(interval), (interval = null);
+				timer = setTimeout(() => (step(), start()), loopDelay);
+				return;
+			}
+		}
+		if (delay === null) frame = requestAnimationFrame(tick);
+		step();
+	}
+	function step() {
+		form.i.valueAsNumber = (form.i.valueAsNumber + direction + lambdas.length) % lambdas.length;
+		form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
+	}
+	form.i.oninput = (event) => {
+		if (event && event.isTrusted && running()) stop();
+		form.value = lambdas[form.i.valueAsNumber];
+		form.o.value = lambdas[form.i.valueAsNumber].toFixed(1);
+	};
+	form.b.onclick = () => {
+		if (running()) return stop();
+		direction = alternate && form.i.valueAsNumber === lambdas.length - 1 ? -1 : 1;
+		form.i.valueAsNumber = (form.i.valueAsNumber + direction) % lambdas.length;
+		form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
+		start();
+	};
+	form.i.oninput();
+	if (autoplay) start();
+	else stop();
+	form.addEventListener("input", () => {
+		div.innerHTML = "";
+		div.append(
+			plot({
+				data: data.filter((x) => Math.abs(x.lambda - form.value) < 1e-3),
+				width,
+			}),
+		);
 	});
-	div.append(plot(lambdaInit));
 
 	var ro = new ResizeObserver((entries) => {
 		for (let entry of entries) {
 			width = entry.contentRect.width;
+			console.log(width);
 		}
 		div.innerHTML = "";
-		div.append(plot(lambdas[form.i.valueAsNumber]));
+		div.append(
+			plot({
+				data: data.filter((x) => Math.abs(x.lambda - form.value) < 1e-3),
+				width,
+			}),
+		);
 	});
 
 	ro.observe(div);

@@ -3,7 +3,6 @@ import fs from "fs";
 import { getCollection } from "astro:content";
 
 export const GET: APIRoute = async function GET({ props }) {
-	console.log();
 	const file = fs.readFileSync(`./src/content/thesis/${props.id}/thesis.pdf`, "binary");
 	const buffer = Buffer.from(file, "binary");
 	return new Response(buffer, {

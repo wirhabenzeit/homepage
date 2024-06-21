@@ -1,89 +1,63 @@
 ---
 import * as d3 from "d3";
-//import { plot, type Data } from "./plot.ts";
 import csv from "./scovAnim.csv?raw";
-import plotUrl from "./plot.ts?url";
+import histPlot from "./plot.js?url";
 import RangeSlider from "@/components/RangeSlider";
 import Plot from "@/components/Plot";
 
-const plot = await import(plotUrl);
-console.log(plot);
+const modules = import.meta.glob(["./plot.js"]);
 
-const data = d3.csvParse(csv, d3.autoType) as Data[];
+// get the path of the built module.
+const importPathRegex = /import\(['"]([^'"]+)['"]\)/;
+const importStatement = Object.values(modules)[0].toString();
+const match = importStatement.match(importPathRegex);
+let sourceUrl = "";
+if (match) {
+	const path = match[1];
+	sourceUrl = path;
+}
+if (sourceUrl === "") {
+	sourceUrl = histPlot;
+}
+console.log(sourceUrl);
+
+const data = d3.csvParse(csv, d3.autoType) as { lambda: number; x: number }[];
 const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
 const lambdaInit = lambdas[lambdas.length / 2];
 const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
-const chart = plot.plot({ data, lambda: lambdaInit, width: 832 });
 ---
 
-<plot-chart data-data={JSON.stringify(data)} data-idx={lambdaInitIndex}>
-	<RangeSlider
-		min={0}
-		max={lambdas.length - 1}
-		step={1}
-		value={lambdaInitIndex}
-		delay={100}
-		alternate={true}
-		id="lambda"
-	>
-		<span id="lambdaLabel">λ = {lambdaInit!.toFixed(1)}</span>
-	</RangeSlider>
-	<div id="myplot" class="full-width -mt-5" set:html={chart.outerHTML} />
-</plot-chart>
-<Plot plot={plotUrl} args={{ data, lambda: lambdaInit, width: 832 }} />
+<RangeSlider
+	min={0}
+	max={lambdas.length - 1}
+	step={1}
+	value={lambdaInitIndex}
+	delay={100}
+	alternate={true}
+	id="lambda"
+>
+	<span id="lambda-label">λ = {lambdaInit!.toFixed(1)}</span>
+</RangeSlider>
+<Plot
+	plot={sourceUrl}
+	args={{ data, lambda: lambdaInit, width: 832 }}
+	id="hist-plot"
+	class="-mt-10"
+/>
 
-<script>
-	import { plot, type Data } from "./plot.ts";
-
-	class PlotChart extends HTMLElement {
-		width: number;
-		lambdas: number[];
-		idx: number;
-		data: Data[];
-		div: HTMLDivElement;
-		sliderLabel: HTMLSpanElement;
-		constructor() {
-			super();
-			this.div = this.querySelector("#myplot")!;
-			const slider = this.querySelector("#lambda")!;
-			this.sliderLabel = this.querySelector("#lambdaLabel")!;
-			this.data = JSON.parse(this.dataset.data!);
-			this.lambdas = Array.from(new Set(this.data.map((x) => x.lambda)));
-			this.idx = parseInt(this.dataset.idx!);
-			this.width = this.div!.offsetWidth;
-
-			const ro = new ResizeObserver((entries) => {
-				for (let entry of entries) {
-					this.width = entry.contentRect.width;
-				}
-				this.plot();
-			});
-			slider.addEventListener("input", (event) => {
-				if (
-					event instanceof CustomEvent &&
-					event.detail.value !== undefined &&
-					typeof event.detail.value === "number" &&
-					event.detail.value >= 0 &&
-					event.detail.value < this.lambdas.length
-				) {
-					this.idx = event.detail.value;
-					this.plot();
-				}
-			});
-
-			ro.observe(this.div);
+<script define:vars={{ lambdas }}>
+	const slider = document.querySelector("#lambda");
+	const label = document.querySelector("#lambda-label");
+	const plot = document.querySelector("#hist-plot");
+	slider.addEventListener("input", (event) => {
+		if (
+			event instanceof CustomEvent &&
+			event.detail.value !== undefined &&
+			typeof event.detail.value === "number"
+		) {
+			const lambda = lambdas[event.detail.value];
+			label.textContent = `λ = ${lambda.toFixed(1)}`;
+			plot.dispatchEvent(new CustomEvent("plot", { detail: { lambda } }));
 		}
-		plot = () => {
-			this.sliderLabel.textContent = `λ = ${this.lambdas[this.idx]!.toFixed(1)}`;
-			const plt = plot({
-				data: this.data,
-				lambda: this.lambdas[this.idx],
-				width: this.width,
-			});
-			this.div.innerHTML = "";
-			this.div.append(plt);
-		};
-	}
-
-	customElements.define("plot-chart", PlotChart);
+	});
 </script>

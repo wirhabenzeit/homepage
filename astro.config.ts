@@ -51,6 +51,9 @@ export default defineConfig({
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
+		build: {
+			assetsInlineLimit: 0,
+		},
 		resolve: {
 			alias: {
 				"./runtimeConfig": "./runtimeConfig.browser",

@@ -1,35 +1,6 @@
 import * as Plot from "@observablehq/plot";
 
-const isCLientSide = typeof window !== "undefined";
-
-if (!isCLientSide) {
-	const { JSDOM } = await import("jsdom");
-	const jsdom = new JSDOM("");
-	global.window = jsdom.window as any as Window & typeof globalThis;
-	global.document = jsdom.window.document;
-	global.Event = jsdom.window.Event;
-	global.Node = jsdom.window.Node;
-	global.NodeList = jsdom.window.NodeList;
-	global.HTMLCollection = jsdom.window.HTMLCollection;
-}
-
-type Data = {
-	x0: number;
-	x1: number;
-	rho: number;
-	type: string;
-	lambda: number;
-};
-
-export const plot = ({
-	data,
-	lambda,
-	width = 832,
-}: {
-	data: Data[];
-	width: number;
-	lambda: number;
-}) => {
+export const plot = ({ data, lambda, width = 832 }) => {
 	const rect = {
 		x1: "x0",
 		x2: "x1",

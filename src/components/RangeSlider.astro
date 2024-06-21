@@ -34,8 +34,9 @@ const {
 >
 	<form id="scrubber" class="dispay-flex">
 		<label class="flex flex-grow items-center">
-			<button name="b" type="button" class="w-5 text-xl">⏵</button>
+			<button name="b" type="button" class="w-5 text-xl" disabled>⏵</button>
 			<input
+				disabled
 				name="i"
 				type="range"
 				min={min}
@@ -72,6 +73,8 @@ const {
 		constructor() {
 			super();
 			this.form = this.querySelector("form")!;
+			this.form.i.disabled = false;
+			this.form.b.disabled = false;
 			this.settings = JSON.parse(this.dataset.settings!);
 			this.settings.length = (this.settings.max - this.settings.min) / this.settings.step;
 			this.form.i.oninput = (event: Event) => {

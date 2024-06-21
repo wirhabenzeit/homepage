@@ -86,13 +86,6 @@ const {
 			};
 			this.form.b.onclick = () => {
 				if (this.running()) return this.stop();
-				this.settings.direction =
-					this.settings.alternate && this.form.i.valueAsNumber === this.settings.max ? -1 : 1;
-				this.form.i.valueAsNumber =
-					(this.form.i.valueAsNumber + this.settings.direction) % this.settings.length;
-				this.dispatchEvent(
-					new CustomEvent("input", { bubbles: true, detail: { value: this.form.i.valueAsNumber } }),
-				);
 				this.start();
 			};
 			this.form.i.oninput();

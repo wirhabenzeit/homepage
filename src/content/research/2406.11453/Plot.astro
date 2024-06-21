@@ -22,14 +22,38 @@ const chart = plot(args);
 <script>
 	import { plot, type Args } from "./plot.ts";
 
+	function debounce<Params extends unknown[]>(
+		func: (...args: Params) => unknown,
+		timeout: number,
+	): (...args: Params) => void {
+		let timer: ReturnType<typeof setTimeout> | null = null;
+		return (...args: Params) => {
+			if (timer !== null) clearTimeout(timer);
+			timer = setTimeout(() => {
+				func(...args);
+			}, timeout);
+		};
+	}
+
 	class PlotChart extends HTMLElement {
-		args: Args;
+		args: Args & { width: number; height: number };
 		div: HTMLDivElement;
 		constructor() {
 			super();
 			this.div = this.querySelector("div")!;
 			this.args = JSON.parse(this.dataset.args!);
-
+			const ro = new ResizeObserver(
+				debounce((entries: ResizeObserverEntry[]) => {
+					if (entries.length === 0) return;
+					else {
+						const entry: ResizeObserverEntry = entries[0]!;
+						this.args.width = entry.contentRect.width;
+						this.args.height = entry.contentRect.height;
+						this.plot();
+					}
+				}, 50),
+			);
+			ro.observe(this.div);
 			this.addEventListener("plot", (event) => {
 				if (event instanceof CustomEvent) {
 					this.args = { ...this.args, ...event.detail };

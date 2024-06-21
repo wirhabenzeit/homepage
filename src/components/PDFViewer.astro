@@ -4,7 +4,14 @@ import { Icon } from "astro-icon/components";
 const { url, filename, class: classList = "", embedMode = undefined } = Astro.props;
 ---
 
-<div
+<iframe src={url} class:list={[classList, "mb-2"]} title={url}></iframe>
+<a href={url} class="cactus-link" target="_blank" rel="noopener noreferrer">
+	<div class="flex items-center">
+		<Icon class="h-6 w-6" name="mdi:download" aria-hidden="true" focusable="false" />
+		{filename}
+	</div>
+</a>
+<!-- <div
 	id="adobe"
 	data-url={url}
 	data-filename={filename}
@@ -22,7 +29,7 @@ const { url, filename, class: classList = "", embedMode = undefined } = Astro.pr
 		{filename}
 	</div>
 </a>
-<!-- <script type="module" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
+<script type="module" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
 <script type="module">
 	const data = document.getElementById("adobe").dataset;
 	var viewerConfig =

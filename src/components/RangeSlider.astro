@@ -68,8 +68,8 @@ const {
 			pauseSymbol: string;
 		};
 		frame: number | null = null;
-		timer: ReturnType<typeof setTimeout> | null = null;
-		interval: ReturnType<typeof setTimeout> | null = null;
+		timer: any;
+		interval: any;
 		constructor() {
 			super();
 			this.form = this.querySelector("form")!;

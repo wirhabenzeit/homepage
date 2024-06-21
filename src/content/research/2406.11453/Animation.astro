@@ -9,12 +9,12 @@ const modules = import.meta.glob(["./plot.js"]);
 
 // get the path of the built module.
 const importPathRegex = /import\(['"]([^'"]+)['"]\)/;
-const importStatement = Object.values(modules)[0].toString();
+const importStatement = Object.values(modules)[0]!.toString();
 const match = importStatement.match(importPathRegex);
 let sourceUrl = "";
 if (match) {
 	const path = match[1];
-	sourceUrl = path;
+	if (path) sourceUrl = path;
 }
 if (sourceUrl === "") {
 	sourceUrl = histPlot;

@@ -1,242 +1,78 @@
 ---
 import * as d3 from "d3";
-import { JSDOM } from "jsdom";
-import * as Plot from "@observablehq/plot";
+import { plot, type Data } from "./plot.ts";
 import csv from "./scovAnim.csv?raw";
-
-const jsdom = new JSDOM("");
-global.window = jsdom.window as any as Window & typeof globalThis;
-global.document = jsdom.window.document;
-global.Event = jsdom.window.Event;
-global.Node = jsdom.window.Node;
-global.NodeList = jsdom.window.NodeList;
-global.HTMLCollection = jsdom.window.HTMLCollection;
-
-type Data = {
-	x0: number;
-	x1: number;
-	rho: number;
-	type: string;
-	lambda: number;
-};
+import RangeSlider from "@/components/RangeSlider";
 
 const data = d3.csvParse(csv, d3.autoType) as Data[];
-
-const plot = ({ dataFiltered, width = 832 }: { dataFiltered: Data[]; width: number }) => {
-	const rect = {
-		x1: "x0",
-		x2: "x1",
-		y2: "rho",
-		y1: () => 0,
-	};
-	return Plot.plot({
-		grid: true,
-		color: { legend: true },
-		y: { type: "sqrt", domain: [0, 1], label: "ρ" },
-		caption:
-			"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
-		x: { domain: [-2.5, 2.5] },
-		width: width,
-		height: width * 0.5,
-		marks: [
-			Plot.rect(
-				dataFiltered.filter((x) => x.type == "emp"),
-				{
-					...rect,
-					opacity: 0.2,
-				},
-			),
-			...["Max", "Min"].map((type) =>
-				Plot.rect(
-					dataFiltered.filter((x) => x.type == `emp${type}`),
-					{
-						...rect,
-						opacity: 0.5,
-						fill: () => type,
-					},
-				),
-			),
-			Plot.line(
-				dataFiltered.filter((x) => x.type == "free"),
-				{
-					x: "x",
-					y: "rho",
-				},
-			),
-		],
-	});
-};
-
 const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
 const lambdaInit = lambdas[lambdas.length / 2];
 const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
-const chart = plot({ dataFiltered: data.filter((x) => x.lambda == lambdaInit), width: 832 });
+const chart = plot({ data, filter: (x) => x.lambda == lambdaInit, width: 832 });
 ---
 
-<plot-chart data-data={JSON.stringify(data)}>
-	<form id="scrubber" class="dispay-flex">
-		<label class="flex flex-grow items-center">
-			<button name="b" type="button" class="w-5 text-xl">⏵</button>
-			<input
-				name="i"
-				type="range"
-				min="0"
-				max={lambdas.length - 1}
-				value={lambdaInitIndex}
-				step="1"
-				class="range slider mx-2 flex-grow"
-			/>
-			λ =
-			<output name="o" class="ml-1">{lambdaInit}</output>
-		</label>
-	</form>
+<plot-chart data-data={JSON.stringify(data)} data-idx={lambdaInitIndex}>
+	<RangeSlider
+		min={0}
+		max={lambdas.length - 1}
+		step={1}
+		value={lambdaInitIndex}
+		delay={100}
+		alternate={true}
+		id="lambda"
+	>
+		<span id="lambdaLabel">λ = {lambdaInit!.toFixed(1)}</span>
+	</RangeSlider>
 	<div id="myplot" class="full-width -mt-5" set:html={chart.outerHTML} />
 </plot-chart>
 
 <script>
-	import * as Plot from "@observablehq/plot";
-
-	type Data = {
-		x0: number;
-		x1: number;
-		rho: number;
-		type: string;
-		lambda: number;
-	};
+	import { plot, type Data } from "./plot.ts";
 
 	class PlotChart extends HTMLElement {
 		width: number;
-		idx: number;
 		lambdas: number[];
+		idx: number;
 		data: Data[];
-		form: HTMLFormElement;
 		div: HTMLDivElement;
-		delay: number = 100;
-		direction: number = 1;
-		loop: boolean = true;
-		alternate: boolean = true;
-		loopDelay: number | null = null;
-		autoplay: boolean = false;
-		frame: number | null = null;
-		timer: ReturnType<typeof setTimeout> | null = null;
-		interval: ReturnType<typeof setTimeout> | null = null;
+		sliderLabel: HTMLSpanElement;
 		constructor() {
 			super();
-			this.div = this.querySelector("div")!;
-			this.form = this.querySelector("form")!;
+			this.div = this.querySelector("#myplot")!;
+			const slider = this.querySelector("#lambda")!;
+			this.sliderLabel = this.querySelector("#lambdaLabel")!;
 			this.data = JSON.parse(this.dataset.data!);
 			this.lambdas = Array.from(new Set(this.data.map((x) => x.lambda)));
+			this.idx = parseInt(this.dataset.idx!);
 			this.width = this.div!.offsetWidth;
-			this.idx = this.form.i.valueAsNumber;
-			this.form.i.oninput = (event: Event) => {
-				if (event && event.isTrusted && this.running()) this.stop();
-				this.form.value = this.lambdas[this.form.i.valueAsNumber];
-				this.form.o.value = this.lambdas[this.form.i.valueAsNumber]!.toFixed(1);
-			};
-			this.form.b.onclick = () => {
-				if (this.running()) return this.stop();
-				this.direction =
-					this.alternate && this.form.i.valueAsNumber === this.lambdas.length - 1 ? -1 : 1;
-				this.form.i.valueAsNumber =
-					(this.form.i.valueAsNumber + this.direction) % this.lambdas.length;
-				this.form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
-				this.start();
-			};
-			this.form.i.oninput();
-			if (this.autoplay) this.start();
-			else this.stop();
-			this.form.addEventListener("input", () => {
-				this.idx = this.form.i.valueAsNumber;
-				this.plot();
-			});
+
 			const ro = new ResizeObserver((entries) => {
 				for (let entry of entries) {
 					this.width = entry.contentRect.width;
 				}
 				this.plot();
 			});
+			slider.addEventListener("input", (event) => {
+				if (
+					event instanceof CustomEvent &&
+					event.detail.value !== undefined &&
+					typeof event.detail.value === "number" &&
+					event.detail.value >= 0 &&
+					event.detail.value < this.lambdas.length
+				) {
+					this.idx = event.detail.value;
+					this.plot();
+				}
+			});
 
 			ro.observe(this.div);
 		}
-		start = () => {
-			this.form.b.textContent = "⏸";
-			if (this.delay === null) this.frame = requestAnimationFrame(this.tick);
-			else this.interval = setInterval(this.tick, this.delay);
-		};
-		stop = () => {
-			this.form.b.textContent = "⏵";
-			if (this.frame !== null) cancelAnimationFrame(this.frame), (this.frame = null);
-			if (this.timer !== null) clearTimeout(this.timer), (this.timer = null);
-			if (this.interval !== null) clearInterval(this.interval), (this.interval = null);
-		};
-		running = () => {
-			return this.frame !== null || this.timer !== null || this.interval !== null;
-		};
-		tick = () => {
-			if (
-				this.form.i.valueAsNumber ===
-				(this.direction > 0 ? this.lambdas.length - 1 : this.direction < 0 ? 0 : NaN)
-			) {
-				if (!this.loop) return stop();
-				if (this.alternate) this.direction = -this.direction;
-				if (this.loopDelay !== null) {
-					if (this.frame !== null) cancelAnimationFrame(this.frame), (this.frame = null);
-					if (this.interval !== null) clearInterval(this.interval), (this.interval = null);
-					this.timer = setTimeout(() => (this.step(), this.start()), this.loopDelay);
-					return;
-				}
-			}
-			if (this.delay === null) this.frame = requestAnimationFrame(this.tick);
-			this.step();
-		};
-		step = () => {
-			this.form.i.valueAsNumber =
-				(this.form.i.valueAsNumber + this.direction + this.lambdas.length) % this.lambdas.length;
-			this.form.i.dispatchEvent(new CustomEvent("input", { bubbles: true }));
-		};
 		plot = () => {
-			const data = this.data.filter((x) => x.lambda == this.lambdas[this.idx]);
-			const rect = {
-				x1: "x0",
-				x2: "x1",
-				y2: "rho",
-				y1: () => 0,
-			};
-			const plt = Plot.plot({
-				grid: true,
-				color: { legend: true },
-				y: { type: "sqrt", domain: [0, 1], label: "ρ" },
-				caption:
-					"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
-				x: { domain: [-2.5, 2.5] },
+			this.sliderLabel.textContent = `λ = ${this.lambdas[this.idx]!.toFixed(1)}`;
+			const plt = plot({
+				data: this.data,
+				filter: (x) => x.lambda == this.lambdas[this.idx],
 				width: this.width,
-				height: this.width * 0.5,
-				marks: [
-					Plot.rect(
-						data.filter((x) => x.type == "emp"),
-						{
-							...rect,
-							opacity: 0.2,
-						},
-					),
-					...["Max", "Min"].map((type) =>
-						Plot.rect(
-							data.filter((x) => x.type == `emp${type}`),
-							{
-								...rect,
-								opacity: 0.5,
-								fill: () => type,
-							},
-						),
-					),
-					Plot.line(
-						data.filter((x) => x.type == "free"),
-						{
-							x: "x",
-							y: "rho",
-						},
-					),
-				],
 			});
 			this.div.innerHTML = "";
 			this.div.append(plt);

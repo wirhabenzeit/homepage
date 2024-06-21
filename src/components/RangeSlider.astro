@@ -1,0 +1,141 @@
+---
+const {
+	min,
+	max,
+	step,
+	value,
+	delay = 100,
+	direction = 1,
+	loop = true,
+	alternate = false,
+	loopDelay = null,
+	autoplay = false,
+	playSymbol = "⏵",
+	pauseSymbol = "⏸",
+	id,
+} = Astro.props;
+---
+
+<range-slider
+	{...id !== undefined && { id }}
+	data-settings={JSON.stringify({
+		min,
+		max,
+		step,
+		delay,
+		direction,
+		loop,
+		alternate,
+		loopDelay,
+		autoplay,
+		playSymbol,
+		pauseSymbol,
+	})}
+>
+	<form id="scrubber" class="dispay-flex">
+		<label class="flex flex-grow items-center">
+			<button name="b" type="button" class="w-5 text-xl">⏵</button>
+			<input
+				name="i"
+				type="range"
+				min={min}
+				max={max}
+				value={value}
+				step={step}
+				class="range slider mx-2 flex-grow"
+			/>
+			<slot />
+		</label>
+	</form>
+</range-slider>
+
+<script>
+	class RangeSlider extends HTMLElement {
+		form: HTMLFormElement;
+		settings: {
+			min: number;
+			max: number;
+			step: number;
+			length: number;
+			delay: number;
+			direction: number;
+			loop: boolean;
+			alternate: boolean;
+			loopDelay: number;
+			autoplay: boolean;
+			playSymbol: string;
+			pauseSymbol: string;
+		};
+		frame: number | null = null;
+		timer: ReturnType<typeof setTimeout> | null = null;
+		interval: ReturnType<typeof setTimeout> | null = null;
+		constructor() {
+			super();
+			this.form = this.querySelector("form")!;
+			this.settings = JSON.parse(this.dataset.settings!);
+			this.settings.length = (this.settings.max - this.settings.min) / this.settings.step;
+			this.form.i.oninput = (event: Event) => {
+				if (event && event.isTrusted && this.running()) this.stop();
+				if (event) event.stopPropagation();
+				this.dispatchEvent(
+					new CustomEvent("input", { bubbles: true, detail: { value: this.form.i.valueAsNumber } }),
+				);
+			};
+			this.form.b.onclick = () => {
+				if (this.running()) return this.stop();
+				this.settings.direction =
+					this.settings.alternate && this.form.i.valueAsNumber === this.settings.max ? -1 : 1;
+				this.form.i.valueAsNumber =
+					(this.form.i.valueAsNumber + this.settings.direction) % this.settings.length;
+				this.dispatchEvent(
+					new CustomEvent("input", { bubbles: true, detail: { value: this.form.i.valueAsNumber } }),
+				);
+				this.start();
+			};
+			this.form.i.oninput();
+			if (this.settings.autoplay) this.start();
+			else this.stop();
+		}
+		start = () => {
+			this.form.b.textContent = this.settings.pauseSymbol;
+			if (this.settings.delay === null) this.frame = requestAnimationFrame(this.tick);
+			else this.interval = setInterval(this.tick, this.settings.delay);
+		};
+		stop = () => {
+			this.form.b.textContent = this.settings.playSymbol;
+			if (this.frame !== null) cancelAnimationFrame(this.frame), (this.frame = null);
+			if (this.timer !== null) clearTimeout(this.timer), (this.timer = null);
+			if (this.interval !== null) clearInterval(this.interval), (this.interval = null);
+		};
+		running = () => {
+			return this.frame !== null || this.timer !== null || this.interval !== null;
+		};
+		tick = () => {
+			if (
+				this.form.i.valueAsNumber ===
+				(this.settings.direction > 0 ? this.settings.max : this.settings.direction < 0 ? 0 : NaN)
+			) {
+				if (!this.settings.loop) return stop();
+				if (this.settings.alternate) this.settings.direction = -this.settings.direction;
+				if (this.settings.loopDelay !== null) {
+					if (this.frame !== null) cancelAnimationFrame(this.frame), (this.frame = null);
+					if (this.interval !== null) clearInterval(this.interval), (this.interval = null);
+					this.timer = setTimeout(() => (this.makeStep(), this.start()), this.settings.loopDelay);
+					return;
+				}
+			}
+			if (this.settings.delay === null) this.frame = requestAnimationFrame(this.tick);
+			this.makeStep();
+		};
+		makeStep = () => {
+			this.form.i.valueAsNumber =
+				(this.form.i.valueAsNumber + this.settings.direction + this.settings.length + 1) %
+				(this.settings.length + 1);
+			this.dispatchEvent(
+				new CustomEvent("input", { bubbles: true, detail: { value: this.form.i.valueAsNumber } }),
+			);
+		};
+	}
+
+	customElements.define("range-slider", RangeSlider);
+</script>

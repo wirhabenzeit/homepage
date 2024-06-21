@@ -1,6 +1,22 @@
 import * as Plot from "@observablehq/plot";
 
-export const plot = ({ data, lambda, width = 832 }) => {
+type Data = {
+	x0: number;
+	x1: number;
+	rho: number;
+	lambda: number;
+	type: string;
+};
+
+export const plot = ({
+	data,
+	lambda,
+	width = 832,
+}: {
+	data: Data[];
+	lambda: number;
+	width: number;
+}) => {
 	const rect = {
 		x1: "x0",
 		x2: "x1",

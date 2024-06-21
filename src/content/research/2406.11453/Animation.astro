@@ -1,25 +1,8 @@
 ---
 import * as d3 from "d3";
 import csv from "./scovAnim.csv?raw";
-import histPlot from "./plot.js?url";
 import RangeSlider from "@/components/RangeSlider";
-import Plot from "@/components/Plot";
-
-const modules = import.meta.glob(["./plot.js"]);
-
-// get the path of the built module.
-const importPathRegex = /import\(['"]([^'"]+)['"]\)/;
-const importStatement = Object.values(modules)[0]!.toString();
-const match = importStatement.match(importPathRegex);
-let sourceUrl = "";
-if (match) {
-	const path = match[1];
-	if (path) sourceUrl = path;
-}
-if (sourceUrl === "") {
-	sourceUrl = histPlot;
-}
-console.log(sourceUrl);
+import Plot from "./Plot.astro";
 
 const data = d3.csvParse(csv, d3.autoType) as { lambda: number; x: number }[];
 const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
@@ -38,12 +21,7 @@ const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
 >
 	<span id="lambda-label">λ = {lambdaInit!.toFixed(1)}</span>
 </RangeSlider>
-<Plot
-	plot={sourceUrl}
-	args={{ data, lambda: lambdaInit, width: 832 }}
-	id="hist-plot"
-	class="-mt-10"
-/>
+<Plot args={{ data, lambda: lambdaInit, width: 832 }} id="hist-plot" class="-mt-10" />
 
 <script define:vars={{ lambdas }}>
 	const slider = document.querySelector("#lambda");

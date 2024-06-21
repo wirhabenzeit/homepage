@@ -1,10 +1,11 @@
 ---
-import { plot } from "./plot.ts";
-
 const { args, id, class: className } = Astro.props;
-const { JSDOM } = await import("jsdom");
+
+import { plot } from "./plot.ts";
+import { JSDOM } from "jsdom";
+
 const jsdom = new JSDOM("");
-global.window = jsdom.window as any;
+global.window = jsdom.window as unknown as Window & typeof globalThis;
 global.document = jsdom.window.document;
 global.Event = jsdom.window.Event;
 global.Node = jsdom.window.Node;
@@ -14,21 +15,21 @@ global.HTMLCollection = jsdom.window.HTMLCollection;
 const chart = plot(args);
 ---
 
-<plot-chart
-	data-args={JSON.stringify(args)}
-	class:list={["full-width", className]}
-	{...id !== undefined && { id }}
-	set:html={chart.outerHTML}
-/>
+<plot-chart data-args={JSON.stringify(args)} {...id !== undefined && { id }}>
+	<div class:list={[className]} set:html={chart.outerHTML} />
+</plot-chart>
 
 <script>
-	import { plot } from "./plot.ts";
+	import { plot, type Args } from "./plot.ts";
+
 	class PlotChart extends HTMLElement {
-		args: any;
-		plotFun: any;
+		args: Args;
+		div: HTMLDivElement;
 		constructor() {
 			super();
+			this.div = this.querySelector("div")!;
 			this.args = JSON.parse(this.dataset.args!);
+
 			this.addEventListener("plot", (event) => {
 				if (event instanceof CustomEvent) {
 					this.args = { ...this.args, ...event.detail };
@@ -39,10 +40,9 @@ const chart = plot(args);
 
 		plot = () => {
 			const plt = plot(this.args);
-			this.innerHTML = "";
-			this.append(plt);
+			this.div.innerHTML = "";
+			this.div.append(plt);
 		};
 	}
-
 	customElements.define("plot-chart", PlotChart);
 </script>

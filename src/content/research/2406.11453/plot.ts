@@ -8,15 +8,13 @@ type Data = {
 	type: string;
 };
 
-export const plot = ({
-	data,
-	lambda,
-	width = 832,
-}: {
+export type Args = {
 	data: Data[];
 	lambda: number;
 	width: number;
-}) => {
+};
+
+export const plot = ({ data, lambda, width = 832 }: Args) => {
 	const rect = {
 		x1: "x0",
 		x2: "x1",

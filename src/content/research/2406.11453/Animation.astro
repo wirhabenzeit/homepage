@@ -21,7 +21,7 @@ const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
 >
 	<span id="lambda-label">λ = {lambdaInit!.toFixed(1)}</span>
 </RangeSlider>
-<Plot args={{ data, lambda: lambdaInit, width: 832 }} id="hist-plot" class="-mt-10" />
+<Plot args={{ data, lambda: lambdaInit, width: 832 }} id="hist-plot" class="-mt-6" />
 
 <script define:vars={{ lambdas }}>
 	const slider = document.querySelector("#lambda");

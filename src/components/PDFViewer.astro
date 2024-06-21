@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
-const { url, filename, class: classList = "", embedMode = undefined } = Astro.props;
+const { url, filename, class: classList = "" } = Astro.props;
 ---
 
 <iframe src={url} class:list={[classList, "mb-2"]} title={url}></iframe>

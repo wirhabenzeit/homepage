@@ -1,0 +1,38 @@
+---
+const { plot: plotFile, args } = Astro.props;
+const plot = await import(plotFile);
+const chart = plot.plot(args);
+---
+
+<plot-chart
+	data-args={JSON.stringify(args)}
+	data-plot={plotFile}
+	class="full-width"
+	set:html={chart.outerHTML}
+/>
+
+<script>
+	class PlotChart extends HTMLElement {
+		plotFile: string;
+		args: any;
+		plotFun: (x: any) => HTMLElement | void;
+		constructor() {
+			super();
+			this.plotFile = this.dataset.plot!;
+			this.args = JSON.parse(this.dataset.args!);
+			this.plotFun = () => {};
+			this.init();
+		}
+		async init() {
+			const plot = await import(this.plotFile);
+			this.plotFun = plot.plot;
+		}
+		plot = () => {
+			const plt = this.plotFun(this.args);
+			this.innerHTML = "";
+			this.append(plt);
+		};
+	}
+
+	customElements.define("plot-chart", PlotChart);
+</script>

@@ -1,14 +1,19 @@
 ---
 import * as d3 from "d3";
-import { plot, type Data } from "./plot.ts";
+//import { plot, type Data } from "./plot.ts";
 import csv from "./scovAnim.csv?raw";
+import plotUrl from "./plot.ts?url";
 import RangeSlider from "@/components/RangeSlider";
+import Plot from "@/components/Plot";
+
+const plot = await import(plotUrl);
+console.log(plot);
 
 const data = d3.csvParse(csv, d3.autoType) as Data[];
 const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
 const lambdaInit = lambdas[lambdas.length / 2];
 const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
-const chart = plot({ data, filter: (x) => x.lambda == lambdaInit, width: 832 });
+const chart = plot.plot({ data, lambda: lambdaInit, width: 832 });
 ---
 
 <plot-chart data-data={JSON.stringify(data)} data-idx={lambdaInitIndex}>
@@ -25,6 +30,7 @@ const chart = plot({ data, filter: (x) => x.lambda == lambdaInit, width: 832 });
 	</RangeSlider>
 	<div id="myplot" class="full-width -mt-5" set:html={chart.outerHTML} />
 </plot-chart>
+<Plot plot={plotUrl} args={{ data, lambda: lambdaInit, width: 832 }} />
 
 <script>
 	import { plot, type Data } from "./plot.ts";
@@ -71,7 +77,7 @@ const chart = plot({ data, filter: (x) => x.lambda == lambdaInit, width: 832 });
 			this.sliderLabel.textContent = `λ = ${this.lambdas[this.idx]!.toFixed(1)}`;
 			const plt = plot({
 				data: this.data,
-				filter: (x) => x.lambda == this.lambdas[this.idx],
+				lambda: this.lambdas[this.idx],
 				width: this.width,
 			});
 			this.div.innerHTML = "";

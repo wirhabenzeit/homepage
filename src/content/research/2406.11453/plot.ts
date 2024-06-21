@@ -13,7 +13,7 @@ if (!isCLientSide) {
 	global.HTMLCollection = jsdom.window.HTMLCollection;
 }
 
-export type Data = {
+type Data = {
 	x0: number;
 	x1: number;
 	rho: number;
@@ -23,12 +23,12 @@ export type Data = {
 
 export const plot = ({
 	data,
-	filter = () => true,
+	lambda,
 	width = 832,
 }: {
 	data: Data[];
 	width: number;
-	filter: (d: Data) => boolean;
+	lambda: number;
 }) => {
 	const rect = {
 		x1: "x0",
@@ -36,7 +36,7 @@ export const plot = ({
 		y2: "rho",
 		y1: () => 0,
 	};
-	const dataFiltered = data.filter(filter);
+	const dataFiltered = data.filter((x) => x.lambda == lambda);
 	return Plot.plot({
 		grid: true,
 		color: { legend: true },

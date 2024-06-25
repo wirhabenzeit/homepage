@@ -2,7 +2,7 @@
 import * as d3 from "d3";
 import csv from "./scovAnim.csv?raw";
 import RangeSlider from "@/components/RangeSlider";
-import Plot from "./Plot.astro";
+import { Histogram } from "./hist";
 
 const data = d3.csvParse(csv, d3.autoType) as { lambda: number; x: number }[];
 const lambdas = Array.from(new Set(data.map((x) => x.lambda)));
@@ -21,7 +21,8 @@ const lambdaInitIndex = lambdas.indexOf(lambdaInit!);
 >
 	<span id="lambda-label">λ = {lambdaInit!.toFixed(1)}</span>
 </RangeSlider>
-<Plot args={{ data, lambda: lambdaInit, width: 832 }} id="hist-plot" class="-mt-6" />
+<Histogram lambda={lambdaInit} data={data} id="hist-plot" classList="-mt-6" />
+<!-- <Plot args={{ data, lambda: lambdaInit, width: 832 }} id="hist-plot" class="-mt-6" /> -->
 
 <script define:vars={{ lambdas }}>
 	const slider = document.querySelector("#lambda");

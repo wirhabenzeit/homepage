@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://n.ethz.ch/~dschroeder/sitemap-index.xml
+Sitemap: https://n.ethz.ch/sitemap-index.xml

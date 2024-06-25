@@ -16,7 +16,7 @@ const postDate = post.data.updatedDate ?? post.data.publishDate;
 <Tag>
 	{post.data.draft && <span class="text-red-500">(Draft) </span>}
 	<a
-		href={`${import.meta.env.BASE_URL}/${post.collection}/${post.slug}/`}
+		href={`${import.meta.env.BASE_URL}${post.collection}/${post.slug}/`}
 		class="cactus-link"
 		data-astro-prefetch
 	>

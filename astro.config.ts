@@ -12,11 +12,13 @@ import { expressiveCodeOptions } from "./src/site.config";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
+import qwik from "@qwikdev/astro";
+
 // https://astro.build/config
 export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
-	site: "https://n.ethz.ch/~dschroeder/",
-	base: "/~dschroeder",
+	site: "https://dominik.page",
+	//base: "",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime, remarkMath],
 		rehypePlugins: [
@@ -43,6 +45,7 @@ export default defineConfig({
 		}),
 		sitemap(),
 		mdx(),
+		qwik(),
 	],
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,

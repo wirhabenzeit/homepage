@@ -13,7 +13,7 @@ heroImage:
   alt: "Outlier phase transition"
 ---
 
-import Animation from "Animation.astro";
+import { Histogram } from "./hist";
 
 ## Summary
 
@@ -57,7 +57,7 @@ exactly as the corresponding _free_ model suggests.
 
 ### Numerical illustration
 
-<Animation />
+<Histogram lambda={5.1} autoplay={false} delay={100} loop={true} />
 
 ## Abstract
 

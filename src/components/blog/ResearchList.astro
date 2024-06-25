@@ -28,7 +28,7 @@ for (let post of allPosts) {
 }
 ---
 
-{
+<!-- {
 	reversable && (
 		<label class="cursor-pointer">
 			<input type="checkbox" id="reverse" class="hidden" />
@@ -41,7 +41,7 @@ for (let post of allPosts) {
 			</div>
 		</label>
 	)
-}
+} -->
 <ol class="not-prose flex flex-col-reverse gap-8" id="research-list">
 	{
 		allPosts.map((post, i) => (
@@ -75,7 +75,7 @@ for (let post of allPosts) {
 	}
 </ol>
 
-<script is:inline>
+<!-- <script is:inline>
 	const reverseButtonListener = () => {
 		const button = document.querySelector("#reverse");
 		const list = document.querySelector("#research-list");
@@ -91,4 +91,4 @@ for (let post of allPosts) {
 	["DOMContentLoaded", "astro:after-swap"].forEach((event) => {
 		document.addEventListener(event, reverseButtonListener);
 	});
-</script>
+</script> -->

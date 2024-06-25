@@ -16,6 +16,8 @@ heroImageHover:
   alt: "Generalization error"
 ---
 
+import { RealEmpPlot } from "./plots";
+
 ## Summary
 
 {frontmatter.description}
@@ -23,14 +25,6 @@ heroImageHover:
 <br />
 
 A widely observed phenomen in deep learning is that the generalization error of a trained model is often well-predicted by the so-called "double descent" curve. This curve is characterized by a peak in the generalization error for a certain model complexity, followed by a decrease in the error as the model complexity increases. The following plot shows the generalization error computed using our asymptotic formula for a deep neural network with structured features. The double descent curve is visible for sufficiently big additive noise.
-
-<iframe
-	width="100%"
-	height="700px"
-	frameborder="0"
-	class="rounded-lg bg-white"
-	src="https://observablehq.com/embed/032a635ef9ea1df1?cells=viewof+noise%2CgenErrorPlot"
-></iframe>
 
 ## Asymptotic formula for the generalization error
 
@@ -87,6 +81,12 @@ $$
 $\theta_\ast\in\R^{k}$ is the target weight vector, and $\Sigma\in\R^{k\times k}$ is covariance of the additive noise.
 
 <br />
+
+## Numerical illustration
+
+Here we consider an MNIST dataset and train a simple 4-layer neural network to recognize whether a digit is even or odd. We then use the readout layer of this network as a feature map and perform ridge regression on the features. The following plot shows the empirical generalization error computed using our asymptotic formula for the ridge regression problem. The double descent curve is visible for sufficiently small additive noise. The deterministic equivalents remain valid throughout the training process.
+
+<RealEmpPlot epoch={0} emp={true} loss={false} reg={true} loop={true} />
 
 ## Abstract
 

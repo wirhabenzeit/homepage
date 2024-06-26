@@ -6,6 +6,7 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	url: string;
 	large?: boolean | undefined;
 	right?: boolean | undefined;
+	hero?: string;
 	heroImage?:
 		| {
 				alt: string;
@@ -30,7 +31,7 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 		| undefined;
 };
 
-const { heroImage, heroImageHover, url, large, right } = Astro.props;
+const { heroImage, heroImageHover, url, large, right, hero } = Astro.props;
 
 const imgClass =
 	"rounded-lg sm:shadow-lg my-2 sm:my_0 h-auto w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105 group";

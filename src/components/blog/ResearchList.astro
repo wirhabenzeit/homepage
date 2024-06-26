@@ -4,7 +4,6 @@ import FancyPostPreview from "./FancyPostPreview.astro";
 import type { CollectionEntry } from "astro:content";
 import PublicationDetails from "../PublicationDetails.astro";
 import Tags from "./Tags.astro";
-import { Icon } from "astro-icon/components";
 
 interface Props {
 	numbered?: boolean;
@@ -47,6 +46,7 @@ for (let post of allPosts) {
 		allPosts.map((post, i) => (
 			<li class="flex flex-auto flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
 				<FancyPostPreview
+					{...(post.data.hero ? { hero: post.data.hero } : {})}
 					right={isRight[i]}
 					{...(post.data.heroImageHover
 						? { heroImage: post.data.heroImageHover }

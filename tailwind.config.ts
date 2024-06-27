@@ -22,6 +22,7 @@ export default {
 			colors: {
 				bgColor: "hsl(var(--theme-bg) / <alpha-value>)",
 				bgColorAlt: "hsl(var(--theme-bg-alt) / <alpha-value>)",
+				bgColorAlt2: "hsl(var(--theme-bg-alt-2) / <alpha-value>)",
 				textColor: "hsl(var(--theme-text) / <alpha-value>)",
 				link: "hsl(var(--theme-link) / <alpha-value>)",
 				accent: "hsl(var(--theme-accent) / <alpha-value>)",

@@ -4,39 +4,87 @@ import FancyPostPreview from "./FancyPostPreview.astro";
 import type { CollectionEntry } from "astro:content";
 import Tags from "./Tags.astro";
 
-const { numbered = false, large = false, collection, filter = () => true } = Astro.props;
+const {
+	numbered = false,
+	large = false,
+	collection,
+	filter = () => true,
+	sort = (a, b) => a.slug.localeCompare(b.slug),
+	reverse = false,
+	Subtitle,
+} = Astro.props;
 
-const allPosts = (await getCollection(collection, filter)) as CollectionEntry<
-	"project" | "thesis" | "teaching"
->[];
+let heros = [];
 
-var isRight = [] as boolean[];
-
-for (let post of allPosts) {
-	isRight.push(
-		post.data.heroImage ? !isRight[isRight.length - 1] : isRight[isRight.length - 1] || false,
-	);
+try {
+	heros =
+		collection == "project"
+			? await Astro.glob("/src/content/project/*/hero.astro")
+			: collection === "thesis"
+				? await Astro.glob("/src/content/thesis/*/hero.astro")
+				: collection === "teaching"
+					? await Astro.glob("/src/content/teaching/*/hero.astro")
+					: collection === "research"
+						? await Astro.glob("/src/content/research/*/hero.astro")
+						: [];
+} catch (error) {
+	console.log("No heros for collection", collection);
 }
+
+const heroMapping = heros.reduce((acc, hero) => {
+	const match = hero.file.match(/\/([^/]+)\/hero\.astro/);
+	if (match) {
+		const id = `${match[1]}/index.mdx`;
+		acc[id] = hero;
+	}
+	return acc;
+}, {});
+
+let right = false;
+
+const allPosts = (
+	(await getCollection(collection, filter)) as CollectionEntry<
+		"project" | "thesis" | "teaching" | "research"
+	>[]
+)
+	.sort(sort)
+	.map((post, i) => {
+		const returnPost = { ...post, number: i + 1 };
+		if (post.id in heroMapping) {
+			returnPost.hero = heroMapping[post.id];
+		}
+		if (returnPost.data.heroImage || returnPost.hero) {
+			right = !right;
+			returnPost.right = right;
+		} else {
+			returnPost.right = false;
+		}
+		return returnPost;
+	});
+
+if (reverse) allPosts.reverse();
 ---
 
 <ul class="not-prose space-y-8">
 	{
-		allPosts.map((post, i) => (
+		allPosts.map((post) => (
 			<li class="flex flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
 				<FancyPostPreview
-					right={isRight[i]}
+					right={post.right}
+					{...(post.hero ? { Hero: post.hero } : {})}
 					{...(post.data.heroImage ? { heroImage: post.data.heroImage } : {})}
 					{...(post.data.heroImageHover ? { heroImageHover: post.data.heroImageHover } : {})}
 					large={large}
-					url={`${post.slug}`}
+					url={`/${collection}/${post.slug}`}
 				>
 					<div slot="title">
 						<h2 class="mb-1 text-xl font-bold">
-							{numbered && `${i + 1}. `}
-							<a href={`${post.slug}`} class="text-accent">
+							{numbered && `${post.number}. `}
+							<a href={`/${collection}/${post.slug}`} class="text-accent">
 								{post.data.title}
 							</a>
 						</h2>
+						{Subtitle && <Subtitle {...post.data} />}
 					</div>
 					<p class="text-md" slot="description">
 						{post.data.description}

@@ -52,6 +52,69 @@ type HistogramProps = {
 	delay?: number;
 };
 
+export const plotOptions = ({
+	epochstep,
+	emp,
+	reg,
+	loss,
+	width,
+	height,
+	legend = true,
+	...opts
+}) => {
+	const df_NN = data.filter((x) => x.type == "NN" && x["epoch+step"] == epochstep);
+	const df_reg = data.filter((x) => x.type == "Linear Regression");
+	const plot_vars = { x: "n", stroke: (x) => `λ = ${x.lamb}`, y: "genErrRMT_emp" };
+	const marks = [Plot.line(df_NN, { ...plot_vars, y: "genErrRMT_emp" })];
+	if (emp) marks.push(Plot.dot(df_NN, { ...plot_vars, y: "genErrEmp_emp", symbol: "type" }));
+	if (reg) {
+		marks.push(
+			Plot.line(df_reg, {
+				...plot_vars,
+				y: "genErrRMT_emp",
+				strokeDasharray: "5,5",
+				opacity: 0.5,
+			}),
+		);
+		if (emp)
+			marks.push(
+				Plot.dot(df_reg, {
+					...plot_vars,
+					y: "genErrEmp_emp",
+					opacity: 0.5,
+					symbol: "type",
+				}),
+			);
+	}
+	if (loss) marks.push(Plot.line(df_NN, { ...plot_vars, y: "loss", stroke: "gray" }));
+
+	return noSerialize({
+		marks,
+		symbol: {
+			legend,
+		},
+		color: {
+			legend,
+			//scheme: "viridis",
+			//range: [0.3, 0.9],
+			label: "λ",
+			type: "categorical",
+		},
+		width: width,
+		height: height,
+		x: { type: "log", label: "# Samples" },
+		y: {
+			domain: [0.04, 3],
+			label: "Generalization error",
+			type: "log",
+		},
+		grid: true,
+		caption:
+			"Generalization error of feature regrresion using either the Neural Network (NN) features or linear features. The solid lines represent the deterministic equivalents, while the dots represent the empirical generalization error. The grey line represents the gradient descent loss of the NN.",
+		...opts,
+	});
+};
+
 export const RealEmpPlot = component$<HistogramProps>(
 	({ epoch, reg, emp, loss, autoplay = false, loop = false, delay = 100 }) => {
 		const outputRef = useSignal<Element | null>(null);
@@ -63,7 +126,6 @@ export const RealEmpPlot = component$<HistogramProps>(
 		const width = useSignal(832);
 		useVisibleTask$(({ track }) => {
 			track(() => outputRef.value);
-			console.log("outputRef", outputRef.value);
 			if (outputRef.value) {
 				const ro = new ResizeObserver((entries) => {
 					for (const entry of entries) {
@@ -76,59 +138,16 @@ export const RealEmpPlot = component$<HistogramProps>(
 			}
 		});
 
-		const chartOptions = useComputed$(() => {
-			const df_NN = data.filter((x) => x.type == "NN" && x["epoch+step"] == epochstep.value);
-			const df_reg = data.filter((x) => x.type == "Linear Regression");
-			const plot_vars = { x: "n", stroke: "lamb", y: "genErrRMT_emp" };
-			const marks = [Plot.line(df_NN, { ...plot_vars, y: "genErrRMT_emp" })];
-			if (empSignal.value)
-				marks.push(Plot.dot(df_NN, { ...plot_vars, y: "genErrEmp_emp", symbol: "type" }));
-			if (regSignal.value) {
-				marks.push(
-					Plot.line(df_reg, {
-						...plot_vars,
-						y: "genErrRMT_emp",
-						strokeDasharray: "5,5",
-						opacity: 0.3,
-					}),
-				);
-				if (empSignal.value)
-					marks.push(
-						Plot.dot(df_reg, {
-							...plot_vars,
-							y: "genErrEmp_emp",
-							opacity: 0.5,
-							symbol: "type",
-						}),
-					);
-			}
-			if (lossSignal.value)
-				marks.push(Plot.line(df_NN, { ...plot_vars, y: "loss", stroke: "gray" }));
-
-			return noSerialize({
-				marks,
-				symbol: {
-					legend: true,
-				},
-				color: {
-					legend: true,
-					scheme: "viridis",
-					label: "λ",
-					type: "log",
-				},
+		const chartOptions = useComputed$(() =>
+			plotOptions({
 				width: width.value,
-				height: 300,
-				x: { type: "log", label: "# Samples" },
-				y: {
-					domain: [0.04, 3],
-					label: "Generalization error",
-					type: "log",
-				},
-				grid: true,
-				caption:
-					"Generalization error of feature regrresion using either the Neural Network (NN) features or linear features. The solid lines represent the deterministic equivalents, while the dots represent the empirical generalization error. The grey line represents the gradient descent loss of the NN.",
-			});
-		});
+				height: 400,
+				epochstep: epochstep.value,
+				emp: empSignal.value,
+				reg: regSignal.value,
+				loss: lossSignal.value,
+			}),
+		);
 
 		const options = [
 			{ signal: regSignal, label: "Linear Regression", id: "reg" },
@@ -158,3 +177,47 @@ export const RealEmpPlot = component$<HistogramProps>(
 		);
 	},
 );
+
+type HeroProps = {
+	width: number;
+	height: number;
+	classList: string[];
+};
+
+export const Hero = component$<HeroProps>(({ width, height, classList }) => {
+	const idx = useSignal(0);
+	const playing = useSignal(false);
+
+	useVisibleTask$(({ track }) => {
+		track(() => idx.value);
+		track(() => playing.value);
+		if (playing.value) {
+			const interval = setInterval(() => {
+				idx.value = (idx.value + 1) % epochs.length;
+			}, 100);
+			return () => clearInterval(interval);
+		}
+	});
+
+	const chartOptions = useComputed$(() =>
+		plotOptions({
+			width,
+			height,
+			epochstep: epochs[idx.value],
+			emp: false,
+			reg: true,
+			loss: false,
+			legend: false,
+			background: "white",
+			caption: null,
+		}),
+	);
+
+	return (
+		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
+			<Chart options={chartOptions} class={classList.join(" ")} />
+		</div>
+	);
+});
+
+export default RealEmpPlot;

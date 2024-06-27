@@ -73,7 +73,6 @@ const research = defineCollection({
 				.transform((val) => new Date(val)),
 			tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),
 			ogImage: z.string().optional(),
-			hero: z.string().optional(),
 			heroImage: z
 				.object({
 					src: image(),

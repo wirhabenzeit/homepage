@@ -5,11 +5,18 @@ toc: true
 ---
 
 import PostList from "../../components/blog/PostList.astro";
-import ResearchList from "../../components/blog/ResearchList.astro";
+import PublicationDetails from "../../components/PublicationDetails.astro";
 
 ## Publications
 
-<ResearchList numbered={true} large={true} reversable={true} />
+<PostList
+	numbered={true}
+	large={true}
+	collection="research"
+	sort={(a, b) => -b.data.publishDate.getTime() + a.data.publishDate.getTime()}
+	reverse={true}
+	Subtitle={PublicationDetails}
+/>
 
 [Download publication list](/publications.pdf)
 

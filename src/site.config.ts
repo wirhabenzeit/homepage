@@ -17,8 +17,6 @@ export const siteConfig: SiteConfig = {
 	},
 };
 
-console.log(import.meta.env.BASE_URL);
-
 export const menuLinks: Array<{ title: string; path: string }> = [
 	{
 		title: "Home",

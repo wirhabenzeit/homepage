@@ -51,7 +51,6 @@ export const Histogram = component$<HistogramProps>(
 		const width = useSignal(832);
 		useVisibleTask$(({ track }) => {
 			track(() => outputRef.value);
-			console.log("outputRef", outputRef.value);
 			if (outputRef.value) {
 				const ro = new ResizeObserver((entries) => {
 					for (const entry of entries) {

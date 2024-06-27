@@ -1,5 +1,6 @@
 ---
-const { width, height } = Astro.props;
+const { width, height, classList } = Astro.props;
+import { Hero } from "./plots";
 ---
 
-<div class="border-slate-800 bg-amber-200">Test</div>
+<Hero width={width} height={height} classList={[...classList, "p-2"]} />

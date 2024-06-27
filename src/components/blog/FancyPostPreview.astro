@@ -6,7 +6,7 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 	url: string;
 	large?: boolean | undefined;
 	right?: boolean | undefined;
-	hero?: string;
+	Hero;
 	heroImage?:
 		| {
 				alt: string;
@@ -31,7 +31,7 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 		| undefined;
 };
 
-const { heroImage, heroImageHover, url, large, right, hero } = Astro.props;
+const { heroImage, heroImageHover, url, large, right, Hero } = Astro.props;
 
 const imgClass =
 	"rounded-lg sm:shadow-lg my-2 sm:my_0 h-auto w-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105 group";
@@ -43,39 +43,46 @@ const imgCols = right
 	: large
 		? "sm:col-span-7 sm:col-start-6"
 		: "sm:col-span-5 sm:col-start-8";
-const titleCols = heroImage
-	? right
-		? "sm:text-right sm:ml-2 " +
-			(large ? "sm:col-span-5 sm:col-start-8" : "sm:col-span-7 sm:col-start-6")
-		: "sm:text-left sm:mr-2 " +
-			(large ? "sm:col-span-5 sm:col-start-1" : "sm:col-span-7 sm:col-start-1")
-	: "sm:text-left sm:col-span-full";
-const descCols = heroImage
-	? right
-		? "sm:text-right sm:ml-2 " +
-			(large ? "sm:col-span-8 sm:col-start-5" : "sm:col-span-10 sm:col-start-3")
-		: "sm:text-left sm:mr-2 " +
-			(large ? "sm:col-span-8 sm:col-start-1" : "sm:col-span-10 sm:col-start-1")
-	: "sm:text-left sm:col-span-full";
+const titleCols =
+	heroImage || Hero
+		? right
+			? "sm:text-right sm:ml-2 " +
+				(large ? "sm:col-span-5 sm:col-start-8" : "sm:col-span-7 sm:col-start-6")
+			: "sm:text-left sm:mr-2 " +
+				(large ? "sm:col-span-5 sm:col-start-1" : "sm:col-span-7 sm:col-start-1")
+		: "sm:text-left sm:col-span-full";
+const descCols =
+	heroImage || Hero
+		? right
+			? "sm:text-right sm:ml-2 " +
+				(large ? "sm:col-span-8 sm:col-start-5" : "sm:col-span-10 sm:col-start-3")
+			: "sm:text-left sm:mr-2 " +
+				(large ? "sm:col-span-8 sm:col-start-1" : "sm:col-span-10 sm:col-start-1")
+		: "sm:text-left sm:col-span-full";
 ---
 
 <div class="grid w-full grid-cols-12 grid-rows-[auto_auto_auto_1fr]">
 	{
-		heroImage && (
+		(heroImage || Hero) && (
 			<div
 				class:list={["col-span-12 row-span-1 row-start-2 sm:row-span-4 sm:row-start-1", imgCols]}
 			>
 				<div class:list={["group relative hover:z-30 sm:z-10"]}>
 					<a href={url} class="group">
-						<Image
-							src={heroImage.src}
-							alt={heroImage.alt}
-							loading="eager"
-							width={600}
-							densities={[1, 2, 3]}
-							fetchpriority="high"
-							class:list={[imgClass, "bg-white"]}
-						/>
+						{Hero && (
+							<Hero.default width={500} height={300} classList={[imgClass, "bg-bgColorAlt2"]} />
+						)}
+						{heroImage && (
+							<Image
+								src={heroImage.src}
+								alt={heroImage.alt}
+								loading="eager"
+								width={600}
+								densities={[1, 2, 3]}
+								fetchpriority="high"
+								class:list={[imgClass, "bg-white"]}
+							/>
+						)}
 						{heroImageHover && (
 							<Image
 								src={heroImageHover.src}
@@ -102,7 +109,7 @@ const descCols = heroImage
 		class:list={[
 			"z-20 col-span-full row-start-3 my-1 bg-bgColorAlt p-2",
 			descCols,
-			heroImage ? "rounded-xl sm:shadow-lg" : "border-l-4 border-accent",
+			heroImage || Hero ? "rounded-xl sm:shadow-lg" : "border-l-4 border-accent",
 		]}
 	>
 		<slot name="description" />

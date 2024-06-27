@@ -12,41 +12,40 @@ interface Props {
 	reversable?: boolean;
 }
 
-const { numbered = false, large = false, filter = () => true, reversable = false } = Astro.props;
+const { numbered = false, large = false, filter = () => true } = Astro.props;
 
-const allPosts = ((await getCollection("research", filter)) as CollectionEntry<"research">[]).sort(
-	(a, b) => -b.data.publishDate.getTime() + a.data.publishDate.getTime(),
-);
+const heros = await Astro.glob("/src/content/research/*/hero.astro");
+
+const heroMapping = heros.reduce((acc, hero) => {
+	const match = hero.file.match(/research\/(.+)\/hero\.astro/);
+	if (match) {
+		const id = `${match[1]}/index.mdx`;
+		acc[id] = hero;
+	}
+	return acc;
+}, {});
+
+const allPosts = ((await getCollection("research", filter)) as CollectionEntry<"research">[])
+	.sort((a, b) => -b.data.publishDate.getTime() + a.data.publishDate.getTime())
+	.map((post) => ({ ...post, ...(post.id in heroMapping && { hero: heroMapping[post.id] }) }));
 
 var isRight = [] as boolean[];
 
 for (let post of allPosts) {
 	isRight.push(
-		post.data.heroImage ? !isRight[isRight.length - 1] : isRight[isRight.length - 1] || false,
+		post.data.heroImage || post.Hero
+			? !isRight[isRight.length - 1]
+			: isRight[isRight.length - 1] || false,
 	);
 }
 ---
 
-<!-- {
-	reversable && (
-		<label class="cursor-pointer">
-			<input type="checkbox" id="reverse" class="hidden" />
-			<div class="relative">
-				<Icon
-					name="mdi:chevron-down"
-					class="absolute -top-8 right-0 rotate-180 transform transition-transform duration-300"
-					id="arrow-icon"
-				/>
-			</div>
-		</label>
-	)
-} -->
 <ol class="not-prose flex flex-col-reverse gap-8" id="research-list">
 	{
 		allPosts.map((post, i) => (
 			<li class="flex flex-auto flex-col flex-wrap gap-2 sm:flex-row [&_q]:basis-full">
 				<FancyPostPreview
-					{...(post.data.hero ? { hero: post.data.hero } : {})}
+					{...("hero" in post ? { Hero: post.hero } : {})}
 					right={isRight[i]}
 					{...(post.data.heroImageHover
 						? { heroImage: post.data.heroImageHover }

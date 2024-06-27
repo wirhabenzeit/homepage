@@ -3,4 +3,8 @@ const { width, height, classList } = Astro.props;
 import { Hero } from "./plots";
 ---
 
-<Hero width={width} height={height} classList={[...classList, "p-2"]} />
+<Hero
+	width={width}
+	height={height}
+	classList={[...classList, "p-2 bg-bgColorAlt4 border dark:border-accent-2/50"]}
+/>

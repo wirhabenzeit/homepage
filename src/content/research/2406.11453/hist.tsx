@@ -36,6 +36,51 @@ type HistogramProps = {
 	delay?: number;
 };
 
+const plotOptions = ({ lambda, width, height, ...opts }) => {
+	const dataFiltered = data.filter((x) => x.lambda == lambda);
+	return noSerialize({
+		grid: true,
+		color: { legend: true },
+		y: { type: "sqrt", domain: [0, 1], label: "ρ" },
+		x: { domain: [-2.5, 2.5] },
+		width: width,
+		height: height,
+		marks: [
+			Plot.rect(
+				dataFiltered.filter((x) => x.type == "emp"),
+				{
+					x1: "x0",
+					x2: "x1",
+					y2: "rho",
+					y1: () => 0,
+					opacity: 0.2,
+				},
+			),
+			...["Max", "Min"].map((type) =>
+				Plot.rect(
+					dataFiltered.filter((x) => x.type == `emp${type}`),
+					{
+						x1: "x0",
+						x2: "x1",
+						y2: "rho",
+						y1: () => 0,
+						opacity: 0.5,
+						fill: () => type,
+					},
+				),
+			),
+			Plot.line(
+				dataFiltered.filter((x) => x.type == "free"),
+				{
+					x: "x",
+					y: "rho",
+				},
+			),
+		],
+		...opts,
+	});
+};
+
 export const Histogram = component$<HistogramProps>(
 	({ lambda: lambdaInit, autoplay = false, loop = false, delay = 100 }) => {
 		const jsdom = new JSDOM("");
@@ -64,51 +109,15 @@ export const Histogram = component$<HistogramProps>(
 		});
 
 		const lambda = useSignal(lambdaInit);
-		const chartOptions = useComputed$(() => {
-			const dataFiltered = data.filter((x) => x.lambda == lambda.value);
-			return noSerialize({
-				grid: true,
-				color: { legend: true },
-				y: { type: "sqrt", domain: [0, 1], label: "ρ" },
+		const chartOptions = useComputed$(() =>
+			plotOptions({
+				lambda: lambda.value,
+				width: width.value,
+				height: width.value / 2,
 				caption:
 					"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
-				x: { domain: [-2.5, 2.5] },
-				width: width.value,
-				height: width.value * 0.5,
-				marks: [
-					Plot.rect(
-						dataFiltered.filter((x) => x.type == "emp"),
-						{
-							x1: "x0",
-							x2: "x1",
-							y2: "rho",
-							y1: () => 0,
-							opacity: 0.2,
-						},
-					),
-					...["Max", "Min"].map((type) =>
-						Plot.rect(
-							dataFiltered.filter((x) => x.type == `emp${type}`),
-							{
-								x1: "x0",
-								x2: "x1",
-								y2: "rho",
-								y1: () => 0,
-								opacity: 0.5,
-								fill: () => type,
-							},
-						),
-					),
-					Plot.line(
-						dataFiltered.filter((x) => x.type == "free"),
-						{
-							x: "x",
-							y: "rho",
-						},
-					),
-				],
-			});
-		});
+			}),
+		);
 
 		return (
 			<div>
@@ -127,3 +136,40 @@ export const Histogram = component$<HistogramProps>(
 		);
 	},
 );
+
+type HeroProps = {
+	width: number;
+	height: number;
+	classList: string[];
+};
+
+export const Hero = component$<HeroProps>(({ width, height, classList }) => {
+	const idx = useSignal(0);
+	const playing = useSignal(false);
+
+	useVisibleTask$(({ track }) => {
+		track(() => idx.value);
+		track(() => playing.value);
+		if (playing.value) {
+			const interval = setInterval(() => {
+				idx.value = (idx.value + 1) % lambdas.length;
+			}, 100);
+			return () => clearInterval(interval);
+		}
+	});
+
+	const chartOptions = useComputed$(() =>
+		plotOptions({
+			width,
+			height,
+			lambda: lambdas[idx.value],
+			color: { legend: false },
+		}),
+	);
+
+	return (
+		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
+			<Chart options={chartOptions} class={classList.join(" ")} />
+		</div>
+	);
+});

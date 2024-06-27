@@ -70,7 +70,11 @@ const descCols =
 				<div class:list={["group relative hover:z-30 sm:z-10"]}>
 					<a href={url} class="group">
 						{Hero && (
-							<Hero.default width={500} height={300} classList={[imgClass, "bg-bgColorAlt2"]} />
+							<Hero.default
+								width={500}
+								height={300}
+								classList={[imgClass, "border dark:border-accent-2/50"]}
+							/>
 						)}
 						{heroImage && (
 							<Image

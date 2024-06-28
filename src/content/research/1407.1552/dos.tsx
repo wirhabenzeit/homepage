@@ -1,12 +1,6 @@
 /** @jsxImportSource @builder.io/qwik */
 
-import {
-	component$,
-	useSignal,
-	useComputed$,
-	noSerialize,
-	useVisibleTask$,
-} from "@builder.io/qwik";
+import { $, component$, useSignal, useComputed$, useVisibleTask$ } from "@builder.io/qwik";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 
@@ -35,7 +29,7 @@ const vPos = (q: number, x: number[], n = 20) => {
 	return result;
 };
 
-const linspace = (start, stop, nsteps) => {
+const linspace = (start: number, stop: number, nsteps: number) => {
 	const delta = (stop - start) / (nsteps - 1);
 	return d3.range(nsteps).map((i) => start + i * delta);
 };
@@ -59,41 +53,65 @@ export const v = (q: number, xall: number[], n = 20) => {
 const n = 50;
 const qs = d3.scaleLinear().domain([0.01, 0.9]).ticks(30);
 
-const data = qs.concat([0, 1]).flatMap((q) => {
+const data = qs.flatMap((q) => {
 	const edge = q < 0.6 ? 2 / (1 - q) ** 0.5 : 3;
-	const x = linspace(-edge, edge, 51);
+	const x = linspace(-edge, edge, 71);
 	const y = v(q, x, n);
 	return x.map((x, i) => ({ x, y: y[i], q }));
 });
 
-const plotOptions = ({ q, ...opts }) => {
+type DOSargs = {
+	q: number;
+} & Plot.PlotOptions;
+
+const plotOptions = ({ q, ...opts }: DOSargs) => {
 	return {
 		marks: [
 			Plot.line(
-				data.filter((x) => abs(x.q - q) < 1e-3 || x.q == 0 || x.q == 1),
+				data.filter((x) => abs(x.q - q) < 1e-3),
 				{
 					x: "x",
 					y: "y",
-					stroke: (x) =>
-						x.q == 0 ? "semicircle" : x.q == 1 ? "normal" : `ρ( · ,${x.q.toFixed(2)})`,
+					stroke: "q",
+					//stroke: (x) =>
+					//	x.q == 0 ? "semicircle" : x.q == 1 ? "normal" : `ρ( · ,${x.q.toFixed(2)})`,
 				},
 			),
+			Plot.line(data, {
+				x: "x",
+				y: "y",
+				stroke: "q",
+				opacity: 0.2,
+			}),
 			Plot.ruleY([0]),
 		],
 		y: { domain: [0.0, 0.4], label: null },
 		x: { domain: [-3, 3], label: null },
-		color: { type: "categorical", legend: true },
 		grid: true,
 		...opts,
 	};
 };
 
-export const DOS = component$(({}) => {
+export const DOS = component$(() => {
 	const q = useSignal(qs[15]!);
 
-	const chartOptions = useComputed$(() =>
-		noSerialize(plotOptions({ q: q.value, width: 832, height: 400 })),
+	const args = useComputed$(() => ({
+		q: q.value,
+	}));
+
+	const plotFun = $((opts: DOSargs) =>
+		plotOptions({
+			...opts,
+			width: 832,
+			color: {
+				domain: [0, 1],
+				scheme: "viridis",
+				legend: true,
+				label: `q = ${q.value.toFixed(2)}`,
+			},
+		}),
 	);
+
 	return (
 		<div>
 			<Range
@@ -104,13 +122,13 @@ export const DOS = component$(({}) => {
 				delay={30}
 				label$={(value: number) => `q = ${value == undefined ? "" : value.toFixed(2)}`}
 			/>
-			<Chart options={chartOptions} class="-mt-5" />
+			<Chart plotFunction={plotFun} args={args} class="-mt-5" fullWidth={true} aspectRatio={2} />
 		</div>
 	);
 });
 
 export const Hero = component$(({ width, height, classList }) => {
-	const idx = useSignal(0);
+	const idx = useSignal(15);
 	const playing = useSignal(false);
 
 	useVisibleTask$(({ track }) => {
@@ -124,18 +142,22 @@ export const Hero = component$(({ width, height, classList }) => {
 		}
 	});
 
-	const chartOptions = useComputed$(() =>
-		noSerialize(
-			plotOptions({
-				q: qs[idx.value],
-				width,
-				height,
-			}),
-		),
+	const args = useComputed$(() => ({
+		q: qs[idx.value],
+	}));
+
+	const plotFun = $((opts: DOSargs) =>
+		plotOptions({
+			...opts,
+			width,
+			height,
+			color: { domain: [0, 1], scheme: "viridis", legend: false },
+		}),
 	);
+
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart options={chartOptions} class={classList.join(" ")} />
+			<Chart plotFunction={plotFun} args={args} resize={false} class={classList.join(" ")} />
 		</div>
 	);
 });

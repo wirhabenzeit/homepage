@@ -1,12 +1,6 @@
 /** @jsxImportSource @builder.io/qwik */
 
-import {
-	component$,
-	useSignal,
-	useComputed$,
-	noSerialize,
-	useVisibleTask$,
-} from "@builder.io/qwik";
+import { component$, useSignal, useComputed$, $, useVisibleTask$ } from "@builder.io/qwik";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 
@@ -41,16 +35,6 @@ const data = d3.csvParse(csv, (row) => ({
 })) as Data[];
 
 const epochs = Array.from(new Set(data.filter((x) => x.type == "NN").map((x) => x["epoch+step"])));
-
-type HistogramProps = {
-	epoch: number;
-	loss: boolean;
-	reg: boolean;
-	emp: boolean;
-	autoplay?: boolean;
-	loop?: boolean;
-	delay?: number;
-};
 
 export const plotOptions = ({
 	epochstep,
@@ -88,15 +72,13 @@ export const plotOptions = ({
 	}
 	if (loss) marks.push(Plot.line(df_NN, { ...plot_vars, y: "loss", stroke: "gray" }));
 
-	return noSerialize({
+	return {
 		marks,
 		symbol: {
 			legend,
 		},
 		color: {
 			legend,
-			//scheme: "viridis",
-			//range: [0.3, 0.9],
 			label: "λ",
 			type: "categorical",
 		},
@@ -109,10 +91,18 @@ export const plotOptions = ({
 			type: "log",
 		},
 		grid: true,
-		caption:
-			"Generalization error of feature regrresion using either the Neural Network (NN) features or linear features. The solid lines represent the deterministic equivalents, while the dots represent the empirical generalization error. The grey line represents the gradient descent loss of the NN.",
 		...opts,
-	});
+	};
+};
+
+type HistogramProps = {
+	epoch: number;
+	loss: boolean;
+	reg: boolean;
+	emp: boolean;
+	autoplay?: boolean;
+	loop?: boolean;
+	delay?: number;
 };
 
 export const RealEmpPlot = component$<HistogramProps>(
@@ -123,31 +113,17 @@ export const RealEmpPlot = component$<HistogramProps>(
 		const empSignal = useSignal(emp);
 		const lossSignal = useSignal(loss);
 
-		const width = useSignal(832);
-		useVisibleTask$(({ track }) => {
-			track(() => outputRef.value);
-			if (outputRef.value) {
-				const ro = new ResizeObserver((entries) => {
-					for (const entry of entries) {
-						const rect = entry.contentRect;
-						width.value = rect.width;
-					}
-				});
-				ro.observe(outputRef.value);
-				return () => ro.disconnect();
-			}
-		});
+		const args = useComputed$(() => ({
+			height: 400,
+			epochstep: epochstep.value,
+			emp: empSignal.value,
+			reg: regSignal.value,
+			loss: lossSignal.value,
+			caption:
+				"Generalization error of feature regrresion using either the Neural Network (NN) features or linear features. The solid lines represent the deterministic equivalents, while the dots represent the empirical generalization error. The grey line represents the gradient descent loss of the NN.",
+		}));
 
-		const chartOptions = useComputed$(() =>
-			plotOptions({
-				width: width.value,
-				height: 400,
-				epochstep: epochstep.value,
-				emp: empSignal.value,
-				reg: regSignal.value,
-				loss: lossSignal.value,
-			}),
-		);
+		const plotFun = $(plotOptions);
 
 		const options = [
 			{ signal: regSignal, label: "Linear Regression", id: "reg" },
@@ -167,12 +143,10 @@ export const RealEmpPlot = component$<HistogramProps>(
 				/>
 				<div class="flex items-center gap-4">
 					{options.map((option) => (
-						<Check value={option.signal} label$={(checked) => option.label} id={option.id} />
+						<Check value={option.signal} label$={() => option.label} id={option.id} />
 					))}
 				</div>
-				<div ref={outputRef} class="-mt-5">
-					<Chart options={chartOptions} />
-				</div>
+				<Chart plotFunction={plotFun} args={args} class="-mt-5" fullWidth={true} ref={outputRef} />
 			</div>
 		);
 	},
@@ -199,23 +173,21 @@ export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 		}
 	});
 
-	const chartOptions = useComputed$(() =>
-		plotOptions({
-			width,
-			height,
-			epochstep: epochs[idx.value],
-			emp: false,
-			reg: true,
-			loss: false,
-			legend: false,
-			background: "white",
-			caption: null,
-		}),
-	);
+	const args = useComputed$(() => ({
+		width,
+		height,
+		epochstep: epochs[idx.value],
+		emp: false,
+		reg: true,
+		loss: false,
+		legend: false,
+	}));
+
+	const plotFun = $(plotOptions);
 
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart options={chartOptions} class={classList.join(" ")} />
+			<Chart plotFunction={plotFun} args={args} class={classList.join(" ")} />
 		</div>
 	);
 });

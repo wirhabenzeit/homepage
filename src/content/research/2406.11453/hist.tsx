@@ -7,10 +7,7 @@ import {
 	useComputed$,
 	noSerialize,
 	useVisibleTask$,
-	useTask$,
-	type Signal,
 } from "@builder.io/qwik";
-import { JSDOM } from "jsdom";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 
@@ -83,41 +80,15 @@ const plotOptions = ({ lambda, width, height, ...opts }) => {
 
 export const Histogram = component$<HistogramProps>(
 	({ lambda: lambdaInit, autoplay = false, loop = false, delay = 100 }) => {
-		const jsdom = new JSDOM("");
-		global.window = jsdom.window as unknown as Window & typeof globalThis;
-		global.document = jsdom.window.document;
-		global.Event = jsdom.window.Event;
-		global.Node = jsdom.window.Node;
-		global.NodeList = jsdom.window.NodeList;
-		global.HTMLCollection = jsdom.window.HTMLCollection;
-
-		const outputRef = useSignal<Element | null>(null);
-
-		const width = useSignal(832);
-		useVisibleTask$(({ track }) => {
-			track(() => outputRef.value);
-			if (outputRef.value) {
-				const ro = new ResizeObserver((entries) => {
-					for (const entry of entries) {
-						const rect = entry.contentRect;
-						width.value = rect.width;
-					}
-				});
-				ro.observe(outputRef.value);
-				return () => ro.disconnect();
-			}
-		});
-
 		const lambda = useSignal(lambdaInit);
-		const chartOptions = useComputed$(() =>
-			plotOptions({
-				lambda: lambda.value,
-				width: width.value,
-				height: width.value / 2,
-				caption:
-					"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
-			}),
-		);
+		const args = useComputed$(() => ({
+			lambda: lambda.value,
+			height: 300,
+			caption:
+				"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
+		}));
+
+		const plotFun = $(plotOptions);
 
 		return (
 			<div>
@@ -129,9 +100,7 @@ export const Histogram = component$<HistogramProps>(
 					delay={delay}
 					label$={(value: number) => `λ = ${value.toFixed(1)}`}
 				/>
-				<div ref={outputRef} class="-mt-5">
-					<Chart options={chartOptions} />
-				</div>
+				<Chart args={args} plotFunction={plotFun} fullWidth={true} aspectRatio={2} class="-mt-5" />
 			</div>
 		);
 	},
@@ -158,18 +127,18 @@ export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 		}
 	});
 
-	const chartOptions = useComputed$(() =>
-		plotOptions({
-			width,
-			height,
-			lambda: lambdas[idx.value],
-			color: { legend: false },
-		}),
-	);
+	const plotFun = $(plotOptions);
+
+	const args = useComputed$(() => ({
+		width,
+		height,
+		lambda: lambdas[idx.value],
+		color: { legend: false },
+	}));
 
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart options={chartOptions} class={classList.join(" ")} />
+			<Chart args={args} plotFunction={plotFun} class={classList.join(" ")} />
 		</div>
 	);
 });

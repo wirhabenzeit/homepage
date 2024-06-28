@@ -25,18 +25,18 @@ type CheckProps = {
 
 export const Check = component$<CheckProps>(({ value, label$, id }) => {
 	return (
-		<span>
-			<input
-				type="checkbox"
-				name={id}
-				class="mr-2 leading-tight"
-				checked={value.value}
-				onInput$={() => (value.value = !value.value)}
-			/>
-			<label for={id} class="text-sm">
-				{label$(value.value)}
+		<div>
+			<label class="label cursor-pointer">
+				<input
+					type="checkbox"
+					name={id}
+					class="toggle toggle-sm"
+					checked={value.value}
+					onInput$={() => (value.value = !value.value)}
+				/>
+				<span class="label-text ml-2">{label$(value.value)}</span>
 			</label>
-		</span>
+		</div>
 	);
 });
 
@@ -82,7 +82,7 @@ export const Range = component$<RangeProps>(
 					<button
 						name="b"
 						type="button"
-						class="w-5 text-xl"
+						class="btn btn-sm"
 						onClick$={() => (playing.value = !playing.value)}
 					>
 						{buttonLabel.value}
@@ -94,14 +94,14 @@ export const Range = component$<RangeProps>(
 						max={values.length - 1}
 						value={idx.value}
 						step={1}
-						class="range slider mx-2 flex-grow"
+						class="range range-xs mx-3 flex-grow"
 						onInput$={(e) => {
 							playing.value = false;
 							idx.value = parseInt(e.target.value);
 							direction.value = 1;
 						}}
 					/>
-					<span class="text-sm">{label$(values[idx.value])}</span>
+					<div class="badge badge-outline flex-shrink-0">{label$(values[idx.value])}</div>
 				</label>
 			</form>
 		);

@@ -52,7 +52,7 @@ export const Range = component$<RangeProps>(
 		const idx = useSignal(values.indexOf(value.value));
 		const playing = useSignal(autoplay);
 		const direction = useSignal(1);
-		const buttonLabel = useComputed$(() => (playing.value ? "⏸" : "⏵"));
+		const buttonLabel = useComputed$(() => (playing.value ? "\u23F8\uFE0E" : "\u23F5\uFE0E"));
 
 		useVisibleTask$(({ track }) => {
 			track(() => idx.value);
@@ -82,7 +82,7 @@ export const Range = component$<RangeProps>(
 					<button
 						name="b"
 						type="button"
-						class="btn btn-sm"
+						class="btn btn-sm w-8"
 						onClick$={() => (playing.value = !playing.value)}
 					>
 						{buttonLabel.value}

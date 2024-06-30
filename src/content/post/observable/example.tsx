@@ -17,7 +17,7 @@ export const Example = component$(() => {
 		color: { legend: true },
 		symbol: { legend: true },
 		height: 300,
-		width: 832,
+		width: 672,
 		marks: [
 			Plot.dot(penguins, {
 				x: "culmen_length_mm",

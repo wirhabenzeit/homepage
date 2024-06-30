@@ -54,7 +54,10 @@ export const Select = component$<SelectProps>(({ value, options, label }) => {
 			<label class="text-sm font-medium">{label}</label>
 			<select
 				class="rounded border bg-bgColorAlt p-1 text-textColor"
-				onInput$={(e) => (value.value = e.target.value)}
+				onInput$={(e) => {
+					console.log("CHANGE", e.target.value);
+					value.value = e.target.value;
+				}}
 			>
 				{options.map((option) => (
 					<option value={option} selected={value.value === option}>

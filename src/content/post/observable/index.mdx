@@ -14,7 +14,23 @@ import { Example } from "./example";
 
 ## Usage
 
-The code for the example above is the following Qwik component:
+The `Chart` component has two main props: `plotFunction` and `args`, and some optional props for controlling the rendering:
+
+```
+<Chart
+    plotFunction={T => Plot.PlotOptions}
+    args={Signal<T>}
+    fullWidth={boolean?}
+    fullHeight={boolean?}
+    aspectRatio={number?}
+/>
+```
+
+Here `plotFunction` is a function accepting an argument of an arbitrary (serializable) type `T` and returning a `Plot.PlotOptions` object. The `args` prop is a Qwik signal containing the argument of type `T`. The plot will be re-rendered whenever the argument changes. The `fullWidth` and `fullHeight` props control whether the plot should take the full width or height of the container. The `aspectRatio` prop can be used to set the aspect ratio of the plot if specifying exactly either the width or height. Note that for server-side rendering it makes sense to set set width and height explicitly, as the container size is not known.
+
+<br />
+
+The following example shows how to use the `Chart` component to render a plot above. Here `Select` is a component changing the value of the `colorby` and `symbolby` signals when the user selects an option.
 
 ```tsx
 import { $, useSignal, component$, useComputed$ } from "@builder.io/qwik";
@@ -63,9 +79,13 @@ export const Example = component$(() => {
 });
 ```
 
-The `Chart` component has two main props: `plotFunction` and `args`. The `plotFunction` is a function that returns the plot configuration object, and `args` is a Qwik signal that contains the arguments for the plot function. If the arguments change, the plot will be re-rendered. If `fullWidth` is set to `true`, the plot will take the full width and rerender on resize. The `Chart` compnent is rendered both on the server and on the client, so the plot will be visible even if JavaScript is disabled.
+## Code for `Chart`
 
-## Code for the `Chart` component
+The implementation of the `Chart` component is shown below. The main ingredients are
+
+- `JSDOM` for server side rendering
+- `ResizeObserver` for tracking the size of the container
+- `useVisibleTask$` for rendering the plot when the argument signal changes, or the container is resized
 
 ```tsx
 /** @jsxImportSource @builder.io/qwik */

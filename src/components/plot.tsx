@@ -52,20 +52,14 @@ export const Chart = component$<PlotFunction<any>>(
 
 		const chart = useComputed$(async () => {
 			const plotarg = await plotFunction(args.value);
-			if (fullWidth && width.value > 0) {
-				plotarg.width = width.value;
-				if (aspectRatio) plotarg.height = width.value / aspectRatio;
-			}
-			if (fullHeight && height.value > 0) {
-				plotarg.height = height.value;
-				if (aspectRatio) plotarg.width = height.value * aspectRatio;
-			}
 			return Plot.plot(plotarg).outerHTML;
 		});
 
 		useVisibleTask$(async ({ track }) => {
+			if (!outputRef.value) return;
 			if (fullHeight) track(() => height.value);
 			if (fullWidth) track(() => width.value);
+			track(() => args.value);
 			const plotarg = await plotFunction(args.value);
 			if (fullWidth && width.value > 0) {
 				plotarg.width = width.value;
@@ -75,9 +69,16 @@ export const Chart = component$<PlotFunction<any>>(
 				plotarg.height = height.value;
 				if (aspectRatio) plotarg.width = height.value * aspectRatio;
 			}
-			chart.value = Plot.plot(plotarg).outerHTML;
+			outputRef.value.innerHTML = "";
+			outputRef.value.append(Plot.plot(plotarg));
 		});
 
-		return <div dangerouslySetInnerHTML={chart.value} class={classList} ref={outputRef} />;
+		return (
+			<div
+				class={classList ? classList + " not-prose" : "not-prose"}
+				ref={outputRef}
+				dangerouslySetInnerHTML={chart.value}
+			/>
+		);
 	},
 );

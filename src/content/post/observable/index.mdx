@@ -1,0 +1,155 @@
+---
+title: "Reactive Observable Plot with Qwik"
+description: "How to render Observable Plot graphics with Qwik, on the server and on the client."
+publishDate: "30 Jun 2024"
+---
+
+import { Example } from "./example";
+
+[Observable Plot](https://observablehq.com/@observablehq/plot) is a powerful library for creating interactive plots, [Qwik](https://qwik.dev) is a minimalistic web framework that can deliver instant loading web applications. This article shows how to render Observable Plot graphics in Qwik.
+
+## Example
+
+<Example />
+
+## Usage
+
+The code for the example above is the following Qwik component:
+
+```tsx
+import { $, useSignal, component$, useComputed$ } from "@builder.io/qwik";
+import * as d3 from "d3";
+import * as Plot from "@observablehq/plot";
+
+import { Chart } from "src/components/plot";
+import { Select } from "src/components/inputs";
+
+import csv from "./penguins.csv?raw";
+const penguins = d3.csvParse(csv, d3.autoType);
+
+export const Example = component$(() => {
+	const colorby = useSignal("species");
+	const symbolby = useSignal("island");
+	const args = useComputed$(() => ({ stroke: colorby.value, symbol: symbolby.value }));
+	const plotFun = $(({ stroke, symbol }: { stroke: string; symbol: string }) => ({
+		grid: true,
+		color: { legend: true },
+		symbol: { legend: true },
+		height: 300,
+		width: 832,
+		marks: [
+			Plot.dot(penguins, {
+				x: "culmen_length_mm",
+				y: "culmen_depth_mm",
+				tip: true,
+				stroke,
+				symbol,
+			}),
+		],
+		title: "Penguin Culmen Length vs Depth",
+		subtitle: "Data from Palmer Station, Antarctica",
+		caption:
+			"Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data.",
+	}));
+	return (
+		<div>
+			<div class="mb-2 flex gap-5">
+				<Select value={colorby} options={["species", "island", "sex"]} label="Color" />
+				<Select value={symbolby} options={["species", "island", "sex"]} label="Symbol" />
+			</div>
+			<Chart plotFunction={plotFun} args={args} fullWidth={true} />
+		</div>
+	);
+});
+```
+
+The `Chart` component has two main props: `plotFunction` and `args`. The `plotFunction` is a function that returns the plot configuration object, and `args` is a Qwik signal that contains the arguments for the plot function. If the arguments change, the plot will be re-rendered. If `fullWidth` is set to `true`, the plot will take the full width and rerender on resize. The `Chart` compnent is rendered both on the server and on the client, so the plot will be visible even if JavaScript is disabled.
+
+## Code for the `Chart` component
+
+```tsx
+/** @jsxImportSource @builder.io/qwik */
+
+import {
+	component$,
+	useComputed$,
+	useSignal,
+	useVisibleTask$,
+	type Signal,
+	type QRL,
+} from "@builder.io/qwik";
+
+import * as Plot from "@observablehq/plot";
+import { JSDOM } from "jsdom";
+
+interface PlotFunction<T> {
+	plotFunction: QRL<(x: T) => Plot.PlotOptions>;
+	args: Signal<T>;
+	class?: string;
+	fullWidth?: boolean;
+	fullHeight?: boolean;
+	aspectRatio?: number;
+}
+
+export const Chart = component$<PlotFunction<any>>(
+	({ plotFunction, args, class: classList, fullWidth, fullHeight, aspectRatio }) => {
+		const jsdom = new JSDOM("");
+		global.window = jsdom.window as unknown as Window & typeof globalThis;
+		global.document = jsdom.window.document;
+		global.Event = jsdom.window.Event;
+		global.Node = jsdom.window.Node;
+		global.NodeList = jsdom.window.NodeList;
+		global.HTMLCollection = jsdom.window.HTMLCollection;
+
+		const outputRef = useSignal<HTMLDivElement | null>(null);
+		const width = useSignal(0);
+		const height = useSignal(0);
+
+		useVisibleTask$(({ track }) => {
+			track(() => outputRef.value);
+			if (outputRef.value) {
+				const ro = new ResizeObserver((entries) => {
+					for (const entry of entries) {
+						const rect = entry.contentRect;
+						width.value = rect.width;
+						height.value = rect.height;
+					}
+				});
+				ro.observe(outputRef.value);
+				return () => ro.disconnect();
+			}
+		});
+
+		const chart = useComputed$(async () => {
+			const plotarg = await plotFunction(args.value);
+			return Plot.plot(plotarg).outerHTML;
+		});
+
+		useVisibleTask$(async ({ track }) => {
+			if (!outputRef.value) return;
+			if (fullHeight) track(() => height.value);
+			if (fullWidth) track(() => width.value);
+			track(() => args.value);
+			const plotarg = await plotFunction(args.value);
+			if (fullWidth && width.value > 0) {
+				plotarg.width = width.value;
+				if (aspectRatio) plotarg.height = width.value / aspectRatio;
+			}
+			if (fullHeight && height.value > 0) {
+				plotarg.height = height.value;
+				if (aspectRatio) plotarg.width = height.value * aspectRatio;
+			}
+			outputRef.value.innerHTML = "";
+			outputRef.value.append(Plot.plot(plotarg));
+		});
+
+		return (
+			<div
+				class={classList ? classList + " not-prose" : "not-prose"}
+				ref={outputRef}
+				dangerouslySetInnerHTML={chart.value}
+			/>
+		);
+	},
+);
+```

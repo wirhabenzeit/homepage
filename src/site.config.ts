@@ -34,6 +34,10 @@ export const menuLinks: Array<{ title: string; path: string }> = [
 		title: "Teaching",
 		path: `${import.meta.env.BASE_URL}teaching/`,
 	},
+	{
+		title: "Blog",
+		path: `${import.meta.env.BASE_URL}blog/`,
+	},
 ];
 
 export const expressiveCodeOptions: AstroExpressiveCodeOptions = {

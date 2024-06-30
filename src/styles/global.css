@@ -39,4 +39,16 @@
 	html body {
 		@apply relative mx-auto box-border flex min-h-screen max-w-4xl flex-col overflow-x-hidden bg-bgColor px-6 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
+
+	figcaption {
+		@apply text-xs text-textColor opacity-60;
+	}
+
+	figure > h2 {
+		@apply text-xl font-bold text-textColor;
+	}
+
+	figure > h3 {
+		@apply font-bold text-textColor;
+	}
 }

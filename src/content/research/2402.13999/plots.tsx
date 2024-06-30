@@ -127,7 +127,7 @@ export const RealEmpPlot = component$<HistogramProps>(
 
 		const options = [
 			{ signal: regSignal, label: "Linear Regression", id: "reg" },
-			{ signal: empSignal, label: "Empirical Loss", id: "emp" },
+			{ signal: empSignal, label: "Empirical", id: "emp" },
 			{ signal: lossSignal, label: "NN Loss", id: "loss" },
 		];
 
@@ -139,14 +139,16 @@ export const RealEmpPlot = component$<HistogramProps>(
 					autoplay={autoplay}
 					loop={loop}
 					delay={delay}
-					label$={(value: number) => `Epoch = ${value == undefined ? "" : value.toFixed(2)}`}
+					label$={(value: number) =>
+						`Epoch = ${value == undefined ? "" : value < 10 ? value.toFixed(2) : value.toFixed(1)}`
+					}
 				/>
-				<div class="flex items-center gap-4">
+				<div class="mt-2 flex items-center gap-2">
 					{options.map((option) => (
 						<Check value={option.signal} label$={() => option.label} id={option.id} />
 					))}
 				</div>
-				<Chart plotFunction={plotFun} args={args} class="-mt-5" fullWidth={true} ref={outputRef} />
+				<Chart plotFunction={plotFun} args={args} fullWidth={true} ref={outputRef} />
 			</div>
 		);
 	},

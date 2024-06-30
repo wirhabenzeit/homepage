@@ -122,7 +122,7 @@ export const DOS = component$(() => {
 				delay={30}
 				label$={(value: number) => `q = ${value == undefined ? "" : value.toFixed(2)}`}
 			/>
-			<Chart plotFunction={plotFun} args={args} class="-mt-5" fullWidth={true} aspectRatio={2} />
+			<Chart plotFunction={plotFun} args={args} fullWidth={true} aspectRatio={2} />
 		</div>
 	);
 });

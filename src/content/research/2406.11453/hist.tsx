@@ -100,7 +100,7 @@ export const Histogram = component$<HistogramProps>(
 					delay={delay}
 					label$={(value: number) => `λ = ${value.toFixed(1)}`}
 				/>
-				<Chart args={args} plotFunction={plotFun} fullWidth={true} aspectRatio={2} class="-mt-5" />
+				<Chart args={args} plotFunction={plotFun} fullWidth={true} aspectRatio={2} />
 			</div>
 		);
 	},

@@ -3,7 +3,10 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
 export default {
-	content: ["./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}"],
+	content: [
+		"./src/**/*.{astro,html,js,jsx,md,svelte,ts,tsx,vue}",
+		"./node_modules/flowbite/**/*.js",
+	],
 	darkMode: ["class", '[data-theme="dark"]'],
 	corePlugins: {
 		// disable aspect ratio as per docs -> @tailwindcss/aspect-ratio
@@ -118,7 +121,9 @@ export default {
 	plugins: [
 		require("@tailwindcss/typography"),
 		require("@tailwindcss/aspect-ratio"),
-		require("daisyui"),
+		require("preline/plugin"),
+		//require("flowbite/plugin"),
+		//require("daisyui"),
 		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {

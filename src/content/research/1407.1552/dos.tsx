@@ -1,6 +1,6 @@
 /** @jsxImportSource @builder.io/qwik */
 
-import { $, component$, useSignal, useComputed$, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useSignal, useComputed$, useVisibleTask$ } from "@builder.io/qwik";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 
@@ -99,19 +99,6 @@ export const DOS = component$(() => {
 		q: q.value,
 	}));
 
-	const plotFun = $((opts: DOSargs) =>
-		plotOptions({
-			...opts,
-			width: 832,
-			color: {
-				domain: [0, 1],
-				scheme: "viridis",
-				legend: true,
-				label: `q = ${q.value.toFixed(2)}`,
-			},
-		}),
-	);
-
 	return (
 		<div>
 			<Range
@@ -122,7 +109,23 @@ export const DOS = component$(() => {
 				delay={30}
 				label$={(value: number) => `q = ${value == undefined ? "" : value.toFixed(2)}`}
 			/>
-			<Chart plotFunction={plotFun} args={args} fullWidth={true} aspectRatio={2} />
+			<Chart
+				plotFunction$={(opts: DOSargs) =>
+					plotOptions({
+						...opts,
+						width: 832,
+						color: {
+							domain: [0, 1],
+							scheme: "viridis",
+							legend: true,
+						},
+					})
+				}
+				args={args}
+				fullWidth={true}
+				aspectRatio={2}
+				class="mt-3 rounded-lg border bg-bgColorAlt2 p-2"
+			/>
 		</div>
 	);
 });
@@ -146,18 +149,21 @@ export const Hero = component$(({ width, height, classList }) => {
 		q: qs[idx.value],
 	}));
 
-	const plotFun = $((opts: DOSargs) =>
-		plotOptions({
-			...opts,
-			width,
-			height,
-			color: { domain: [0, 1], scheme: "viridis", legend: false },
-		}),
-	);
-
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart plotFunction={plotFun} args={args} resize={false} class={classList.join(" ")} />
+			<Chart
+				plotFunction$={(opts: DOSargs) =>
+					plotOptions({
+						...opts,
+						width,
+						height,
+						color: { domain: [0, 1], scheme: "viridis", legend: false },
+					})
+				}
+				args={args}
+				resize={false}
+				class={classList.join(" ")}
+			/>
 		</div>
 	);
 });

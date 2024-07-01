@@ -88,8 +88,6 @@ export const Histogram = component$<HistogramProps>(
 				"The grey histogram represents the empirical distribution of sample covariance eigenvalues, while the solid curve is the spectral density of the corresponding free model. The coloured histograms represent the empirical distribution of the largest and smallest eigenvalues of the sample covariance matrix. Here √δ ≈ 0.45 so that the two phase transitions occur at λ ≈ 0.55 and λ ≈ 1.45.",
 		}));
 
-		const plotFun = $(plotOptions);
-
 		return (
 			<div>
 				<Range
@@ -100,7 +98,13 @@ export const Histogram = component$<HistogramProps>(
 					delay={delay}
 					label$={(value: number) => `λ = ${value.toFixed(1)}`}
 				/>
-				<Chart args={args} plotFunction={plotFun} fullWidth={true} aspectRatio={2} />
+				<Chart
+					args={args}
+					plotFunction$={(args) => plotOptions(args)}
+					fullWidth={true}
+					aspectRatio={2}
+					class="mt-3 rounded-lg border bg-bgColorAlt2 p-2"
+				/>
 			</div>
 		);
 	},
@@ -138,7 +142,7 @@ export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart args={args} plotFunction={plotFun} class={classList.join(" ")} />
+			<Chart args={args} plotFunction$={(args) => plotOptions(args)} class={classList.join(" ")} />
 		</div>
 	);
 });

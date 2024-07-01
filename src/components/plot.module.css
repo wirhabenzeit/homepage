@@ -1,0 +1,24 @@
+.container > figure > figcaption {
+	@apply font-sans text-xs italic text-textColor opacity-80;
+}
+
+.container > figure > h2 {
+	@apply font-sans text-2xl font-bold text-textColor;
+}
+
+.container > figure > h3 {
+	@apply font-sans font-bold text-textColor;
+}
+
+.container > figure > div {
+	@apply mb-0 min-h-6;
+}
+
+.container > figure > svg {
+	@apply mt-2;
+	--plot-background: hsl(var(--theme-bg));
+}
+
+.container > figure > [class$="-ramp"] {
+	@apply ml-4 mt-0;
+}

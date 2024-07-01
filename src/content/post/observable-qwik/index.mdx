@@ -1,0 +1,55 @@
+---
+title: "Reactive Observable Plot with Qwik"
+description: "How to render Observable Plot graphics with Qwik, on the server and on the client."
+publishDate: "30 Jun 2024"
+---
+
+import { Example } from "./example";
+import { Code } from "astro-expressive-code/components";
+import exampleCode from "./example.tsx?raw";
+import chartCode from "src/components/plot.tsx?raw";
+
+[Observable Plot](https://observablehq.com/@observablehq/plot) is a powerful library for exploratory data analysis, [Qwik](https://qwik.dev) is a minimalistic Javascript framework. This article shows how to render Observable Plot graphics using Qwik, on the server and on the client. The goal is two-fold:
+
+- static rendering during build time for fast page loads, and full functionality without Javascript
+- interactive rendering on the client side for progressive layout, animations, and user interaction
+
+## Example
+
+<Example />
+
+## Usage
+
+The `Chart` component has two main props: `plotFunction$` and `args`, and some optional props for controlling the rendering:
+
+```
+<Chart
+    plotFunction$={T => Plot.PlotOptions}
+    args={Signal<T>}
+    fullWidth={boolean?}
+    fullHeight={boolean?}
+    aspectRatio={number?}
+/>
+```
+
+Here `plotFunction$` is a function accepting an argument of an arbitrary (serializable) type `T` and returning a `Plot.PlotOptions` object[^1]. The `args` prop is a Qwik signal containing the argument of type `T`. The plot will be re-rendered whenever the argument changes[^2]. The `fullWidth` and `fullHeight` props control whether the plot should take the full width or height of the container. The `aspectRatio` prop can be used to set the aspect ratio of the plot if specifying exactly either the width or height. Note that for server-side rendering it makes sense to set set width and height explicitly, as the container size is not known.
+
+The following example shows how to use the `Chart` component to render the plot above. Here `Select` is a component changing the value of the `colorby` and `symbolby` signals when the user selects an option.
+
+<Code code={exampleCode} lang="tsx" title="example.tsx" />
+
+## Code for `Chart`
+
+The implementation of the `Chart` component is shown below. The main ingredients are
+
+- `JSDOM` for server side rendering, thanks to the `document` option[^3]
+- `ResizeObserver` for tracking the size of the container
+- `useVisibleTask$` for rendering the plot when the argument signal changes, or the container is resized
+
+<Code code={chartCode} lang="tsx" title="plot.tsx" />
+
+[^1]: `$` sign is used to tell the Qwik optimizer to extract the argument into a separate file which then can be loaded by both server and client code, see https://qwik.dev/docs/advanced/dollar/ for more information.
+
+[^2]: A full rerender is triggered whenever the argument changes, which is not the most efficient way to update the plot. A more sophisticated approach would be to update only the changed parts of the plot, e.g. using the `render` transform as demonstrated in https://observablehq.com/@fil/plot-animate-a-bar-chart/2
+
+[^3]: https://github.com/observablehq/plot/pull/969

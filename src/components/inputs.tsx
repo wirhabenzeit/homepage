@@ -21,10 +21,10 @@ type RangeProps = {
 type CheckProps = {
 	value: Signal<boolean>;
 	id?: string;
-	label: QRL<(value: boolean) => string> | string;
+	label$: QRL<(value: boolean) => string> | string;
 };
 
-export const Check = component$<CheckProps>(({ value, label, id }) => {
+export const Check = component$<CheckProps>(({ value, label$, id }) => {
 	const checkId = id ? id : Math.random().toString(36).substring(7);
 	return (
 		<div class="flex items-center">
@@ -36,7 +36,7 @@ export const Check = component$<CheckProps>(({ value, label, id }) => {
 				class="h-4 w-4 rounded bg-bgColorAlt text-accent"
 			/>
 			<label for={checkId} class="ms-2 text-xs font-medium">
-				{typeof label === "function" ? label(value.value) : label}
+				{typeof label$ === "function" ? label$(value.value) : label$}
 			</label>
 		</div>
 	);
@@ -55,7 +55,6 @@ export const Select = component$<SelectProps>(({ value, options, label }) => {
 			<select
 				class="rounded border bg-bgColorAlt p-1 text-textColor"
 				onInput$={(e) => {
-					console.log("CHANGE", e.target.value);
 					value.value = e.target.value;
 				}}
 			>
@@ -111,7 +110,7 @@ export const Range = component$<RangeProps>(
 					<button
 						name="b"
 						type="button"
-						class="h-8 w-8 rounded-lg border bg-bgColorAlt font-medium hover:bg-bgColorAlt2"
+						class="h-7 w-7 rounded-lg border bg-bgColorAlt font-medium hover:bg-bgColorAlt2"
 						onClick$={() => (playing.value = !playing.value)}
 					>
 						{buttonLabel.value}

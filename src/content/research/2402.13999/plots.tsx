@@ -123,8 +123,6 @@ export const RealEmpPlot = component$<HistogramProps>(
 				"Generalization error of feature regrresion using either the Neural Network (NN) features or linear features. The solid lines represent the deterministic equivalents, while the dots represent the empirical generalization error. The grey line represents the gradient descent loss of the NN.",
 		}));
 
-		const plotFun = $(plotOptions);
-
 		const options = [
 			{ signal: regSignal, label: "Linear Regression", id: "reg" },
 			{ signal: empSignal, label: "Empirical", id: "emp" },
@@ -148,7 +146,13 @@ export const RealEmpPlot = component$<HistogramProps>(
 						<Check value={option.signal} label$={() => option.label} id={option.id} />
 					))}
 				</div>
-				<Chart plotFunction={plotFun} args={args} fullWidth={true} ref={outputRef} />
+				<Chart
+					plotFunction$={(args) => plotOptions(args)}
+					args={args}
+					fullWidth={true}
+					ref={outputRef}
+					class="mt-3 rounded-lg border bg-bgColorAlt2 p-2"
+				/>
 			</div>
 		);
 	},
@@ -185,11 +189,9 @@ export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 		legend: false,
 	}));
 
-	const plotFun = $(plotOptions);
-
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart plotFunction={plotFun} args={args} class={classList.join(" ")} />
+			<Chart plotFunction$={(args) => plotOptions(args)} args={args} class={classList} />
 		</div>
 	);
 });

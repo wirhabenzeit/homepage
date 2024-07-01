@@ -23,6 +23,12 @@ importers:
       '@builder.io/qwik':
         specifier: 1.5.6
         version: 1.5.6(@types/node@20.14.8)(undici@6.19.2)
+      '@expressive-code/plugin-collapsible-sections':
+        specifier: ^0.35.3
+        version: 0.35.3
+      '@expressive-code/plugin-line-numbers':
+        specifier: ^0.35.3
+        version: 0.35.3
       '@fast-csv/parse':
         specifier: ^5.0.0
         version: 5.0.0
@@ -564,8 +570,14 @@ packages:
   '@expressive-code/core@0.35.3':
     resolution: {integrity: sha512-SYamcarAjufYhbuK/kfvJSvAXLsfnM7DKc78R7Dq4B73R5bKQK2m5zR0l57tXr4yp2C5Z8lu5xZncdwWxcmPdg==}
 
+  '@expressive-code/plugin-collapsible-sections@0.35.3':
+    resolution: {integrity: sha512-UvinhyQGQ93ZrwZhxzkCqQYS1HkiJ3OOIcqKOUiEZnH26bSck2EehrXBLHxh0TuAnSfCwbC8H1QB1CAX3G2G1Q==}
+
   '@expressive-code/plugin-frames@0.35.3':
     resolution: {integrity: sha512-QYytMq6IsaHgTofQ5b6d+CnbxkqLdikSF2hC+IL/ZZwPYHYZoUlmjIwmJZhY4/hHqJGELrtZsyVdlt06RntgmA==}
+
+  '@expressive-code/plugin-line-numbers@0.35.3':
+    resolution: {integrity: sha512-VzEcJ6yPaix19x4Q9ih237AGPxZuN+tNUroA2AoXedJ+fQD+frdY83/xKafRrbTqd3PeTnJj9CgXCxmwkbHFkQ==}
 
   '@expressive-code/plugin-shiki@0.35.3':
     resolution: {integrity: sha512-aFQBPepv0zhVXqJFAvfQ4vXYv/meJKiqmEEKSxdjAfwXllIV49PDlnGEXmbGYjR4hUQQjbfDgzAbrbfePc3YVQ==}
@@ -5092,7 +5104,15 @@ snapshots:
       unist-util-visit: 5.0.0
       unist-util-visit-parents: 6.0.1
 
+  '@expressive-code/plugin-collapsible-sections@0.35.3':
+    dependencies:
+      '@expressive-code/core': 0.35.3
+
   '@expressive-code/plugin-frames@0.35.3':
+    dependencies:
+      '@expressive-code/core': 0.35.3
+
+  '@expressive-code/plugin-line-numbers@0.35.3':
     dependencies:
       '@expressive-code/core': 0.35.3
 

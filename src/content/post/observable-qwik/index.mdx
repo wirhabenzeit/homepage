@@ -42,7 +42,7 @@ The following example shows how to use the `Chart` component to render the plot 
 
 The implementation of the `Chart` component is shown below. The main ingredients are
 
-- `JSDOM` for server side rendering, thanks to the `document` option[^3]
+- `JSDOM` for server side rendering, unfortunately the `document` option [^3] does not seem to work with Qwik (?)
 - `ResizeObserver` for tracking the size of the container
 - `useVisibleTask$` for rendering the plot when the argument signal changes, or the container is resized
 

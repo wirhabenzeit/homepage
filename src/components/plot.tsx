@@ -23,7 +23,13 @@ interface ChartProps<T> {
 
 const renderJSDOM = (options: Plot.PlotOptions) => {
 	const jsdom = new JSDOM("");
-	return Plot.plot({ ...options, document: jsdom.window.document }).outerHTML;
+	global.window = jsdom.window as unknown as Window & typeof globalThis;
+	global.document = jsdom.window.document;
+	global.Event = jsdom.window.Event;
+	global.Node = jsdom.window.Node;
+	global.NodeList = jsdom.window.NodeList;
+	global.HTMLCollection = jsdom.window.HTMLCollection;
+	return Plot.plot({ ...options }).outerHTML;
 };
 
 export const Chart = component$<ChartProps<any>>(

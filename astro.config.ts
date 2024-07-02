@@ -12,7 +12,6 @@ import icon from "astro-icon";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import qwik from "@qwikdev/astro";
-
 import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
@@ -40,7 +39,6 @@ export default defineConfig({
 	},
 	integrations: [
 		expressiveCode(),
-		//expressiveCode(expressiveCodeOptions),
 		icon(),
 		tailwind({
 			applyBaseStyles: false,

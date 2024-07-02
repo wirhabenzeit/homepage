@@ -2,6 +2,7 @@
 import type { SiteMeta } from "@/types";
 import { siteConfig } from "@/site-config";
 import "../styles/global.css";
+import "katex/dist/katex.min.css";
 import { posthog } from "posthog-js";
 
 type Props = SiteMeta;
@@ -130,10 +131,5 @@ const socialImageURL = new URL(ogImage ? ogImage : "/social-card.png", Astro.url
 	}
 </script>
 
-<!-- <ViewTransitions /> -->
-
 {/* Astro */}
 <meta name="generator" content={Astro.generator} />
-
-{/* katex */}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />

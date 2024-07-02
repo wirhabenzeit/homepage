@@ -117,21 +117,23 @@ type HeroProps = {
 };
 
 export const Hero = component$<HeroProps>(({ width, height, classList }) => {
-	const idx = useSignal(0);
+	const idx = useSignal(20);
 	const playing = useSignal(false);
+	const direction = useSignal(1);
 
 	useVisibleTask$(({ track }) => {
 		track(() => idx.value);
 		track(() => playing.value);
 		if (playing.value) {
 			const interval = setInterval(() => {
-				idx.value = (idx.value + 1) % lambdas.length;
+				idx.value = idx.value + direction.value;
+				if (idx.value == lambdas.length - 1 || idx.value == 0) {
+					direction.value *= -1;
+				}
 			}, 100);
 			return () => clearInterval(interval);
 		}
 	});
-
-	const plotFun = $(plotOptions);
 
 	const args = useComputed$(() => ({
 		width,
@@ -142,7 +144,12 @@ export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart args={args} plotFunction$={(args) => plotOptions(args)} class={classList.join(" ")} />
+			<Chart
+				args={args}
+				plotFunction$={(args) => plotOptions(args)}
+				class={classList}
+				fullWidth={true}
+			/>
 		</div>
 	);
 });

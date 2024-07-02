@@ -191,7 +191,12 @@ export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 
 	return (
 		<div onMouseEnter$={() => (playing.value = true)} onMouseLeave$={() => (playing.value = false)}>
-			<Chart plotFunction$={(args) => plotOptions(args)} args={args} class={classList} />
+			<Chart
+				plotFunction$={(args) => plotOptions(args)}
+				args={args}
+				class={classList}
+				fullWidth={true}
+			/>
 		</div>
 	);
 });

@@ -1,6 +1,5 @@
 import {
 	component$,
-	useComputed$,
 	useSignal,
 	useVisibleTask$,
 	type Signal,
@@ -29,7 +28,7 @@ const renderJSDOM = (options: Plot.PlotOptions) => {
 	global.Node = jsdom.window.Node;
 	global.NodeList = jsdom.window.NodeList;
 	global.HTMLCollection = jsdom.window.HTMLCollection;
-	return Plot.plot({ ...options }).outerHTML;
+	return Plot.plot(options).outerHTML;
 };
 
 export const Chart = component$<ChartProps<any>>(

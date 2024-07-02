@@ -1,5 +1,3 @@
-/** @jsxImportSource @builder.io/qwik */
-
 import { component$, useSignal, useComputed$, useVisibleTask$ } from "@builder.io/qwik";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
@@ -133,14 +131,18 @@ export const DOS = component$(() => {
 export const Hero = component$(({ width, height, classList }) => {
 	const idx = useSignal(15);
 	const playing = useSignal(false);
+	const direction = useSignal(1);
 
 	useVisibleTask$(({ track }) => {
 		track(() => idx.value);
 		track(() => playing.value);
 		if (playing.value) {
 			const interval = setInterval(() => {
-				idx.value = (idx.value + 1) % qs.length;
-			}, 100);
+				idx.value = idx.value + direction.value;
+				if (idx.value == qs.length - 1 || idx.value == 0) {
+					direction.value *= -1;
+				}
+			}, 50);
 			return () => clearInterval(interval);
 		}
 	});
@@ -162,7 +164,8 @@ export const Hero = component$(({ width, height, classList }) => {
 				}
 				args={args}
 				resize={false}
-				class={classList.join(" ")}
+				class={classList}
+				fullWidth={true}
 			/>
 		</div>
 	);

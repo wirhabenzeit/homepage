@@ -37,6 +37,6 @@
 	}
 
 	html body {
-		@apply relative mx-auto box-border flex min-h-screen max-w-4xl flex-col overflow-x-hidden bg-bgColor px-6 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply relative mx-auto box-border flex min-h-screen max-w-4xl flex-col bg-bgColor px-6 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
 }

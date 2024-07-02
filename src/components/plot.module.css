@@ -15,10 +15,17 @@
 }
 
 .container > figure > svg {
-	@apply mt-2;
 	--plot-background: hsl(var(--theme-bg));
 }
 
 .container > figure > [class$="-ramp"] {
 	@apply ml-4 mt-0;
+}
+
+[class$="-swatches-wrap"] {
+	@apply mr-2 inline-block;
+}
+
+[class$="-swatches-wrap"]:last-of-type {
+	@apply mr-0;
 }

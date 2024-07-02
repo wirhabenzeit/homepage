@@ -20,7 +20,6 @@
 		"@expressive-code/plugin-collapsible-sections": "^0.35.3",
 		"@expressive-code/plugin-line-numbers": "^0.35.3",
 		"@observablehq/plot": "^0.6.15",
-		"@playform/compress": "^0.0.13",
 		"@qwikdev/astro": "0.5.16",
 		"@types/d3": "^7.4.3",
 		"@types/jsdom": "^21.1.7",

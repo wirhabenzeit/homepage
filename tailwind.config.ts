@@ -121,9 +121,6 @@ export default {
 	plugins: [
 		require("@tailwindcss/typography"),
 		require("@tailwindcss/aspect-ratio"),
-		require("preline/plugin"),
-		//require("flowbite/plugin"),
-		//require("daisyui"),
 		plugin(function ({ addComponents }) {
 			addComponents({
 				".cactus-link": {

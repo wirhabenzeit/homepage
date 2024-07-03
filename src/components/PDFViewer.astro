@@ -5,7 +5,7 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 const { url, filename, class: classList = "" } = Astro.props;
 ---
 
-<iframe src={url} class:list={[classList, "mb-2"]} title={url}></iframe>
+<iframe src={url} class:list={[classList, "mb-2"]} title={url} id="pdfIframe"></iframe>
 <a href={url} class="cactus-link" target="_blank" rel="noopener noreferrer">
 	<div class="flex items-center">
 		<Icon icon={faDownload} class="mr-2 h-4 w-4" />

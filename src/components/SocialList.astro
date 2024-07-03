@@ -1,35 +1,28 @@
 ---
-import { Icon } from "astro-icon/components";
-
-/**
-	Uses https://github.com/natemoo-re/astro-icon#readme
-	Find icons @ https://icones.js.org/
-*/
+import { type IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import Icon from "src/components/Icon.astro";
+import { faInstagram, faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
 const socialLinks: Array<{
-	name: string;
-	friendlyName: string;
+	icon: IconDefinition;
 	link: string;
 	isWebmention?: boolean;
 }> = [
 	{
-		name: "mdi:github",
-		friendlyName: "Github",
+		icon: faGithub,
 		link: "https://github.com/wirhabenzeit",
 	},
 	{
-		name: "mdi:instagram",
-		friendlyName: "Instagram",
+		icon: faInstagram,
 		link: "https://www.instagram.com/wirhabenzeit/",
 	},
 	{
-		name: "mdi:linkedin",
-		friendlyName: "LinkedIn",
+		icon: faLinkedin,
 		link: "https://www.linkedin.com/in/dominik-schröder-695365222/",
 	},
 	{
-		name: "mdi:email",
-		friendlyName: "email",
+		icon: faEnvelope,
 		link: "mailto:dschroeder@ethz.ch",
 		isWebmention: true,
 	},
@@ -39,7 +32,7 @@ const socialLinks: Array<{
 <div class="flex flex-wrap items-end gap-x-4">
 	<ul class="not-prose flex flex-1 items-center gap-x-2 sm:flex-initial">
 		{
-			socialLinks.map(({ link, name, friendlyName, isWebmention }) => (
+			socialLinks.map(({ link, icon, isWebmention }) => (
 				<li class="flex">
 					<a
 						class="inline-block p-1 sm:hover:text-link"
@@ -47,8 +40,7 @@ const socialLinks: Array<{
 						target="_blank"
 						rel={`noopener noreferrer ${isWebmention ? "me authn" : ""}`}
 					>
-						<Icon class="h-6 w-6" name={name} aria-hidden="true" focusable="false" />
-						<span class="sr-only">{friendlyName}</span>
+						<Icon class="h-5 w-5" icon={icon} />
 					</a>
 				</li>
 			))

@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
+import Icon from "../../Icon.astro";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import type { WebmentionsChildren } from "@/types";
 
 interface Props {
@@ -70,12 +71,7 @@ const comments = mentions.filter(
 									<span id="cmt-source" class="hidden">
 										Vist the source of this webmention
 									</span>
-									<Icon
-										class="h-5 w-5"
-										name="mdi:open-in-new"
-										aria-hidden="true"
-										focusable="false"
-									/>
+									<Icon class="h-5 w-5" icon={faArrowUpRightFromSquare} />
 								</a>
 							</div>
 							<p class="mb-0 mt-1 break-words [word-break:break-word]">{mention.content?.text}</p>

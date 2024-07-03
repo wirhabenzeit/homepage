@@ -6,9 +6,6 @@ import sitemap from "@astrojs/sitemap";
 import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
-import icon from "astro-icon";
-//import expressiveCode from "astro-expressive-code";
-//import { expressiveCodeOptions } from "./src/site.config";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import qwik from "@qwikdev/astro";
@@ -39,7 +36,6 @@ export default defineConfig({
 	},
 	integrations: [
 		expressiveCode(),
-		icon(),
 		tailwind({
 			applyBaseStyles: false,
 		}),

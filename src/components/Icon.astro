@@ -1,0 +1,20 @@
+---
+import { icon as iconFun } from "@fortawesome/fontawesome-svg-core";
+const { icon, class: classList } = Astro.props;
+const {
+	icon: [width, height, , , path],
+	iconName,
+} = iconFun(icon);
+---
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox={`0 0 ${width} ${height}`}
+	class:list={[classList]}
+	aria-label={iconName}
+	focusable="false"
+	width="1.5em"
+	height="1.5em"
+>
+	<path fill="currentColor" d={path}></path>
+</svg>

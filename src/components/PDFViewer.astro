@@ -1,5 +1,6 @@
 ---
-import { Icon } from "astro-icon/components";
+import Icon from "./Icon.astro";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 const { url, filename, class: classList = "" } = Astro.props;
 ---
@@ -7,7 +8,7 @@ const { url, filename, class: classList = "" } = Astro.props;
 <iframe src={url} class:list={[classList, "mb-2"]} title={url}></iframe>
 <a href={url} class="cactus-link" target="_blank" rel="noopener noreferrer">
 	<div class="flex items-center">
-		<Icon class="h-6 w-6" name="mdi:download" aria-hidden="true" focusable="false" />
+		<Icon icon={faDownload} class="mr-2 h-4 w-4" />
 		{filename}
 	</div>
 </a>

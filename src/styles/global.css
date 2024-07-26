@@ -39,4 +39,8 @@
 	html body {
 		@apply relative mx-auto box-border flex min-h-screen max-w-4xl flex-col bg-bgColor px-6 pt-16 font-mono text-sm font-normal text-textColor antialiased;
 	}
+
+	.katex-display {
+		overflow: scroll hidden;
+	}
 }

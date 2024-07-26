@@ -11,6 +11,8 @@ import rehypeKatex from "rehype-katex";
 import qwik from "@qwikdev/astro";
 import expressiveCode from "astro-expressive-code";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
@@ -42,6 +44,9 @@ export default defineConfig({
 		sitemap(),
 		mdx(),
 		qwik(),
+		react({
+			include: ["**/react/*"],
+		}),
 	],
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,

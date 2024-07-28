@@ -6,7 +6,7 @@ import mapboxgl from "mapbox-gl";
 import tnr from "./_tnr.json";
 
 export default component$(() => {
-	//	useStyles$(mapboxStyles);
+	//useStyles$(styles);
 
 	return <MapboxMap zoom={6.5} center={[8, 44.5]} />;
 });

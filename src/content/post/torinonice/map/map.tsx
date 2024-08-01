@@ -33,7 +33,6 @@ export interface MarkersProps {
 
 export const MapboxMap = component$<MapProps>(({ zoom, center }) => {
 	const mapContainerSig = useSignal();
-	console.log(tnr);
 
 	useVisibleTask$(async ({}) => {
 		if (mapContainerSig.value) {

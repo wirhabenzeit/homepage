@@ -1,0 +1,21 @@
+---
+import svg from "../assets/strava.svg";
+import Image from "astro/components/Image.astro";
+
+const { id } = Astro.props;
+const ids = typeof id === "object" ? id : [id];
+---
+
+{
+	ids.map((id: number) => (
+		<a href={`https://www.strava.com/activities/${id}`} class="not-prose">
+			<Image
+				src={svg}
+				alt="Strava"
+				width="14"
+				height="14"
+				class="mx-1 inline-block grayscale hover:grayscale-0"
+			/>
+		</a>
+	))
+}

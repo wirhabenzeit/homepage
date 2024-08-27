@@ -14,7 +14,7 @@ import { JSDOM } from "jsdom";
 interface ChartProps<T> {
 	plotFunction$: QRL<(x: T) => Plot.PlotOptions>;
 	args: Signal<T>;
-	class?: string;
+	class?: string | string[];
 	fullWidth?: boolean;
 	fullHeight?: boolean;
 	aspectRatio?: number;
@@ -33,7 +33,7 @@ const renderJSDOM = (options: Plot.PlotOptions) => {
 
 export const Chart = component$<ChartProps<any>>(
 	({ plotFunction$, args, class: classList, fullWidth, fullHeight, aspectRatio }) => {
-		const outputRef = useSignal<HTMLDivElement | null>(null);
+		const outputRef = useSignal<Element>();
 		const width = useSignal(0);
 		const height = useSignal(0);
 		const chart = useSignal<string>("");

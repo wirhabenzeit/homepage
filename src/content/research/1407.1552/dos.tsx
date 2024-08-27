@@ -128,7 +128,13 @@ export const DOS = component$(() => {
 	);
 });
 
-export const Hero = component$(({ width, height, classList }) => {
+interface HeroProps {
+	width: number;
+	height: number;
+	classList: string | string[];
+}
+
+export const Hero = component$<HeroProps>(({ width, height, classList }) => {
 	const idx = useSignal(15);
 	const playing = useSignal(false);
 	const direction = useSignal(1);
@@ -163,7 +169,6 @@ export const Hero = component$(({ width, height, classList }) => {
 					})
 				}
 				args={args}
-				resize={false}
 				class={classList}
 				fullWidth={true}
 			/>

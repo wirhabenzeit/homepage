@@ -1,13 +1,12 @@
 /** @jsxImportSource @builder.io/qwik */
 
 import {
-	$,
 	component$,
 	useSignal,
 	useComputed$,
-	noSerialize,
 	useVisibleTask$,
 } from "@builder.io/qwik";
+import type { ScaleType } from "@observablehq/plot";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 
@@ -33,12 +32,12 @@ type HistogramProps = {
 	delay?: number;
 };
 
-const plotOptions = ({ lambda, width, height, ...opts }) => {
+const plotOptions = ({ lambda, width, height, ...opts }: { lambda: number; width: number; height: number; [key: string]: any }) => {
 	const dataFiltered = data.filter((x) => x.lambda == lambda);
-	return noSerialize({
+	return {
 		grid: true,
 		color: { legend: true },
-		y: { type: "sqrt", domain: [0, 1], label: "ρ" },
+		y: { type: "sqrt" as ScaleType, domain: [0, 1], label: "ρ" },
 		x: { domain: [-2.5, 2.5] },
 		width: width,
 		height: height,
@@ -75,7 +74,7 @@ const plotOptions = ({ lambda, width, height, ...opts }) => {
 			),
 		],
 		...opts,
-	});
+	};
 };
 
 export const Histogram = component$<HistogramProps>(

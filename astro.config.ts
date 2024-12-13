@@ -3,7 +3,7 @@ import fs from "fs";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
-import remarkUnwrapImages from "remark-unwrap-images";
+import rehypeUnwrapImages from "rehype-unwrap-images";
 import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 import remarkMath from "remark-math";
@@ -17,8 +17,9 @@ export default defineConfig({
 	site: "https://dominik.page",
 	//base: "",
 	markdown: {
-		remarkPlugins: [remarkUnwrapImages, remarkReadingTime, remarkMath],
+		remarkPlugins: [remarkReadingTime, remarkMath],
 		rehypePlugins: [
+			rehypeUnwrapImages,
 			rehypeKatex,
 			[
 				rehypeExternalLinks,

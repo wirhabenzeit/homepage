@@ -1,4 +1,5 @@
 import { z, defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
 
 function removeDupsAndLowerCase(array: string[]) {
 	if (!array.length) return array;
@@ -8,7 +9,7 @@ function removeDupsAndLowerCase(array: string[]) {
 }
 
 const teaching = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.mdx", base: "./src/content/teaching" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string().max(60),
@@ -35,7 +36,7 @@ const teaching = defineCollection({
 });
 
 const thesis = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.mdx", base: "./src/content/thesis" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -62,7 +63,7 @@ const thesis = defineCollection({
 });
 
 const research = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.mdx", base: "./src/content/research" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -100,7 +101,7 @@ const research = defineCollection({
 });
 
 const project = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.mdx", base: "./src/content/project" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string().max(60),
@@ -127,7 +128,7 @@ const project = defineCollection({
 });
 
 const post = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.mdx", base: "./src/content/post" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string().max(60),

@@ -4,8 +4,8 @@ description: "How to render Observable Plot graphics with Qwik, on the server an
 publishDate: "30 Jun 2024"
 ---
 
-import { Example } from "./example";
-import { Code } from "astro-expressive-code/components";
+//import { Example } from "./example";
+//import { Code } from "astro-expressive-code/components";
 import exampleCode from "./example.tsx?raw";
 import chartCode from "src/components/plot.tsx?raw";
 
@@ -36,7 +36,7 @@ Here `plotFunction$` is a function accepting an argument of an arbitrary (serial
 
 The following example shows how to use the `Chart` component to render the plot above. Here `Select` is a component changing the value of the `colorby` and `symbolby` signals when the user selects an option.
 
-<Code code={exampleCode} lang="tsx" title="example.tsx" />
+//<Code code={exampleCode} lang="tsx" title="example.tsx" />
 
 ## Code for `Chart`
 
@@ -46,7 +46,7 @@ The implementation of the `Chart` component is shown below. The main ingredients
 - `ResizeObserver` for tracking the size of the container
 - `useVisibleTask$` for rendering the plot when the argument signal changes, or the container is resized
 
-<Code code={chartCode} lang="tsx" title="plot.tsx" />
+//<Code code={chartCode} lang="tsx" title="plot.tsx" />
 
 [^1]: `$` sign is used to tell the Qwik optimizer to extract the argument into a separate file which then can be loaded by both server and client code, see https://qwik.dev/docs/advanced/dollar/ for more information.
 

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+//import { getCollection } from "astro:content";
 import FancyPostPreview from "./FancyPostPreview.astro";
 import type { CollectionEntry } from "astro:content";
 import Tags from "./Tags.astro";
@@ -9,23 +9,24 @@ const {
 	large = false,
 	collection,
 	filter = () => true,
-	sort = (a, b) => a.slug.localeCompare(b.slug),
+	sort = (a, b) => a.id.localeCompare(b.id),
 	reverse = false,
 	Subtitle,
 } = Astro.props;
 
 let heros = [];
+Object.values(import.meta.glob("./posts/*.md", { eager: true }));
 
 try {
 	heros =
 		collection == "project"
-			? await Astro.glob("/src/content/project/*/hero.astro")
+			? Object.values(import.meta.glob("/src/content/project/*/hero.astro", { eager: true }))
 			: collection === "thesis"
-				? await Astro.glob("/src/content/thesis/*/hero.astro")
+				? Object.values(import.meta.glob("/src/content/thesis/*/hero.astro", { eager: true }))
 				: collection === "teaching"
-					? await Astro.glob("/src/content/teaching/*/hero.astro")
+					? Object.values(import.meta.glob("/src/content/teaching/*/hero.astro", { eager: true }))
 					: collection === "research"
-						? await Astro.glob("/src/content/research/*/hero.astro")
+						? Object.values(import.meta.glob("/src/content/research/*/hero.astro", { eager: true }))
 						: [];
 } catch (error) {
 	console.log("No heros for collection", collection);
@@ -42,25 +43,26 @@ const heroMapping = heros.reduce((acc, hero) => {
 
 let right = false;
 
-const allPosts = (
-	(await getCollection(collection, filter)) as CollectionEntry<
-		"project" | "thesis" | "teaching" | "research"
-	>[]
-)
-	.sort(sort)
-	.map((post, i) => {
-		const returnPost = { ...post, number: i + 1 };
-		if (post.id in heroMapping) {
-			returnPost.hero = heroMapping[post.id];
-		}
-		if (returnPost.data.heroImage || returnPost.hero) {
-			right = !right;
-			returnPost.right = right;
-		} else {
-			returnPost.right = false;
-		}
-		return returnPost;
-	});
+const allPosts = [];
+// (
+// 	(await getCollection(collection, filter)) as CollectionEntry<
+// 		"project" | "thesis" | "teaching" | "research"
+// 	>[]
+// )
+// 	.sort(sort)
+// 	.map((post, i) => {
+// 		const returnPost = { ...post, number: i + 1 };
+// 		if (post.id in heroMapping) {
+// 			returnPost.hero = heroMapping[post.id];
+// 		}
+// 		if (returnPost.data.heroImage || returnPost.hero) {
+// 			right = !right;
+// 			returnPost.right = right;
+// 		} else {
+// 			returnPost.right = false;
+// 		}
+// 		return returnPost;
+// 	});
 
 if (reverse) allPosts.reverse();
 ---

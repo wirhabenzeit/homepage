@@ -8,7 +8,7 @@ import rehypeExternalLinks from "rehype-external-links";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import qwik from "@qwikdev/astro";
+//import qwik from "@qwikdev/astro";
 import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
@@ -42,7 +42,7 @@ export default defineConfig({
 		}),
 		sitemap(),
 		mdx(),
-		qwik(),
+		//qwik(),
 	],
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,

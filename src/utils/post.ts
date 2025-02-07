@@ -1,5 +1,5 @@
 import type { CollectionEntry, CollectionKey } from "astro:content";
-import { getCollection } from "astro:content";
+//import { getCollection } from "astro:content";
 
 /** Note: this function filters out draft posts based on the environment */
 export async function getAllPosts() {

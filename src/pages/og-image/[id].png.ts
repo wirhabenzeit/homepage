@@ -3,7 +3,7 @@ import satori, { type SatoriOptions } from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import { siteConfig } from "@/site-config";
-import { getAllPosts, getFormattedDate } from "@/utils";
+import { getFormattedDate } from "@/utils";
 
 import RobotoMono from "@/assets/roboto-mono-regular.ttf";
 import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
@@ -76,12 +76,22 @@ export async function GET(context: APIContext) {
 	});
 }
 
+import type { CollectionEntry, CollectionKey } from "astro:content";
+import { getCollection } from "astro:content";
+
+/** Note: this function filters out draft posts based on the environment */
+export async function getAllPosts() {
+	return await getCollection("post", ({ data }) => {
+		return import.meta.env.PROD ? data.draft !== true : true;
+	});
+}
+
 export async function getStaticPaths() {
 	const posts = await getAllPosts();
 	return posts
 		.filter(({ data }) => !data.ogImage)
 		.map((post) => ({
-			params: { slug: post.slug },
+			params: { id: post.id },
 			props: {
 				title: post.data.title,
 				pubDate: post.data.updatedDate ?? post.data.publishDate,

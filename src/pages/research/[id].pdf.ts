@@ -16,7 +16,7 @@ export const getStaticPaths = async () => {
 	const blogEntries = await getCollection("research");
 	return blogEntries.map((entry) => {
 		return {
-			params: { id: entry.slug },
+			params: { id: entry.id },
 			props: { arxiv: entry.data.arxiv },
 		};
 	});

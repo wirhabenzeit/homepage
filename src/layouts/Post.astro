@@ -3,11 +3,13 @@ import PublicationDetails from "@/components/PublicationDetails";
 import BaseLayout from "./Base.astro";
 import TOC from "@/components/blog/TOC";
 
+import { getEntry, render } from "astro:content";
+
 const { post } = Astro.props;
 const {
 	data: { title, description },
 } = post;
-const { headings } = await post.render();
+const { headings } = await render(post);
 ---
 
 <BaseLayout meta={{ title, description }}>

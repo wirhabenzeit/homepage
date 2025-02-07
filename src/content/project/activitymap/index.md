@@ -58,6 +58,7 @@ Map, list, and analyze of all your Strava activities.
 - [react](https://reactjs.org/)
 - [strava](https://www.strava.com/)
 - [mapbox](https://www.mapbox.com/)
+- [TanStack Table](https://tanstack.com/table/latest)
 - [Observable Plot](https://observablehq.com/@observablehq/plot)
 
 ## Setup

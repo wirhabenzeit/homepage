@@ -4,7 +4,16 @@ import { type CollectionEntry } from "astro:content";
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import Pagination from "@/components/Paginator";
-import { getAll } from "@/utils";
+
+import type { CollectionEntry, CollectionKey } from "astro:content";
+import { getCollection } from "astro:content";
+
+export async function getAll() {
+	const collectionNames = ["post", "research", "thesis", "project"] as CollectionKey[];
+	const collectionsPromises = collectionNames.map((name) => getCollection(name));
+	const collections = await Promise.all(collectionsPromises);
+	return collections.flat();
+}
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 	var posts = await getAll();

@@ -1,6 +1,16 @@
 ---
 import PageLayout from "@/layouts/Base";
-import { getAll, getUniqueTagsWithCount } from "@/utils";
+import { getUniqueTagsWithCount } from "@/utils";
+
+import type { CollectionEntry, CollectionKey } from "astro:content";
+import { getCollection } from "astro:content";
+
+export async function getAll() {
+	const collectionNames = ["post", "research", "thesis", "project"] as CollectionKey[];
+	const collectionsPromises = collectionNames.map((name) => getCollection(name));
+	const collections = await Promise.all(collectionsPromises);
+	return collections.flat();
+}
 
 const allPosts = await getAll();
 const allTags = getUniqueTagsWithCount(allPosts);

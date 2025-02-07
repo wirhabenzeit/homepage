@@ -3,13 +3,14 @@ import { getCollection } from "astro:content";
 import FancyPostPreview from "./FancyPostPreview.astro";
 import type { CollectionEntry } from "astro:content";
 import Tags from "./Tags.astro";
+import * as Astro from "astro";
 
 const {
 	numbered = false,
 	large = false,
 	collection,
 	filter = () => true,
-	sort = (a, b) => a.slug.localeCompare(b.slug),
+	sort = (a, b) => a.id.localeCompare(b.id),
 	reverse = false,
 	Subtitle,
 } = Astro.props;
@@ -19,13 +20,13 @@ let heros = [];
 try {
 	heros =
 		collection == "project"
-			? await Astro.glob("/src/content/project/*/hero.astro")
+			? Object.values(import.meta.glob("/src/content/project/*/hero.astro", { eager: true }))
 			: collection === "thesis"
-				? await Astro.glob("/src/content/thesis/*/hero.astro")
+				? Object.values(import.meta.glob("/src/content/thesis/*/hero.astro", { eager: true }))
 				: collection === "teaching"
-					? await Astro.glob("/src/content/teaching/*/hero.astro")
+					? Object.values(import.meta.glob("/src/content/teaching/*/hero.astro", { eager: true }))
 					: collection === "research"
-						? await Astro.glob("/src/content/research/*/hero.astro")
+						? Object.values(import.meta.glob("/src/content/research/*/hero.astro", { eager: true }))
 						: [];
 } catch (error) {
 	console.log("No heros for collection", collection);
@@ -34,7 +35,7 @@ try {
 const heroMapping = heros.reduce((acc, hero) => {
 	const match = hero.file.match(/\/([^/]+)\/hero\.astro/);
 	if (match) {
-		const id = `${match[1]}/index.mdx`;
+		const id = match[1].replace(".", "");
 		acc[id] = hero;
 	}
 	return acc;
@@ -75,12 +76,12 @@ if (reverse) allPosts.reverse();
 					{...(post.data.heroImage ? { heroImage: post.data.heroImage } : {})}
 					{...(post.data.heroImageHover ? { heroImageHover: post.data.heroImageHover } : {})}
 					large={large}
-					url={`/${collection}/${post.slug}`}
+					url={`/${collection}/${post.id}`}
 				>
 					<div slot="title">
 						<h2 class="mb-1 text-xl font-bold">
 							{numbered && `${post.number}. `}
-							<a href={`/${collection}/${post.slug}`} class="text-accent">
+							<a href={`/${collection}/${post.id}`} class="text-accent">
 								{post.data.title}
 							</a>
 						</h2>
